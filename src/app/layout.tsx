@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
-      <body className="m-0 bg-background bg-[radial-gradient(ellipse_at_10%_40%,#dbe6ce55,transparent_50%)] font-sans text-foreground antialiased [color-scheme:light] [&_button]:cursor-pointer [&_button:disabled]:cursor-wait [&_select]:cursor-pointer">
+      <body className="m-0 bg-background bg-[radial-gradient(ellipse_at_10%_40%,#dbe6ce55,transparent_50%)] font-sans text-foreground antialiased scheme-light [&_button]:cursor-pointer [&_button:disabled]:cursor-wait [&_select]:cursor-pointer">
         <MotionProvider>
           {children}
           <Toaster richColors position="bottom-right" />

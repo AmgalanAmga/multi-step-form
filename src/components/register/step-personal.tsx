@@ -13,7 +13,7 @@ const NameInput: RegistrationFieldRendererType<"firstName" | "lastName"> = ({ fi
     <FormItem>
       <FormLabel>{isFirstName ? "First name" : "Last name"}</FormLabel>
       <div className="relative">
-        <User className="pointer-events-none absolute left-3.5 top-[15px] size-[15px] text-muted-foreground" />
+        <User className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-muted-foreground" />
         <FormControl>
           <Input
             {...field}
@@ -32,7 +32,7 @@ const EmailInput: RegistrationFieldRendererType<"email"> = ({ field }) => (
   <FormItem>
     <FormLabel>Email address</FormLabel>
     <div className="relative">
-      <Mail className="pointer-events-none absolute left-3.5 top-[15px] size-[15px] text-muted-foreground" />
+      <Mail className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-muted-foreground" />
       <FormControl>
         <Input {...field} type="email" autoComplete="email" placeholder="you@example.com" className="pl-10" />
       </FormControl>

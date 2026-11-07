@@ -91,6 +91,7 @@ export const ImageUpload = ({ value, disabled = false, onChange, onBlur, ...prop
           <span className="grid mb-3 rounded-full size-9 place-items-center bg-primary/10 text-primary">
             <UploadCloud size={18} />
           </span>
+          
           <span className="text-xs">
             <strong className="font-semibold text-primary">Click to upload</strong> or drag and drop
           </span>

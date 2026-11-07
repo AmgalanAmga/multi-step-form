@@ -36,7 +36,9 @@ export const RegisterForm = () => {
   const uploadedImage = useRef<UploadedImageType | null>(null);
   const [submissionStage, setSubmissionStage] = useState<"uploading" | "saving">("uploading");
   const pending = useRef(false);
+
   const { reset, setFocus } = form;
+
   const hydrateForm = () => {
     const success = readStorage(STORAGE_KEYS.success, successSchema);
     if (success) {
@@ -53,9 +55,11 @@ export const RegisterForm = () => {
   // Restore browser storage after hydration to keep server and client HTML consistent.
   // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(hydrateForm, [reset]);
+
   const focusCurrentStep = () => {
     if (hydrated && !summary) setFocus(fields[step][0]);
   };
+
   useEffect(focusCurrentStep, [hydrated, step, summary, setFocus]);
   const next = async () => {
     if (pending.current || step === 3) return;
@@ -100,8 +104,7 @@ export const RegisterForm = () => {
       uploadedImage.current = null;
       toast.success("Your profile is ready. Welcome to Orbit!");
     } catch (cause) {
-      const message =
-        cause instanceof Error && cause.name !== "ZodError" ? cause.message : "Registration could not be completed. Please try again.";
+      const message = cause instanceof Error && cause.name !== "ZodError" ? cause.message : "Registration could not be completed. Please try again.";
       setError(message);
       toast.error(message);
     } finally {
@@ -162,13 +165,7 @@ export const RegisterForm = () => {
                   {error}
                 </div>
               )}
-              <RegisterActions
-                step={step}
-                busy={busy}
-                submitting={form.formState.isSubmitting}
-                submissionStage={submissionStage}
-                onBack={handleBack}
-              />
+              <RegisterActions step={step} busy={busy} submitting={form.formState.isSubmitting} submissionStage={submissionStage} onBack={handleBack} />
             </form>
           </Form>
         )}
