@@ -1,0 +1,35 @@
+import type { UseFormReturn } from "react-hook-form";
+import type { RegisterValues } from "@/lib/validations/register.schema";
+import { MotionPanel } from "@/components/ui/motion";
+import { copy } from "./register-config";
+import { StepPersonal } from "./step-personal";
+import { StepSecurity } from "./step-security";
+import { StepProfile } from "./step-profile";
+
+const stepComponents = [StepPersonal, StepSecurity, StepProfile];
+
+type RegisterStepType = {
+  step: FormStep;
+  form: UseFormReturn<RegisterValues>;
+  disabled: boolean;
+};
+
+export const RegisterStep = ({ step, form, disabled }: RegisterStepType) => {
+  const ActiveStep = stepComponents[step - 1];
+  const { title, description } = copy[step];
+
+  return (
+    <>
+      <MotionPanel key={`heading-${step}`} className="mb-7">
+        <p className="mb-2 text-[10px] font-semibold tracking-[.15em] text-primary uppercase">Step {step} of 3</p>
+        <h2 className="text-[27px] font-semibold tracking-[-.04em]">{title}</h2>
+        <p className="mt-2 text-xs leading-5 text-muted-foreground">{description}</p>
+      </MotionPanel>
+      <fieldset disabled={disabled} className="min-w-0">
+        <MotionPanel key={step}>
+          <ActiveStep form={form} />
+        </MotionPanel>
+      </fieldset>
+    </>
+  );
+};

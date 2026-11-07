@@ -1,36 +1,28 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Orbit registration
 
-## Getting Started
+## Install
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```sh
+npm install react-hook-form @hookform/resolvers zod lucide-react cloudinary server-only class-variance-authority clsx tailwind-merge @radix-ui/react-slot @radix-ui/react-label @radix-ui/react-popover react-day-picker date-fns sonner
+npx shadcn@latest add form input button label card progress popover calendar sonner skeleton
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The included UI components are customized. Keep them when the CLI asks to overwrite.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Run
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. `cp .env.example .env.local` and fill in the three Cloudinary credentials.
+2. `npm run dev`
+3. Open http://localhost:3000.
 
-## Learn More
+## Checks
 
-To learn more about Next.js, take a look at the following resources:
+```sh
+npm run lint
+npm run typecheck
+npm run build
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Submission uploads the image to Cloudinary first, then posts its public URL and profile details to `/api/register`. The server uploads the registration JSON directly from memory to Cloudinary as an authenticated raw asset under `registrations/<id>.json`. No registration files are created on the local filesystem. Passwords and confirmation passwords are excluded. The success screen appears only after Cloudinary saves the JSON. If saving fails, retrying reuses the uploaded image while the form stays open.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+JSON persistence requires a writable, persistent Node.js filesystem. For serverless deployment, use durable database or object storage instead of the local filesystem. Start over clears browser progress; it does not delete server records or Cloudinary images.
