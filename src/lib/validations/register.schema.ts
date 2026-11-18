@@ -97,7 +97,7 @@ export type RegisterValues = z.infer<typeof registerSchema>;
 export const successSchema = personalSchema.extend({
   phoneNumber: profileSchema.shape.phoneNumber,
   dateOfBirth: dateOfBirthSchema,
-  profileImage: z.url().startsWith("https://res.cloudinary.com/"),
+  profileImage: z.templateLiteral(["/api/profile-images/", z.uuid()]),
 });
 export const draftSchema = z.object({
   step: z.union([z.literal(1), z.literal(2), z.literal(3)]),

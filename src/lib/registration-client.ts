@@ -5,8 +5,7 @@ const UPLOAD_TIMEOUT_MS = 90_000;
 const SAVE_TIMEOUT_MS = 90_000;
 const apiErrorSchema = z.object({ error: z.string() });
 const uploadSchema = z.object({
-  url: z.url().startsWith("https://res.cloudinary.com/"),
-  publicId: z.string().min(1),
+  url: successSchema.shape.profileImage,
 });
 
 export const uploadProfileImage = async (file: File): Promise<UploadResult> => {

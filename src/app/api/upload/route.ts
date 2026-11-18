@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { uploadImage } from "@/lib/cloudinary";
+import { uploadImage } from "@/lib/blob";
 import { getUploadFailure } from "@/lib/upload-errors";
 import { imageSchema } from "@/lib/validations/register.schema";
 

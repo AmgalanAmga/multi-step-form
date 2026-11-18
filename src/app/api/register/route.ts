@@ -5,8 +5,7 @@ import { successSchema } from "@/lib/validations/register.schema";
 
 export const runtime = "nodejs";
 
-const errorResponse = (error: string, status: number) =>
-  NextResponse.json<ApiError>({ error }, { status });
+const errorResponse = (error: string, status: number) => NextResponse.json<ApiError>({ error }, { status });
 
 export const POST = async (request: Request) => {
   let data: unknown;
