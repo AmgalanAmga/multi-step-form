@@ -3,18 +3,13 @@
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { STEPS } from "@/lib/constants";
-import { Progress } from "@/components/ui/progress";
 import { Check, User, Lock, Camera } from "lucide-react";
-
-type StepperType = {
-  step: number;
-};
 
 type StepIndicatorType = { step: number; index: 0 | 1 | 2 };
 
 const icons = [User, Lock, Camera];
 
-const StepIndicator = ({ step, index }: StepIndicatorType) => {
+export const StepIndicator = ({ step, index }: StepIndicatorType) => {
   const label = STEPS[index];
   const number = index + 1;
   const Icon = icons[index];
@@ -37,20 +32,5 @@ const StepIndicator = ({ step, index }: StepIndicatorType) => {
         {label}
       </span>
     </li>
-  );
-};
-export const Stepper = ({ step }: StepperType) => {
-  return (
-    <nav className="mb-9">
-      <div className="relative">
-        <div className="absolute h-px top-4 right-8 left-8 bg-border" />
-        <ol className="relative flex justify-between">
-          <StepIndicator step={step} index={0} />
-          <StepIndicator step={step} index={1} />
-          <StepIndicator step={step} index={2} />
-        </ol>
-      </div>
-      <Progress value={step === 4 ? 100 : ((step - 1) / 3) * 100} className="h-1 mt-6" />
-    </nav>
   );
 };

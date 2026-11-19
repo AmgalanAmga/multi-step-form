@@ -1,15 +1,14 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import type { PropsWithChildren } from "react";
-import { Toaster } from "@/components/ui/sonner";
-import { MotionProvider } from "@/components/motion-provider";
+import { Toaster } from "@/components/ui/Sonner";
+import { MotionProvider } from "@/components/MotionProvider";
 
 export const metadata: Metadata = {
-  title: "Join Orbit · A little more you",
-  description: "Your next chapter starts here. Set up your Orbit profile in three simple steps.",
+  title: "Firstleaf",
+  description: "Create your profile in three simple steps.",
 };
 
-const RootLayout = ({ children }: PropsWithChildren) => {
+const RootLayout = ({ children }: LayoutProps<"/">) => {
   return (
     <html lang="en">
       <body className="m-0 bg-background bg-[radial-gradient(ellipse_at_10%_40%,#dbe6ce55,transparent_50%)] font-sans text-foreground antialiased scheme-light [&_button]:cursor-pointer [&_button:disabled]:cursor-wait [&_select]:cursor-pointer">

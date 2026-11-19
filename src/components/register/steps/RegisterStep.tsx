@@ -1,10 +1,10 @@
 import type { UseFormReturn } from "react-hook-form";
 import type { RegisterValues } from "@/lib/validations/register.schema";
-import { MotionPanel } from "@/components/ui/motion";
-import { copy } from "./register-config";
-import { StepPersonal } from "./step-personal";
-import { StepSecurity } from "./step-security";
-import { StepProfile } from "./step-profile";
+import { MotionPanel } from "@/components/ui/MotionPanel";
+import { copy } from "../form/register-config";
+import { StepPersonal } from "./StepPersonal";
+import { StepSecurity } from "./StepSecurity";
+import { StepProfile } from "./StepProfile";
 
 const stepComponents = [StepPersonal, StepSecurity, StepProfile];
 

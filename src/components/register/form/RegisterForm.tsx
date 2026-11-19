@@ -5,17 +5,18 @@ import { useForm, type SubmitErrorHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle } from "lucide-react";
 import { toast } from "sonner";
-import { Form } from "@/components/ui/form";
-import { Card, CardContent } from "@/components/ui/card";
+import { Form } from "@/components/ui/Form";
+import { Card } from "@/components/ui/Card";
+import { CardContent } from "@/components/ui/CardContent";
 import { registerSchema, draftSchema, successSchema, type RegisterValues } from "@/lib/validations/register.schema";
 import { STORAGE_KEYS } from "@/lib/constants";
 import { readStorage, writeStorage, removeStorage } from "@/lib/storage";
-import { Stepper } from "./stepper";
-import { StepSuccess } from "./step-success";
+import { Stepper } from "../stepper/Stepper";
+import { StepSuccess } from "../success/StepSuccess";
 import { defaults, fields } from "./register-config";
-import { RegisterStep } from "./register-step";
-import { RegisterActions } from "./register-actions";
-import { RegisterSkeleton } from "./register-skeleton";
+import { RegisterStep } from "../steps/RegisterStep";
+import { RegisterActions } from "./RegisterActions";
+import { RegisterSkeleton } from "./RegisterSkeleton";
 import { saveProfile, uploadProfileImage } from "@/lib/registration-client";
 
 type UploadedImageType = {
@@ -102,7 +103,7 @@ export const RegisterForm = () => {
       setSummary(safeSummary);
       reset(defaults);
       uploadedImage.current = null;
-      toast.success("Your profile is ready. Welcome to Orbit!");
+      toast.success("Your profile is ready. Welcome!");
     } catch (cause) {
       const message = cause instanceof Error && cause.name !== "ZodError" ? cause.message : "Registration could not be completed. Please try again.";
       setError(message);

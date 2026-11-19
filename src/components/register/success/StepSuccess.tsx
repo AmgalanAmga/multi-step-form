@@ -1,33 +1,16 @@
 "use client";
-import type { LucideIcon } from "lucide-react";
+
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { CheckCircle2, ArrowRight, Mail, Phone, Calendar, User } from "lucide-react";
 import { format, parseISO } from "date-fns";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
+import { SummaryRow } from "./SummaryRow";
 
 type StepSuccessType = {
   data: RegistrationSummary;
   onReset: () => void;
-};
-
-type SummaryRowType = {
-  label: string;
-  value: string;
-  icon: LucideIcon;
-};
-
-const SummaryRow = ({ icon: Icon, label, value }: SummaryRowType) => {
-  return (
-    <div className="flex items-center gap-3 py-3">
-      <Icon className="size-4 shrink-0 text-muted-foreground" />
-      <div className="min-w-0">
-        <dt className="text-[10px] text-muted-foreground">{label}</dt>
-        <dd className="text-sm break-words">{value}</dd>
-      </div>
-    </div>
-  );
 };
 
 export const StepSuccess = ({ data, onReset }: StepSuccessType) => {

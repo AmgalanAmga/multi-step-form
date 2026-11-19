@@ -1,27 +1,17 @@
-# Orbit · Олон алхамтай бүртгэлийн форм бүтээх
+# Firstleaf — олон алхамт бүртгэлийн форм бүтээх сурагчийн гарын авлага
 
-Энэ хичээлээр та Next.js, TypeScript ашиглан хэрэглэгчийн мэдээллийг гурван алхмаар авдаг форм бүтээнэ. Эцэст нь хэрэглэгч зургаа оруулж, хадгалагдсан профайлаа харна. Дэлгэц дээрх англи бичвэрийг эх төслийнхтэй адил үлдээлээ.
+**Зорилго** — хэрэглэгч гурван алхмаар мэдээллээ бөглөж, зургаа сонгон, бүртгэлээ хадгалдаг Next.js апп бүтээнэ. Хичээлийн төгсгөлд та Continue дарахад хөтөчид юу хадгалагддаг, эцсийн товч дарахад сервер рүү юу илгээгддэгийг тайлбарлаж чадна.
 
-**Юу бэлдэх вэ?** Командын мөр, код засварлагч, Node.js 22.12 буюу түүнээс шинэ 22.x хувилбар, npm бэлдээрэй. Зураг болон эцсийн бүртгэл хадгалахад өөрийн Vercel Blob бүртгэл хэрэгтэй. Эхний алхмуудыг түлхүүргүйгээр хийж болно.
+## 1. Ажиллах орчноо бэлдэх
 
-## 1. Хоосон төслөө ажиллуулах
-
-Терминал дээр шинэ хавтас үүсгээрэй. Дараагийн бүх командыг энэ хавтас дотроос ажиллуулна.
-
-```sh
-mkdir orbit-student
-cd orbit-student
-mkdir -p src/app src/lib/validations src/components/ui src/components/register src/app/api/upload src/app/api/register
-```
-
-Доорх эвхэгддэг хэсэг бүрийн гарчиг нь үүсгэх файлын зам юм. Эхлээд дараах тохиргооны файлуудыг үүсгээд доторх кодыг харгалзах файлд бичээрэй. TypeScript-ийн тохиргоон дахь `@/` нь `src/` хавтсыг заана.
+Уг төслийг шууд турших бол төслийн хавтаст `npm ci`, дараа нь `npm run dev` ажиллуулаад терминалд гарсан хаягийг нээнэ. Өөрөө эхнээс нь бүтээх бол Node.js 22.12 буюу түүнээс шинэ 22.x хувилбар ашиглан хоосон хавтас үүсгэ. Доорх хэсгүүдийн файлыг заасан замд нь үүсгээрэй. Эхний хэсгийг бичээд `npm install` ажиллуулна. `@/` гэж эхэлсэн импорт нь `src/` хавтсыг заана.
 
 <details>
 <summary><code>package.json</code></summary>
 
 ```json
 {
-  "name": "multi-step-form",
+  "name": "firstleaf",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -135,45 +125,6 @@ export default nextConfig;
 </details>
 
 <details>
-<summary><code>tailwind.config.ts</code></summary>
-
-```ts
-import type { Config } from "tailwindcss";
-
-const config = {
-  theme: {
-    extend: {
-      colors: {
-        background: "#f8f9f6",
-        foreground: "#25392e",
-        card: "#ffffff",
-        "card-foreground": "#25392e",
-        popover: "#ffffff",
-        "popover-foreground": "#25392e",
-        primary: "#477b5e",
-        "primary-foreground": "#ffffff",
-        secondary: "#edf1e8",
-        "secondary-foreground": "#25392e",
-        muted: "#f1f3ef",
-        "muted-foreground": "#858d84",
-        accent: "#eef3eb",
-        "accent-foreground": "#25392e",
-        destructive: "#bd4545",
-        border: "#e7ebe3",
-        input: "#dfe5dc",
-        ring: "#477b5e",
-      },
-      fontFamily: { sans: ["Arial", "Helvetica", "sans-serif"] },
-    },
-  },
-} satisfies Config;
-
-export default config;
-```
-
-</details>
-
-<details>
 <summary><code>eslint.config.mjs</code></summary>
 
 ```js
@@ -217,6 +168,131 @@ export default eslintConfig;
 </details>
 
 <details>
+<summary><code>tailwind.config.ts</code></summary>
+
+```ts
+import type { Config } from "tailwindcss";
+
+const config = {
+  theme: {
+    extend: {
+      colors: {
+        background: "#f8f9f6",
+        foreground: "#25392e",
+        card: "#ffffff",
+        "card-foreground": "#25392e",
+        popover: "#ffffff",
+        "popover-foreground": "#25392e",
+        primary: "#477b5e",
+        "primary-foreground": "#ffffff",
+        secondary: "#edf1e8",
+        "secondary-foreground": "#25392e",
+        muted: "#f1f3ef",
+        "muted-foreground": "#858d84",
+        accent: "#eef3eb",
+        "accent-foreground": "#25392e",
+        destructive: "#bd4545",
+        border: "#e7ebe3",
+        input: "#dfe5dc",
+        ring: "#477b5e",
+      },
+      fontFamily: { sans: ["Arial", "Helvetica", "sans-serif"] },
+    },
+  },
+} satisfies Config;
+
+export default config;
+```
+
+</details>
+
+<details>
+<summary><code>components.json</code></summary>
+
+```json
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "src/app/globals.css",
+    "baseColor": "neutral",
+    "cssVariables": true
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  },
+  "iconLibrary": "lucide"
+}
+```
+
+</details>
+
+<details>
+<summary><code>.gitignore</code></summary>
+
+```text
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+!.env.example
+
+# Private registration records
+/data/registrations/
+```
+
+</details>
+
+## 2. Формд ямар өгөгдөл хэрэгтэй вэ?
+
+Сурагчийн оруулсан утгыг TypeScript төрөл код бичих үед, Zod дүрэм программ ажиллах үед шалгана. Нэрийн эхлэл, төгсгөлийн зайг арилгаад хоёроос доошгүй үсэг шаардана. Нууц үг наймаас доошгүй тэмдэгттэй, том жижиг үсэг, цифр, тусгай тэмдэг агуулна. Баталгаажуулах талбарын утга түүнтэй таарах ёстой. Хэрэглэгч 13 нас хүрсэн байх ба JPEG, PNG эсвэл WebP зураг сонгоно. Зургийн хэмжээ 5 × 1024 × 1024 байтаас хэтэрч болохгүй.
+
+<details>
 <summary><code>index.d.ts</code></summary>
 
 ```ts
@@ -237,39 +313,6 @@ declare global {
 ```
 
 </details>
-
-Түр нүүр хуудас үүсгээд төслөө асаана. Дараа нь 6-р алхамд энэ хоёр файлыг бүрэн хувилбараар солино.
-
-```tsx
-// src/app/layout.tsx
-import type { ReactNode } from "react";
-
-export default function Layout({ children }: { children: ReactNode }) {
-  return <html lang="en"><body>{children}</body></html>;
-}
-```
-
-```tsx
-// src/app/page.tsx
-export default function Page() {
-  return <main><h1>Join Orbit</h1></main>;
-}
-```
-
-```sh
-npm install
-npm run dev
-```
-
-**Шалгаарай.** Терминалд гарсан дотоод хаягийг нээхэд **Join Orbit** харагдана. Серверээ ажиллуулсан хэвээр үлдээгээд дараагийн файлуудаа нэмээрэй.
-
-## 2. Талбар бүрийн дүрмийг бичих
-
-Хэрэглэгч «Бат» гэж бичихэд нэрийн шалгалт давна. Харин «Бат1» гэвэл алдаа гарна. Нэрийг шалгахдаа Unicode үсэг таних илэрхийлэл ашигласнаар кирилл нэр оруулах боломжтой. Имэйлийн хоёр талын хоосон зайг арилгаж, үсгийг жижиг болгоно.
-
-Нууц үг наймаас доошгүй тэмдэгттэй, латин том ба жижиг үсэг, цифр, тусгай тэмдэгт агуулна. Баталгаажуулах талбарт ижил утга бичнэ. Профайлд утасны дугаар, төрсөн огноо, зураг шаардлагатай. Яг 13 нас хүрсэн өдрөөс бүртгүүлж болно.
-
-Дараах файлуудаас эхлээд тогтмол утгуудаа, дараа нь Zod схемээ бич. `registerSchema` бүх алхмын өгөгдлийг шалгана. Харин `successSchema` хадгалах мэдээллийг тодорхойлно. Сонгосон зураг эхэндээ браузерын `File` объект байгаад, серверт хадгалах үед URL болсон байгааг анзаараарай.
 
 <details>
 <summary><code>src/lib/constants.ts</code></summary>
@@ -449,55 +492,9 @@ export const copy = {
 
 </details>
 
-<details>
-<summary><code>src/lib/storage.ts</code></summary>
+## 3. Дэлгэцийн үндсэн элементүүдийг угсрах
 
-```ts
-import type { z } from "zod";
-export const readStorage = <T>(key: string, schema: z.ZodType<T>): T | null => {
-  if (typeof window === "undefined") return null;
-  try {
-    const raw = window.localStorage.getItem(key);
-    if (!raw) return null;
-    const parsed = schema.safeParse(JSON.parse(raw));
-    return parsed.success ? parsed.data : null;
-  } catch {
-    return null;
-  }
-};
-export const writeStorage = <T>(key: string, value: T): boolean => {
-  if (typeof window === "undefined") return false;
-  try {
-    window.localStorage.setItem(key, JSON.stringify(value));
-    return true;
-  } catch {
-    return false;
-  }
-};
-export const removeStorage = (key: string): void => {
-  if (typeof window === "undefined") return;
-
-  window.localStorage.removeItem(key);
-};
-```
-
-</details>
-
-## 3. Формын харагдах хэсгийг угсрах
-
-Эхлээд өнгө, фонт, хүрээ болон товчлуурын нийтлэг загварыг нэмнэ. Дараа нь эдгээр жижиг компонентыг ашиглан гурван дэлгэцээ угсарна. Жишээ нь `step-personal.tsx` дотор нэрийн талбарын `name` нь схемийн түлхүүртэй таарч байгааг ол. Ингэснээр тухайн талбарын утга, гарчиг, алдааны мэдэгдэл хоорондоо холбогдоно.
-
-### Нийтлэг загвар ба компонентууд
-
-<details>
-<summary><code>src/app/globals.css</code></summary>
-
-```css
-@import "tailwindcss";
-@config "../../tailwind.config.ts";
-```
-
-</details>
+Эхлээд Input болон Label компонентыг уншаад Form.tsx дотор талбарын нэр, тайлбар, алдааны мэдэгдэл хэрхэн холбогдож байгааг ажигла. Огноо сонгох талбар Calendar болон Popover ашиглана. Нэг компонентыг хэд хэдэн алхамд ашигласнаар талбарууд ижил харагдаж, ижил байдлаар ажиллана.
 
 <details>
 <summary><code>src/lib/utils.ts</code></summary>
@@ -512,7 +509,7 @@ export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 </details>
 
 <details>
-<summary><code>src/components/ui/button.tsx</code></summary>
+<summary><code>src/components/ui/Button.tsx</code></summary>
 
 ```tsx
 import * as React from "react";
@@ -560,7 +557,7 @@ export const Button = ({
 </details>
 
 <details>
-<summary><code>src/components/ui/calendar.tsx</code></summary>
+<summary><code>src/components/ui/Calendar.tsx</code></summary>
 
 ```tsx
 "use client";
@@ -615,7 +612,7 @@ export const Calendar = ({
 </details>
 
 <details>
-<summary><code>src/components/ui/card.tsx</code></summary>
+<summary><code>src/components/ui/Card.tsx</code></summary>
 
 ```tsx
 import type { ComponentProps } from "react";
@@ -641,11 +638,11 @@ export const CardContent = ({ className, ...props }: CardContentType) => {
 </details>
 
 <details>
-<summary><code>src/components/ui/form.tsx</code></summary>
+<summary><code>src/components/ui/Form.tsx</code></summary>
 
 ```tsx
 "use client";
-import { MotionPanel } from "./motion";
+import { MotionPanel } from "./Motion";
 import {
   createContext,
   useContext,
@@ -663,7 +660,7 @@ import {
 } from "react-hook-form";
 import { Slot } from "@radix-ui/react-slot";
 import { AlertCircle } from "lucide-react";
-import { Label } from "./label";
+import { Label } from "./Label";
 import { cn } from "@/lib/utils";
 export const Form = FormProvider;
 const FieldContext = createContext({ name: "" });
@@ -733,7 +730,7 @@ export const FormMessage = ({ className, ...props }: FormMessageType) => {
 </details>
 
 <details>
-<summary><code>src/components/ui/input.tsx</code></summary>
+<summary><code>src/components/ui/Input.tsx</code></summary>
 
 ```tsx
 import type { ComponentProps } from "react";
@@ -756,7 +753,7 @@ export const Input = ({ className, type, ...props }: InputType) => {
 </details>
 
 <details>
-<summary><code>src/components/ui/label.tsx</code></summary>
+<summary><code>src/components/ui/Label.tsx</code></summary>
 
 ```tsx
 "use client";
@@ -780,7 +777,7 @@ export const Label = ({ className, ...props }: LabelType) => {
 </details>
 
 <details>
-<summary><code>src/components/ui/motion.tsx</code></summary>
+<summary><code>src/components/ui/Motion.tsx</code></summary>
 
 ```tsx
 "use client";
@@ -820,7 +817,7 @@ export const LoadingSpinner = () => {
 </details>
 
 <details>
-<summary><code>src/components/ui/popover.tsx</code></summary>
+<summary><code>src/components/ui/Popover.tsx</code></summary>
 
 ```tsx
 "use client";
@@ -855,7 +852,7 @@ export const PopoverContent = ({
 </details>
 
 <details>
-<summary><code>src/components/ui/progress.tsx</code></summary>
+<summary><code>src/components/ui/Progress.tsx</code></summary>
 
 ```tsx
 "use client";
@@ -903,7 +900,7 @@ export const Progress = ({
 </details>
 
 <details>
-<summary><code>src/components/ui/skeleton.tsx</code></summary>
+<summary><code>src/components/ui/Skeleton.tsx</code></summary>
 
 ```tsx
 "use client";
@@ -930,7 +927,7 @@ export const Skeleton = ({ className, ...props }: SkeletonType) => {
 </details>
 
 <details>
-<summary><code>src/components/ui/sonner.tsx</code></summary>
+<summary><code>src/components/ui/Sonner.tsx</code></summary>
 
 ```tsx
 "use client";
@@ -944,7 +941,7 @@ export const Toaster = (props: ToasterType) => {
 </details>
 
 <details>
-<summary><code>src/components/motion-provider.tsx</code></summary>
+<summary><code>src/components/MotionProvider.tsx</code></summary>
 
 ```tsx
 "use client";
@@ -959,134 +956,62 @@ export const MotionProvider = ({ children }: PropsWithChildren) => {
 
 </details>
 
-### Гурван алхам ба үр дүнгийн дэлгэц
-
-Хувийн мэдээллийн алхмаас эхлээд аюулгүй байдлын болон профайлын алхмыг нэмээрэй. Зураг сонгох үед хэрэглэгч урьдчилан харна. Энэ үед файл браузерт байгаа тул хэрэглэгч илгээхээсээ өмнө зургаа солих боломжтой. `Stepper` нь одоогийн алхмыг, `RegisterActions` нь тухайн үед дарж болох товчлууруудыг харуулна.
-
 <details>
-<summary><code>src/components/register/step-personal.tsx</code></summary>
+<summary><code>src/app/globals.css</code></summary>
 
-```tsx
-"use client";
-import type { UseFormReturn } from "react-hook-form";
-import { Mail, User } from "lucide-react";
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import type { RegisterValues } from "@/lib/validations/register.schema";
-
-type StepPersonalType = { form: UseFormReturn<RegisterValues> };
-
-const NameInput: RegistrationFieldRendererType<"firstName" | "lastName"> = ({ field }) => {
-  const isFirstName = field.name === "firstName";
-  return (
-    <FormItem>
-      <FormLabel>{isFirstName ? "First name" : "Last name"}</FormLabel>
-      <div className="relative">
-        <User className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-muted-foreground" />
-        <FormControl>
-          <Input
-            {...field}
-            autoComplete={isFirstName ? "given-name" : "family-name"}
-            placeholder={isFirstName ? "e.g. Alex" : "e.g. Morgan"}
-            className="pl-10"
-          />
-        </FormControl>
-      </div>
-      <FormMessage />
-    </FormItem>
-  );
-};
-
-const EmailInput: RegistrationFieldRendererType<"email"> = ({ field }) => (
-  <FormItem>
-    <FormLabel>Email address</FormLabel>
-    <div className="relative">
-      <Mail className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-muted-foreground" />
-      <FormControl>
-        <Input {...field} type="email" autoComplete="email" placeholder="you@example.com" className="pl-10" />
-      </FormControl>
-    </div>
-    <FormMessage />
-    <p className="text-[11px] text-muted-foreground">A little connection starts with the right address.</p>
-  </FormItem>
-);
-
-export const StepPersonal = ({ form }: StepPersonalType) => (
-  <div className="space-y-5">
-    <div className="grid gap-5 sm:grid-cols-2">
-      <FormField control={form.control} name="firstName" component={NameInput} />
-      <FormField control={form.control} name="lastName" component={NameInput} />
-    </div>
-    <FormField control={form.control} name="email" component={EmailInput} />
-  </div>
-);
+```css
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
 ```
 
 </details>
 
 <details>
-<summary><code>src/components/register/step-security.tsx</code></summary>
+<summary><code>src/app/layout.tsx</code></summary>
 
 ```tsx
-"use client";
-import { useState } from "react";
-import { Eye, EyeOff, Lock } from "lucide-react";
-import type { UseFormReturn } from "react-hook-form";
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import type { RegisterValues } from "@/lib/validations/register.schema";
+import "./globals.css";
+import type { Metadata } from "next";
+import type { PropsWithChildren } from "react";
+import { Toaster } from "@/components/ui/Sonner";
+import { MotionProvider } from "@/components/MotionProvider";
 
-type StepSecurityType = { form: UseFormReturn<RegisterValues> };
-const invertVisibility = (previous: boolean) => !previous;
+export const metadata: Metadata = {
+  title: "Firstleaf",
+  description: "Create your profile in three simple steps.",
+};
 
-const PasswordInput: RegistrationFieldRendererType<"password" | "confirmPassword"> = ({ field }) => {
-  const [visible, setVisible] = useState(false);
-  const isPassword = field.name === "password";
-  const handleTogglePassword = () => setVisible(invertVisibility);
-
+const RootLayout = ({ children }: PropsWithChildren) => {
   return (
-    <FormItem>
-      <FormLabel>{isPassword ? "Password" : "Confirm password"}</FormLabel>
-      <div className="relative">
-        <Lock className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-muted-foreground" />
-        <FormControl>
-          <Input
-            {...field}
-            type={visible ? "text" : "password"}
-            autoComplete="new-password"
-            className="px-10"
-            placeholder={isPassword ? "Create a strong password" : "Enter your password again"}
-          />
-        </FormControl>
-        <Button type="button" variant="ghost" size="icon" className="absolute top-1 right-1 size-9" onClick={handleTogglePassword}>
-          {visible ? <EyeOff size={16} /> : <Eye size={16} />}
-        </Button>
-      </div>
-      <FormMessage />
-    </FormItem>
+    <html lang="en">
+      <body className="m-0 bg-background bg-[radial-gradient(ellipse_at_10%_40%,#dbe6ce55,transparent_50%)] font-sans text-foreground antialiased scheme-light [&_button]:cursor-pointer [&_button:disabled]:cursor-wait [&_select]:cursor-pointer">
+        <MotionProvider>
+          {children}
+          <Toaster richColors position="bottom-right" />
+        </MotionProvider>
+      </body>
+    </html>
   );
 };
 
-export const StepSecurity = ({ form }: StepSecurityType) => (
-  <div className="space-y-5">
-    <FormField control={form.control} name="password" component={PasswordInput} />
-    <FormField control={form.control} name="confirmPassword" component={PasswordInput} />
-  </div>
-);
+export default RootLayout;
 ```
 
 </details>
 
+## 4. Нэг формыг гурван алхамд хуваах
+
+Personal info алхамд нэр, овог, имэйл оруулна. Security алхамд нууц үгээ давтан бичнэ. Profile алхамд утасны дугаар, төрсөн огноо, зураг сонгоно. RegisterStep нь step утгаар харуулах компонентоо сонгодог. Зураг сонгоод харагдах урьдчилсан дүрс нь серверт хадгалагдахаас өмнө гардаг. Зураг сонгох болон солих үед ImageUpload.tsx дотор ямар утга өөрчлөгдөж байгааг дагаарай.
+
 <details>
-<summary><code>src/components/register/image-upload.tsx</code></summary>
+<summary><code>src/components/register/ImageUpload.tsx</code></summary>
 
 ```tsx
 "use client";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { UploadCloud, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { IMAGE_TYPES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 type ImageUploadType = {
@@ -1190,7 +1115,182 @@ export const ImageUpload = ({ value, disabled = false, onChange, onBlur, ...prop
 </details>
 
 <details>
-<summary><code>src/components/register/step-profile.tsx</code></summary>
+<summary><code>src/components/register/RegisterActions.tsx</code></summary>
+
+```tsx
+import { Button } from "@/components/ui/Button";
+import { LoadingSpinner } from "@/components/ui/Motion";
+import { ArrowLeft, ArrowRight, LockKeyhole } from "lucide-react";
+
+type RegisterActionsType = {
+  busy: boolean;
+  step: FormStep;
+  onBack: () => void;
+  submitting: boolean;
+  submissionStage: "uploading" | "saving";
+};
+
+export const RegisterActions = ({ step, busy, submitting, submissionStage, onBack }: RegisterActionsType) => {
+  const disabled = busy || submitting;
+  let label = step === 3 ? "Create my profile" : "Continue";
+  if (busy) label = "Checking...";
+  if (submitting) label = submissionStage === "uploading" ? "Uploading..." : "Saving...";
+
+  return (
+    <>
+      <div className="flex gap-3 mt-8">
+        {step > 1 && (
+          <Button type="button" variant="outline" className="h-11" disabled={disabled} onClick={onBack}>
+            <ArrowLeft size={15} />
+            Back
+          </Button>
+        )}
+        <Button type="submit" disabled={disabled} className="flex-1 text-xs font-semibold h-11">
+          {disabled && <LoadingSpinner />}
+          {label}
+          {!disabled && <ArrowRight className="size-4" />}
+        </Button>
+      </div>
+      <p className="mt-5 flex items-center justify-center gap-1.5 text-[10px] text-muted-foreground">
+        <LockKeyhole size={11} />
+        Progress is saved when you click Continue.
+      </p>
+    </>
+  );
+};
+```
+
+</details>
+
+<details>
+<summary><code>src/components/register/RegisterSkeleton.tsx</code></summary>
+
+```tsx
+import { Card, CardContent } from "@/components/ui/Card";
+import { Skeleton } from "@/components/ui/Skeleton";
+
+export const RegisterSkeleton = () => (
+  <Card className="bg-card/90 shadow-[0_20px_80px_-35px_#233c2933,0_3px_10px_#233c2905] backdrop-blur-xl">
+    <CardContent className="space-y-7 p-7 sm:p-10">
+      <Skeleton className="w-full h-12" />
+      <Skeleton className="w-3/4 h-10" />
+      <Skeleton className="w-full h-5" />
+      <Skeleton className="w-full h-12" />
+      <Skeleton className="w-full h-12" />
+      <Skeleton className="w-full h-11" />
+    </CardContent>
+  </Card>
+);
+```
+
+</details>
+
+<details>
+<summary><code>src/components/register/RegisterStep.tsx</code></summary>
+
+```tsx
+import type { UseFormReturn } from "react-hook-form";
+import type { RegisterValues } from "@/lib/validations/register.schema";
+import { MotionPanel } from "@/components/ui/Motion";
+import { copy } from "./register-config";
+import { StepPersonal } from "./StepPersonal";
+import { StepSecurity } from "./StepSecurity";
+import { StepProfile } from "./StepProfile";
+
+const stepComponents = [StepPersonal, StepSecurity, StepProfile];
+
+type RegisterStepType = {
+  step: FormStep;
+  form: UseFormReturn<RegisterValues>;
+  disabled: boolean;
+};
+
+export const RegisterStep = ({ step, form, disabled }: RegisterStepType) => {
+  const ActiveStep = stepComponents[step - 1];
+  const { title, description } = copy[step];
+
+  return (
+    <>
+      <MotionPanel key={`heading-${step}`} className="mb-7">
+        <p className="mb-2 text-[10px] font-semibold tracking-[.15em] text-primary uppercase">Step {step} of 3</p>
+        <h2 className="text-[27px] font-semibold tracking-[-.04em]">{title}</h2>
+        <p className="mt-2 text-xs leading-5 text-muted-foreground">{description}</p>
+      </MotionPanel>
+      <fieldset disabled={disabled} className="min-w-0">
+        <MotionPanel key={step}>
+          <ActiveStep form={form} />
+        </MotionPanel>
+      </fieldset>
+    </>
+  );
+};
+```
+
+</details>
+
+<details>
+<summary><code>src/components/register/StepPersonal.tsx</code></summary>
+
+```tsx
+"use client";
+import type { UseFormReturn } from "react-hook-form";
+import { Mail, User } from "lucide-react";
+import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/Form";
+import { Input } from "@/components/ui/Input";
+import type { RegisterValues } from "@/lib/validations/register.schema";
+
+type StepPersonalType = { form: UseFormReturn<RegisterValues> };
+
+const NameInput: RegistrationFieldRendererType<"firstName" | "lastName"> = ({ field }) => {
+  const isFirstName = field.name === "firstName";
+  return (
+    <FormItem>
+      <FormLabel>{isFirstName ? "First name" : "Last name"}</FormLabel>
+      <div className="relative">
+        <User className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-muted-foreground" />
+        <FormControl>
+          <Input
+            {...field}
+            autoComplete={isFirstName ? "given-name" : "family-name"}
+            placeholder={isFirstName ? "e.g. Alex" : "e.g. Morgan"}
+            className="pl-10"
+          />
+        </FormControl>
+      </div>
+      <FormMessage />
+    </FormItem>
+  );
+};
+
+const EmailInput: RegistrationFieldRendererType<"email"> = ({ field }) => (
+  <FormItem>
+    <FormLabel>Email address</FormLabel>
+    <div className="relative">
+      <Mail className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-muted-foreground" />
+      <FormControl>
+        <Input {...field} type="email" autoComplete="email" placeholder="you@example.com" className="pl-10" />
+      </FormControl>
+    </div>
+    <FormMessage />
+    <p className="text-[11px] text-muted-foreground">A little connection starts with the right address.</p>
+  </FormItem>
+);
+
+export const StepPersonal = ({ form }: StepPersonalType) => (
+  <div className="space-y-5">
+    <div className="grid gap-5 sm:grid-cols-2">
+      <FormField control={form.control} name="firstName" component={NameInput} />
+      <FormField control={form.control} name="lastName" component={NameInput} />
+    </div>
+    <FormField control={form.control} name="email" component={EmailInput} />
+  </div>
+);
+```
+
+</details>
+
+<details>
+<summary><code>src/components/register/StepProfile.tsx</code></summary>
 
 ```tsx
 "use client";
@@ -1198,12 +1298,12 @@ import { useState } from "react";
 import { format, parseISO } from "date-fns";
 import { Calendar as CalendarIcon, Phone } from "lucide-react";
 import { useFormContext, type UseFormReturn } from "react-hook-form";
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
-import { ImageUpload } from "./image-upload";
+import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/Form";
+import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
+import { Calendar } from "@/components/ui/Calendar";
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/Popover";
+import { ImageUpload } from "./ImageUpload";
 import { latestBirthDate, type RegisterValues } from "@/lib/validations/register.schema";
 
 type StepProfileType = {
@@ -1305,185 +1405,61 @@ export const StepProfile = ({ form }: StepProfileType) => {
 </details>
 
 <details>
-<summary><code>src/components/register/stepper.tsx</code></summary>
+<summary><code>src/components/register/StepSecurity.tsx</code></summary>
 
 ```tsx
 "use client";
-
-import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
-import { STEPS } from "@/lib/constants";
-import { Progress } from "@/components/ui/progress";
-import { Check, User, Lock, Camera } from "lucide-react";
-
-type StepperType = {
-  step: number;
-};
-
-type StepIndicatorType = { step: number; index: 0 | 1 | 2 };
-
-const icons = [User, Lock, Camera];
-
-const StepIndicator = ({ step, index }: StepIndicatorType) => {
-  const label = STEPS[index];
-  const number = index + 1;
-  const Icon = icons[index];
-
-  return (
-    <li className="relative flex flex-col items-center gap-2.5">
-      <motion.span
-        initial={false}
-        animate={{ scale: step === number ? 1.08 : 1 }}
-        transition={{ type: "spring", stiffness: 300, damping: 22 }}
-        className={cn(
-          "grid size-8 place-items-center rounded-full border border-border text-xs font-semibold ",
-          step >= number ? "border-primary bg-primary text-primary-foreground shadow-sm" : "border-border bg-card text-muted-foreground",
-        )}
-      >
-        {step > number ? <Check size={15} /> : number}
-      </motion.span>
-      <span className={cn("flex items-center gap-1.5 text-[11px]", step === number ? "font-semibold text-foreground" : "text-muted-foreground")}>
-        <Icon size={12} />
-        {label}
-      </span>
-    </li>
-  );
-};
-export const Stepper = ({ step }: StepperType) => {
-  return (
-    <nav className="mb-9">
-      <div className="relative">
-        <div className="absolute h-px top-4 right-8 left-8 bg-border" />
-        <ol className="relative flex justify-between">
-          <StepIndicator step={step} index={0} />
-          <StepIndicator step={step} index={1} />
-          <StepIndicator step={step} index={2} />
-        </ol>
-      </div>
-      <Progress value={step === 4 ? 100 : ((step - 1) / 3) * 100} className="h-1 mt-6" />
-    </nav>
-  );
-};
-```
-
-</details>
-
-<details>
-<summary><code>src/components/register/register-step.tsx</code></summary>
-
-```tsx
+import { useState } from "react";
+import { Eye, EyeOff, Lock } from "lucide-react";
 import type { UseFormReturn } from "react-hook-form";
+import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/Form";
+import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
 import type { RegisterValues } from "@/lib/validations/register.schema";
-import { MotionPanel } from "@/components/ui/motion";
-import { copy } from "./register-config";
-import { StepPersonal } from "./step-personal";
-import { StepSecurity } from "./step-security";
-import { StepProfile } from "./step-profile";
 
-const stepComponents = [StepPersonal, StepSecurity, StepProfile];
+type StepSecurityType = { form: UseFormReturn<RegisterValues> };
+const invertVisibility = (previous: boolean) => !previous;
 
-type RegisterStepType = {
-  step: FormStep;
-  form: UseFormReturn<RegisterValues>;
-  disabled: boolean;
-};
-
-export const RegisterStep = ({ step, form, disabled }: RegisterStepType) => {
-  const ActiveStep = stepComponents[step - 1];
-  const { title, description } = copy[step];
+const PasswordInput: RegistrationFieldRendererType<"password" | "confirmPassword"> = ({ field }) => {
+  const [visible, setVisible] = useState(false);
+  const isPassword = field.name === "password";
+  const handleTogglePassword = () => setVisible(invertVisibility);
 
   return (
-    <>
-      <MotionPanel key={`heading-${step}`} className="mb-7">
-        <p className="mb-2 text-[10px] font-semibold tracking-[.15em] text-primary uppercase">Step {step} of 3</p>
-        <h2 className="text-[27px] font-semibold tracking-[-.04em]">{title}</h2>
-        <p className="mt-2 text-xs leading-5 text-muted-foreground">{description}</p>
-      </MotionPanel>
-      <fieldset disabled={disabled} className="min-w-0">
-        <MotionPanel key={step}>
-          <ActiveStep form={form} />
-        </MotionPanel>
-      </fieldset>
-    </>
-  );
-};
-```
-
-</details>
-
-<details>
-<summary><code>src/components/register/register-actions.tsx</code></summary>
-
-```tsx
-import { Button } from "@/components/ui/button";
-import { LoadingSpinner } from "@/components/ui/motion";
-import { ArrowLeft, ArrowRight, LockKeyhole } from "lucide-react";
-
-type RegisterActionsType = {
-  busy: boolean;
-  step: FormStep;
-  onBack: () => void;
-  submitting: boolean;
-  submissionStage: "uploading" | "saving";
-};
-
-export const RegisterActions = ({ step, busy, submitting, submissionStage, onBack }: RegisterActionsType) => {
-  const disabled = busy || submitting;
-  let label = step === 3 ? "Create my profile" : "Continue";
-  if (busy) label = "Checking...";
-  if (submitting) label = submissionStage === "uploading" ? "Uploading..." : "Saving...";
-
-  return (
-    <>
-      <div className="flex gap-3 mt-8">
-        {step > 1 && (
-          <Button type="button" variant="outline" className="h-11" disabled={disabled} onClick={onBack}>
-            <ArrowLeft size={15} />
-            Back
-          </Button>
-        )}
-        <Button type="submit" disabled={disabled} className="flex-1 text-xs font-semibold h-11">
-          {disabled && <LoadingSpinner />}
-          {label}
-          {!disabled && <ArrowRight className="size-4" />}
+    <FormItem>
+      <FormLabel>{isPassword ? "Password" : "Confirm password"}</FormLabel>
+      <div className="relative">
+        <Lock className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-muted-foreground" />
+        <FormControl>
+          <Input
+            {...field}
+            type={visible ? "text" : "password"}
+            autoComplete="new-password"
+            className="px-10"
+            placeholder={isPassword ? "Create a strong password" : "Enter your password again"}
+          />
+        </FormControl>
+        <Button type="button" variant="ghost" size="icon" className="absolute top-1 right-1 size-9" onClick={handleTogglePassword}>
+          {visible ? <EyeOff size={16} /> : <Eye size={16} />}
         </Button>
       </div>
-      <p className="mt-5 flex items-center justify-center gap-1.5 text-[10px] text-muted-foreground">
-        <LockKeyhole size={11} />
-        Progress is saved when you click Continue.
-      </p>
-    </>
+      <FormMessage />
+    </FormItem>
   );
 };
-```
 
-</details>
-
-<details>
-<summary><code>src/components/register/register-skeleton.tsx</code></summary>
-
-```tsx
-import { Card, CardContent } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-
-export const RegisterSkeleton = () => (
-  <Card className="bg-card/90 shadow-[0_20px_80px_-35px_#233c2933,0_3px_10px_#233c2905] backdrop-blur-xl">
-    <CardContent className="space-y-7 p-7 sm:p-10">
-      <Skeleton className="w-full h-12" />
-      <Skeleton className="w-3/4 h-10" />
-      <Skeleton className="w-full h-5" />
-      <Skeleton className="w-full h-12" />
-      <Skeleton className="w-full h-12" />
-      <Skeleton className="w-full h-11" />
-    </CardContent>
-  </Card>
+export const StepSecurity = ({ form }: StepSecurityType) => (
+  <div className="space-y-5">
+    <FormField control={form.control} name="password" component={PasswordInput} />
+    <FormField control={form.control} name="confirmPassword" component={PasswordInput} />
+  </div>
 );
 ```
 
 </details>
 
 <details>
-<summary><code>src/components/register/step-success.tsx</code></summary>
+<summary><code>src/components/register/StepSuccess.tsx</code></summary>
 
 ```tsx
 "use client";
@@ -1493,7 +1469,7 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { CheckCircle2, ArrowRight, Mail, Phone, Calendar, User } from "lucide-react";
 import { format, parseISO } from "date-fns";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 
 type StepSuccessType = {
   data: RegistrationSummary;
@@ -1567,20 +1543,82 @@ export const StepSuccess = ({ data, onReset }: StepSuccessType) => {
 
 </details>
 
-## 4. Зураг болон бүртгэл хадгалах серверээ бичих
+<details>
+<summary><code>src/components/register/Stepper.tsx</code></summary>
 
-Төслийн үндсэн хавтаст `.env.local` үүсгээд өөрийн Vercel Blob private store-ийн токеныг оруул. Энэ файлд нууц түлхүүр байгаа тул Git-д оруулахгүй байхын тулд төслийн `.gitignore` файлд `.env.local`, `node_modules/`, `.next/` гэсэн мөрүүдийг нэмээрэй. Түлхүүр оруулсны дараа серверээ Ctrl+C дарж зогсоогоод `npm run dev` командаар дахин асаана.
+```tsx
+"use client";
 
-```dotenv
+import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+import { STEPS } from "@/lib/constants";
+import { Progress } from "@/components/ui/Progress";
+import { Check, User, Lock, Camera } from "lucide-react";
+
+type StepperType = {
+  step: number;
+};
+
+type StepIndicatorType = { step: number; index: 0 | 1 | 2 };
+
+const icons = [User, Lock, Camera];
+
+const StepIndicator = ({ step, index }: StepIndicatorType) => {
+  const label = STEPS[index];
+  const number = index + 1;
+  const Icon = icons[index];
+
+  return (
+    <li className="relative flex flex-col items-center gap-2.5">
+      <motion.span
+        initial={false}
+        animate={{ scale: step === number ? 1.08 : 1 }}
+        transition={{ type: "spring", stiffness: 300, damping: 22 }}
+        className={cn(
+          "grid size-8 place-items-center rounded-full border border-border text-xs font-semibold ",
+          step >= number ? "border-primary bg-primary text-primary-foreground shadow-sm" : "border-border bg-card text-muted-foreground",
+        )}
+      >
+        {step > number ? <Check size={15} /> : number}
+      </motion.span>
+      <span className={cn("flex items-center gap-1.5 text-[11px]", step === number ? "font-semibold text-foreground" : "text-muted-foreground")}>
+        <Icon size={12} />
+        {label}
+      </span>
+    </li>
+  );
+};
+export const Stepper = ({ step }: StepperType) => {
+  return (
+    <nav className="mb-9">
+      <div className="relative">
+        <div className="absolute h-px top-4 right-8 left-8 bg-border" />
+        <ol className="relative flex justify-between">
+          <StepIndicator step={step} index={0} />
+          <StepIndicator step={step} index={1} />
+          <StepIndicator step={step} index={2} />
+        </ol>
+      </div>
+      <Progress value={step === 4 ? 100 : ((step - 1) / 3) * 100} className="h-1 mt-6" />
+    </nav>
+  );
+};
+```
+
+</details>
+
+## 5. Зураг, профайлыг Vercel Blob-д хадгалах
+
+Төслийн үндсэн хавтаст .env.local файл үүсгэж, доорх жишээний BLOB_READ_WRITE_TOKEN хувьсагчид private Blob store-ийн түлхүүрээ өгөөд хөгжүүлэлтийн серверээ дахин асаана. Түлхүүрийг зөвхөн сервер уншина. Эцсийн товч дарахад registration-client.ts эхлээд зургийг FormData дотор file нэрээр POST /api/upload руу илгээнэ. Сервер зургийг profile-images/ дор хадгалж, зураг үзэх зам буцаана. Дараагийн POST /api/register хүсэлт нэр, овог, имэйл, утас, төрсөн огноо болон тэр замыг JSON хэлбэрээр илгээнэ. Сервер бүртгэлд ID, үүсгэсэн огноо нэмээд registrations/ дор тусдаа JSON файл бичнэ. Нууц үг ба давтан бичсэн утгыг зөвхөн форм дээр шалгадаг.
+
+<details>
+<summary><code>.env.example</code></summary>
+
+```text
 BLOB_READ_WRITE_TOKEN=
 ```
 
-| Хүсэлт | Браузераас илгээх өгөгдөл | Амжилттай үед |
-| --- | --- | --- |
-| POST /api/upload | Зургийн файлыг FormData-ийн file талбарт хийнэ | Зургийн URL ирнэ |
-| POST /api/register | Нэр, овог, имэйл, утас, төрсөн огноо, зургийн URL бүхий JSON | Сервер бүртгэлийг хадгалж, профайлын мэдээлэл буцаана |
-
-Эхний хүсэлтээс URL ирсний дараа хоёр дахь хүсэлтээ илгээнэ. Сервер бүртгэлд ID болон үүсгэсэн цаг нэмж Vercel Blob-д хандалт хязгаарласан JSON файл хадгална. Нууц үг, давтан бичсэн нууц үг хоёр браузер дахь шалгалтад л оролцоно. Энэ дасгалын үр дүн нь хадгалагдсан профайл юм.
+</details>
 
 <details>
 <summary><code>src/lib/blob.ts</code></summary>
@@ -1594,37 +1632,6 @@ export const uploadImage = async (file: File): Promise<UploadResult> => {
   const id = randomUUID();
   await put(`profile-images/${id}`, file, { access: "private", contentType: file.type });
   return { url: `/api/profile-images/${id}` };
-};
-```
-
-</details>
-
-<details>
-<summary><code>src/lib/upload-errors.ts</code></summary>
-
-```ts
-type UploadFailureType = {
-  status: number;
-  body: ApiError;
-};
-
-type ProviderErrorType = {
-  error?: unknown;
-  cause?: unknown;
-  message?: unknown;
-  http_code?: unknown;
-};
-
-const asProviderError = (value: unknown): ProviderErrorType => (typeof value === "object" && value !== null ? value : {});
-
-export const getUploadFailure = (cause: unknown): UploadFailureType => {
-  const outer = asProviderError(cause);
-  const error = asProviderError(outer.error ?? outer.cause ?? cause);
-  const message = typeof error.message === "string" && error.message.trim() ? error.message : "Image upload failed.";
-  const status =
-    typeof error.http_code === "number" && Number.isInteger(error.http_code) && error.http_code >= 400 && error.http_code <= 599 ? error.http_code : 500;
-
-  return { status, body: { error: message } };
 };
 ```
 
@@ -1667,6 +1674,28 @@ export const POST = async (request: Request) => {
     const failure = getUploadFailure(error);
     return NextResponse.json<ApiError>(failure.body, { status: failure.status });
   }
+};
+```
+
+</details>
+
+<details>
+<summary><code>src/app/api/profile-images/[id]/route.ts</code></summary>
+
+```ts
+import { get } from "@vercel/blob";
+import { z } from "zod";
+
+export const GET = async (_request: Request, context: RouteContext<"/api/profile-images/[id]">) => {
+  const { id } = await context.params;
+  if (!z.uuid().safeParse(id).success) return new Response(null, { status: 404 });
+  const image = await get(`profile-images/${id}`, { access: "private" });
+  if (!image || image.statusCode !== 200) return new Response(null, { status: 404 });
+  return new Response(image.stream, { headers: {
+    "Content-Type": image.blob.contentType,
+    "Cache-Control": "private, no-store",
+    "X-Content-Type-Options": "nosniff",
+  } });
 };
 ```
 
@@ -1744,6 +1773,37 @@ export const POST = async (request: Request) => {
 </details>
 
 <details>
+<summary><code>src/lib/upload-errors.ts</code></summary>
+
+```ts
+type UploadFailureType = {
+  status: number;
+  body: ApiError;
+};
+
+type ProviderErrorType = {
+  error?: unknown;
+  cause?: unknown;
+  message?: unknown;
+  http_code?: unknown;
+};
+
+const asProviderError = (value: unknown): ProviderErrorType => (typeof value === "object" && value !== null ? value : {});
+
+export const getUploadFailure = (cause: unknown): UploadFailureType => {
+  const outer = asProviderError(cause);
+  const error = asProviderError(outer.error ?? outer.cause ?? cause);
+  const message = typeof error.message === "string" && error.message.trim() ? error.message : "Image upload failed.";
+  const status =
+    typeof error.http_code === "number" && Number.isInteger(error.http_code) && error.http_code >= 400 && error.http_code <= 599 ? error.http_code : 500;
+
+  return { status, body: { error: message } };
+};
+```
+
+</details>
+
+<details>
 <summary><code>src/lib/registration-client.ts</code></summary>
 
 ```ts
@@ -1799,16 +1859,46 @@ export const saveProfile = async (values: RegisterValues, imageUrl: string): Pro
 
 </details>
 
-## 5. Алхмуудыг нэг формд холбох
+## 6. Алхам шилжих, ноорог сэргээх, бүртгэл дуусгах
 
-Нэг `useForm` объект бүх талбарын утгыг барина. `step` нь аль хэсгийг харуулахыг шийднэ. Дараах гурван үйлдлийг кодоос дарааллаар нь олоорой.
-
-1. **Continue.** `form.trigger(fields[step])` тухайн алхмын талбаруудыг шалгана. Алдаагүй бол дараагийн алхмын дугаар болон зөвшөөрсөн талбаруудыг localStorage-д хадгална.
-2. **Хуудсаа сэргээх.** `useEffect` браузер дээр ажиллахад өмнөх үр дүн эсвэл ноорог уншигдана. Нууц үг, зураг хадгалагддаггүй. Гурав дахь алхмаас сэргээсэн бол зургаа дахин сонгож, нууц үгээ дахин оруулна.
-3. **Илгээх.** Эцсийн товч бүх талбарыг шалгана. Алдаатай бол тэр талбарын алхамд буцна. Зураг амжилттай илгээгдсэн ч бүртгэл хадгалах хүсэлт бүтэлгүйтвэл форм нээлттэй байх хугацаанд ижил зургийн URL-г дахин ашиглана.
+RegisterForm бүх алхамд нэг useForm ашиглана. Continue дарахад form.trigger(fields[step]) тухайн алхмын талбаруудыг шалгана. Шалгалт амжилттай бол дараагийн алхмын дугаар болон зөвшөөрсөн утгуудыг localStorage-д бичнэ. Жишээ нь хоёрдугаар алхамд хуудсаа шинэчлэхэд эхний алхмын имэйл сэргэсэн байна. Харин нууц үг болон сонгосон файл ноорогт ордоггүй учраас дахин оруулах шаардлагатай. Эцсийн илгээлт бүх алхмыг шалгаж, алдаа байвал засах алхмыг харуулна. Хадгалалт амжилттай бол нооргийг арилгаж, профайлын хураангуйг харуулна.
 
 <details>
-<summary><code>src/components/register/register-form.tsx</code></summary>
+<summary><code>src/lib/storage.ts</code></summary>
+
+```ts
+import type { z } from "zod";
+export const readStorage = <T>(key: string, schema: z.ZodType<T>): T | null => {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.localStorage.getItem(key);
+    if (!raw) return null;
+    const parsed = schema.safeParse(JSON.parse(raw));
+    return parsed.success ? parsed.data : null;
+  } catch {
+    return null;
+  }
+};
+export const writeStorage = <T>(key: string, value: T): boolean => {
+  if (typeof window === "undefined") return false;
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value));
+    return true;
+  } catch {
+    return false;
+  }
+};
+export const removeStorage = (key: string): void => {
+  if (typeof window === "undefined") return;
+
+  window.localStorage.removeItem(key);
+};
+```
+
+</details>
+
+<details>
+<summary><code>src/components/register/RegisterForm.tsx</code></summary>
 
 ```tsx
 "use client";
@@ -1818,17 +1908,17 @@ import { useForm, type SubmitErrorHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle } from "lucide-react";
 import { toast } from "sonner";
-import { Form } from "@/components/ui/form";
-import { Card, CardContent } from "@/components/ui/card";
+import { Form } from "@/components/ui/Form";
+import { Card, CardContent } from "@/components/ui/Card";
 import { registerSchema, draftSchema, successSchema, type RegisterValues } from "@/lib/validations/register.schema";
 import { STORAGE_KEYS } from "@/lib/constants";
 import { readStorage, writeStorage, removeStorage } from "@/lib/storage";
-import { Stepper } from "./stepper";
-import { StepSuccess } from "./step-success";
+import { Stepper } from "./Stepper";
+import { StepSuccess } from "./StepSuccess";
 import { defaults, fields } from "./register-config";
-import { RegisterStep } from "./register-step";
-import { RegisterActions } from "./register-actions";
-import { RegisterSkeleton } from "./register-skeleton";
+import { RegisterStep } from "./RegisterStep";
+import { RegisterActions } from "./RegisterActions";
+import { RegisterSkeleton } from "./RegisterSkeleton";
 import { saveProfile, uploadProfileImage } from "@/lib/registration-client";
 
 type UploadedImageType = {
@@ -1915,7 +2005,7 @@ export const RegisterForm = () => {
       setSummary(safeSummary);
       reset(defaults);
       uploadedImage.current = null;
-      toast.success("Your profile is ready. Welcome to Orbit!");
+      toast.success("Your profile is ready. Welcome!");
     } catch (cause) {
       const message = cause instanceof Error && cause.name !== "ZodError" ? cause.message : "Registration could not be completed. Please try again.";
       setError(message);
@@ -1990,50 +2080,13 @@ export const RegisterForm = () => {
 
 </details>
 
-## 6. Нүүр хуудсыг дуусгах
-
-Эхний алхамд бичсэн түр `layout.tsx`, `page.tsx` хоёроо дараах кодоор солиорой. Нүүр хуудас `RegisterForm`-ыг харуулна. Layout дотор нийтлэг загвар болон мэдэгдэл харуулах `Toaster`-ийг нэг удаа холбоно.
-
-<details>
-<summary><code>src/app/layout.tsx</code></summary>
-
-```tsx
-import "./globals.css";
-import type { Metadata } from "next";
-import type { PropsWithChildren } from "react";
-import { Toaster } from "@/components/ui/sonner";
-import { MotionProvider } from "@/components/motion-provider";
-
-export const metadata: Metadata = {
-  title: "Join Orbit · A little more you",
-  description: "Your next chapter starts here. Set up your Orbit profile in three simple steps.",
-};
-
-const RootLayout = ({ children }: PropsWithChildren) => {
-  return (
-    <html lang="en">
-      <body className="m-0 bg-background bg-[radial-gradient(ellipse_at_10%_40%,#dbe6ce55,transparent_50%)] font-sans text-foreground antialiased scheme-light [&_button]:cursor-pointer [&_button:disabled]:cursor-wait [&_select]:cursor-pointer">
-        <MotionProvider>
-          {children}
-          <Toaster richColors position="bottom-right" />
-        </MotionProvider>
-      </body>
-    </html>
-  );
-};
-
-export default RootLayout;
-```
-
-</details>
-
 <details>
 <summary><code>src/app/page.tsx</code></summary>
 
 ```tsx
 import Link from "next/link";
 import { Asterisk, ShieldCheck } from "lucide-react";
-import { RegisterForm } from "@/components/register/register-form";
+import { RegisterForm } from "@/components/register/RegisterForm";
 
 const Home = () => {
   return (
@@ -2043,7 +2096,7 @@ const Home = () => {
           <span className="grid rounded-full size-8 place-items-center bg-primary text-primary-foreground">
             <Asterisk size={25} />
           </span>
-          orbit<span className="text-primary">.</span>
+          Firstleaf
         </Link>
       </header>
 
@@ -2069,7 +2122,7 @@ const Home = () => {
       </main>
 
       <footer className="mx-auto flex max-w-7xl flex-wrap justify-between gap-3 border-t border-border py-6 text-[11px] text-muted-foreground">
-        <span>© {new Date().getFullYear()} Orbit. A space for your next chapter.</span>
+        <span>© {new Date().getFullYear()} Firstleaf.</span>
         <span>Thoughtfully simple. Uniquely you.</span>
       </footer>
     </div>
@@ -2088,7 +2141,7 @@ export default Home;
 "use client";
 
 import { AlertCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 
 type ErrorBoundaryType = {
   error: Error & {
@@ -2114,34 +2167,26 @@ export default ErrorBoundary;
 
 </details>
 
-<details>
-<summary><code>src/app/icon.svg</code></summary>
-
-```xml
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="20" fill="#477b5e"/><g stroke="#fff" stroke-width="5" stroke-linecap="round"><path d="M32 15v34M17 23l30 18M17 41l30-18"/></g></svg>
-```
-
-</details>
-
 ## 7. Өөрийн бүтээсэн формыг шалгах
 
-Өөр терминал нээгээд төслийн хавтсанд дараах командуудыг ажиллуулаарай.
+Төслийн хавтаст дараах командуудыг ажиллуулна.
 
 ```sh
-npm run typecheck
 npm run lint
-npm run build
+npx next typegen
+npm run typecheck
+npm run dev
 ```
 
-Дараа нь браузерт дараах туршилтуудыг хийнэ. Туршилтад зохиомол мэдээлэл болон хувийн мэдээлэлгүй зураг ашиглаарай.
+Хөтөчийн DevTools дотор Network хэсгийг нээгээд дараах туршилтыг дарааллаар хийгээрэй.
 
-| Хийх үйлдэл | Хүлээгдэх үр дүн |
+| Туршилт | Ажиглах үр дүн |
 | --- | --- |
-| Эхний алхамд нэрээ хоосон үлдээгээд Continue дар | Алдаа тухайн талбарын доор харагдаж, эхний алхам дээр үлдэнэ |
-| Нэрт Бат, овогт Болд, имэйлд bat@example.com гэж оруулаад үргэлжлүүл. Хуудсаа сэргээгээд Back дар | Оруулсан хувийн мэдээлэл хэвээр байна |
-| Туршилтын нууц үгт Orbit123! гэж бичээд баталгаажуулахдаа нэг тэмдэгт зөрүүл | Хоёр утга таарах хүртэл дараагийн алхамд шилжихгүй |
-| Утсанд +97699112233 оруулж, төрсөн огноогоо 2000-01-15 гэж сонго. 5 МиБ-аас бага PNG зураг сонго | Сонгосон зургийн урьдчилсан дүрс гарна |
-| Эцсийн товчийг дарж DevTools → Network хэсгийг хар | Эхлээд upload, дараа нь register хүсэлт амжилттай дуусч, профайлын хураангуй харагдана |
-| Амжилтын дэлгэц дээр хуудсаа сэргээгээд Start over дар | Сэргээхэд хураангуй үлдэнэ. Start over дарахад форм эхний алхамд хоосон нээгдэнэ. Өмнөх серверийн бүртгэл хадгалагдсан хэвээр байна |
+| Нэрийн талбарт ганц үсэг бичээд Continue дар. | Эхний алхамд үлдэж, нэрийн доор алдаа гарна. |
+| Нэр, овог, имэйлээ зөв бөглөөд Continue дарж, хуудсаа шинэчил. Back дар. | Өмнө оруулсан утгууд эхний алхамд харагдана. |
+| Хоёр өөр нууц үг бичээд үргэлжлүүл. | Давтан бичсэн талбарт алдаа гарна. Утгуудыг ижил болгоод дахин оролд. |
+| Гуравдугаар алхамд шаардлага хангасан зураг сонго. | Зургийн урьдчилсан дүрс гарна. Энэ үед Network хэсэгт upload хүсэлт гарахгүй. |
+| Утас, огноогоо бөглөөд бүртгэлээ илгээ. | Эхлээд upload, дараа нь register хүсэлт гарна. Бүртгэл хадгалагдахад register хүсэлт 201 төлөв буцааж, профайлын хураангуй харагдана. |
+| Амжилтын дэлгэц дээр хуудсаа шинэчил. | Хураангуй дахин гарна. Шинээр эхлэх товч дарахад эхний алхам нээгдэнэ. |
 
-**Алдаа гарвал хаанаас эхлэх вэ?** Талбар улаан бол тухайн талбарын мэдэгдлийг унш. Зураг илгээх хүсэлт амжилтгүй бол файлын төрөл, хэмжээ, дараа нь серверийн терминал болон Vercel Blob тохиргоогоо шалга. Зураг илгээгдсэн ч хураангуй гарахгүй бол Network хэсгээс `/api/register` хүсэлтийн хариуг нээ. Ингэж шалгавал аль үйлдэл дээр алдаа гарсныг ялгаж чадна.
+**Бие даалт.** Зургийн дээд хэмжээг 2 MiB болгох шаардлага иржээ. Хэмжээг шалгах нөхцөл болон сурагчид харагдах тайлбаруудыг олж шинэчил. 2 MiB-аас арай бага, арай том хоёр зураг сонгож үр дүнг харьцуул.

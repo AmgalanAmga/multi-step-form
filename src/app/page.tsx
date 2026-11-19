@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Asterisk, ShieldCheck } from "lucide-react";
-import { RegisterForm } from "@/components/register/register-form";
+import { RegisterForm } from "@/components/register/form/RegisterForm";
 
 const Home = () => {
   return (
@@ -10,7 +10,7 @@ const Home = () => {
           <span className="grid rounded-full size-8 place-items-center bg-primary text-primary-foreground">
             <Asterisk size={25} />
           </span>
-          orbit<span className="text-primary">.</span>
+          Firstleaf
         </Link>
       </header>
 
@@ -36,7 +36,7 @@ const Home = () => {
       </main>
 
       <footer className="mx-auto flex max-w-7xl flex-wrap justify-between gap-3 border-t border-border py-6 text-[11px] text-muted-foreground">
-        <span>© {new Date().getFullYear()} Orbit. A space for your next chapter.</span>
+        <span>© {new Date().getFullYear()} Firstleaf.</span>
         <span>Thoughtfully simple. Uniquely you.</span>
       </footer>
     </div>

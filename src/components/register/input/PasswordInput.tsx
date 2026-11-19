@@ -1,16 +1,17 @@
 "use client";
+
 import { useState } from "react";
 import { Eye, EyeOff, Lock } from "lucide-react";
-import type { UseFormReturn } from "react-hook-form";
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import type { RegisterValues } from "@/lib/validations/register.schema";
+import { FormItem } from "@/components/ui/FormItem";
+import { FormLabel } from "@/components/ui/FormLabel";
+import { FormControl } from "@/components/ui/FormControl";
+import { FormMessage } from "@/components/ui/FormMessage";
+import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
 
-type StepSecurityType = { form: UseFormReturn<RegisterValues> };
 const invertVisibility = (previous: boolean) => !previous;
 
-const PasswordInput: RegistrationFieldRendererType<"password" | "confirmPassword"> = ({ field }) => {
+export const PasswordInput: RegistrationFieldRendererType<"password" | "confirmPassword"> = ({ field }) => {
   const [visible, setVisible] = useState(false);
   const isPassword = field.name === "password";
   const handleTogglePassword = () => setVisible(invertVisibility);
@@ -37,10 +38,3 @@ const PasswordInput: RegistrationFieldRendererType<"password" | "confirmPassword
     </FormItem>
   );
 };
-
-export const StepSecurity = ({ form }: StepSecurityType) => (
-  <div className="space-y-5">
-    <FormField control={form.control} name="password" component={PasswordInput} />
-    <FormField control={form.control} name="confirmPassword" component={PasswordInput} />
-  </div>
-);

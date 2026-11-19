@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { LoadingSpinner } from "@/components/ui/motion";
+import { Button } from "@/components/ui/Button";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { ArrowLeft, ArrowRight, LockKeyhole } from "lucide-react";
 
 type RegisterActionsType = {

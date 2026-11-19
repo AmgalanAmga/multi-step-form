@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { UploadCloud, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { IMAGE_TYPES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 type ImageUploadType = {
