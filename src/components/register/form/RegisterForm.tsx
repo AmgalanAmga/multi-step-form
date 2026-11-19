@@ -16,7 +16,7 @@ export const RegisterForm = () => {
   if (!hydrated) return <RegisterSkeleton />;
 
   return (
-    <Card className="max-h-full min-h-0 gap-0 py-0 overflow-y-auto shadow-xl overscroll-contain bg-white/90 shadow-emerald-950/10 backdrop-blur-xl">
+    <Card className="sketch-card min-h-0 max-h-full gap-0 overflow-y-auto overscroll-contain py-0">
       <CardContent className="p-4 sm:p-6">
         <Stepper step={summary ? 4 : step} />
         {summary ? (

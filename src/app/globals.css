@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap");
 @import "tailwindcss";
 @config "../../tailwind.config.ts";
 
@@ -6,20 +7,20 @@
   --color-foreground: var(--color-slate-950);
   --color-card: var(--color-white);
   --color-popover: var(--color-white);
-  --color-primary: var(--color-emerald-700);
+  --color-primary: var(--color-red-700);
   --color-secondary: var(--color-slate-100);
   --color-muted: var(--color-slate-100);
-  --color-accent: var(--color-emerald-50);
-  --color-destructive: var(--color-rose-700);
+  --color-accent: var(--color-red-50);
+  --color-destructive: var(--color-red-800);
   --color-border: var(--color-slate-200);
   --color-input: var(--color-slate-300);
-  --color-ring: var(--color-emerald-600);
+  --color-ring: var(--color-red-600);
   --color-card-foreground: var(--color-slate-950);
   --color-popover-foreground: var(--color-slate-950);
   --color-primary-foreground: var(--color-white);
   --color-secondary-foreground: var(--color-slate-900);
   --color-muted-foreground: var(--color-slate-600);
-  --color-accent-foreground: var(--color-emerald-950);
+  --color-accent-foreground: var(--color-red-950);
 }
 
 @layer base {
@@ -34,5 +35,50 @@
 }
 
 .invalid-field .field-control {
-  @apply border-red-600 focus-visible:ring-red-600/25;
+  @apply border-red-800 focus-visible:ring-red-800/25;
+}
+
+.toaster.toaster {
+  font-family: inherit;
+}
+
+.sketch-paper {
+  background-color: #faf7ef;
+  background-image: radial-gradient(circle, #80766a36 0.8px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.sketch-card {
+  background: #fffdf7;
+  border: 2px solid #403831;
+  border-radius: 15px 10px 18px 9px / 9px 18px 11px 15px;
+  box-shadow: 3px 4px 0 #403831;
+}
+
+.field-control {
+  border-color: #897e73;
+  border-radius: 7px 10px 6px 9px / 9px 6px 9px 6px;
+}
+
+.sketch-marker {
+  border-radius: 47% 53% 45% 55% / 54% 46% 54% 46%;
+  outline: 1px solid #584c41;
+}
+
+.sketch-button {
+  border: 1px solid #403831;
+  border-radius: 8px 5px 9px 6px;
+  box-shadow: 2px 2px 0 #403831;
+}
+
+.sketch-button:active:enabled {
+  translate: 1px 1px;
+  box-shadow: 1px 1px 0 #403831;
+}
+
+.pencil-underline {
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.12em;
 }

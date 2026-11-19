@@ -24,7 +24,7 @@ export const RegisterActions = ({ step, busy, submitting, submissionStage, onBac
             Back
           </Button>
         )}
-        <Button type="submit" disabled={disabled} className="flex-1 text-xs font-semibold h-11">
+        <Button type="submit" disabled={disabled} className="sketch-button flex-1 text-xs font-semibold h-11">
           {disabled && <Loader2 className="size-4 animate-spin motion-reduce:animate-none" />}
           {label}
           {!disabled && <ArrowRight className="shrink-0 size-4" />}

@@ -109,7 +109,7 @@ StepPersonal дотор талбарыг дараах байдлаар холб�
 | input | ImageUpload, ProfileImageInput | ImageUpload нь value, onChange, onBlur, disabled авна. Файл сонгох, чирж оруулах, урьдчилж харах, устгах үйлдэлтэй байна. ProfileImageInput үүнийг формын талбарт холбоно. |
 | steps | StepPersonal, StepSecurity, StepProfile | Тус бүр form prop авч, хоёрдугаар хэсгийн хүснэгтэд заасан талбаруудаа харгалзах оролтын компонентоор харуулна. |
 | steps | RegisterStep | step, form, disabled авч, тухайн алхмын гарчиг, тайлбар, талбаруудыг зурна. |
-| stepper | Stepper | Алхам бүрийн дугаар, нэр, төлөвийг харуулж, алхмуудыг шугамаар холбоно. Дараагийн алхамд шилжихэд хоёр алхмын хоорондох шугам ногоон болно. |
+| stepper | Stepper | Алхам бүрийн дугаар, нэр, төлөвийг харуулж, алхмуудыг шугамаар холбоно. Дараагийн алхамд шилжихэд хоёр алхмын хоорондох шугам улаан болно. |
 | form | RegisterActions, RegisterSkeleton | Эхний алхамд Continue, дараа нь Back, эцэст нь илгээх товч харуул. Түр хадгалсан төлвийг унших үед RegisterSkeleton үзүүл. |
 | success | SummaryRow, StepSuccess | SummaryRow-д icon, label, value дамжуул. StepSuccess-д data, onReset дамжуулж зураг, мэдээллийн мөрүүд, дахин эхлэх товчийг зур. |
 | form | RegisterForm | `useRegisterForm()`-оос ирсэн төлвөөр дэлгэцээ сонго. Сэргээж байвал RegisterSkeleton, амжилттай бол StepSuccess, бусад үед RegisterStep болон RegisterActions харуул. |
@@ -520,16 +520,16 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 export const buttonVariants = cva(
-  "inline-flex cursor-pointer disabled:cursor-wait items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex cursor-pointer disabled:cursor-wait items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-700 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         default:
-          "bg-emerald-700 text-white shadow-sm hover:bg-emerald-700/90",
+          "bg-red-700 text-white shadow-sm hover:bg-red-700/90",
         outline:
-          "border border-slate-200 border-slate-400 bg-green-50 hover:bg-emerald-100",
-        ghost: "hover:bg-emerald-100",
-        link: "text-emerald-700 underline-offset-4 hover:underline",
+          "border border-slate-200 border-slate-400 bg-red-50 hover:bg-red-100",
+        ghost: "hover:bg-red-100",
+        link: "text-red-700 underline-offset-4 hover:underline",
       },
       size: { default: "h-10 px-4 py-2", sm: "h-9 px-3", icon: "size-10" },
     },
@@ -589,21 +589,21 @@ export const Calendar = ({
       caption_label: "flex items-center gap-1 text-sm font-medium",
       dropdowns: "flex items-center gap-2",
       dropdown_root:
-        "relative rounded-md px-1 focus-within:ring-2 focus-within:ring-emerald-700",
+        "relative rounded-md px-1 focus-within:ring-2 focus-within:ring-red-700",
       dropdown:
         "absolute inset-0 w-full cursor-pointer opacity-0",
       nav: "absolute inset-x-0 top-0 flex justify-between",
       button_previous:
-        "z-10 grid cursor-pointer disabled:cursor-wait size-9 place-items-center rounded-md hover:bg-emerald-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 disabled:opacity-30",
+        "z-10 grid cursor-pointer disabled:cursor-wait size-9 place-items-center rounded-md hover:bg-red-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-700 disabled:opacity-30",
       button_next:
-        "z-10 grid cursor-pointer disabled:cursor-wait size-9 place-items-center rounded-md hover:bg-emerald-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 disabled:opacity-30",
+        "z-10 grid cursor-pointer disabled:cursor-wait size-9 place-items-center rounded-md hover:bg-red-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-700 disabled:opacity-30",
       chevron: "size-4 fill-current",
       month_grid: "w-full border-collapse",
       weekday:
         "h-8 w-9 text-center text-xs font-normal text-slate-600",
       day: "size-9 p-0 text-center",
       day_button:
-        "grid cursor-pointer disabled:cursor-wait size-9 place-items-center rounded-md text-xs hover:bg-emerald-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700",
+        "grid cursor-pointer disabled:cursor-wait size-9 place-items-center rounded-md text-xs hover:bg-red-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-700",
       today: "font-bold",
       outside: "text-slate-600 opacity-40",
       disabled: "pointer-events-none opacity-30",
@@ -630,8 +630,8 @@ export const CalendarDayButton = ({ modifiers, className, ...props }: DayButtonP
     modifiers={modifiers}
     className={cn(
       className,
-      modifiers.selected && "bg-emerald-700 text-white",
-      modifiers.today && "ring-1 ring-emerald-700/40",
+      modifiers.selected && "bg-red-700 text-white",
+      modifiers.today && "ring-1 ring-red-700/40",
     )}
   />
 );
@@ -647,7 +647,7 @@ import type { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
 
 export const CalendarOption = ({ className, ...props }: ComponentProps<"option">) => (
-  <option {...props} className={cn("bg-white text-emerald-950", className)} />
+  <option {...props} className={cn("bg-white text-red-950", className)} />
 );
 ```
 
@@ -666,7 +666,7 @@ export const Card = ({ className, ...props }: CardType) => {
   return (
     <div
       className={cn(
-        "rounded-2xl border border-slate-200 bg-white text-emerald-950 shadow-sm",
+        "rounded-2xl border border-slate-200 bg-white text-red-950 shadow-sm",
         className,
       )}
       {...props}
@@ -711,7 +711,7 @@ export const Input = ({ className, type, ...props }: InputType) => {
     <input
       type={type}
       className={cn(
-        "flex h-11 w-full rounded-lg border border-slate-200 border-slate-400 bg-green-50/60 px-3 py-2 text-sm shadow-xs placeholder:text-slate-600/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700/40 focus-visible:border-emerald-700 disabled:cursor-not-allowed disabled:opacity-50",
+        "flex h-11 w-full rounded-lg border border-slate-200 border-slate-400 bg-red-50/60 px-3 py-2 text-sm shadow-xs placeholder:text-slate-600/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-700/40 focus-visible:border-red-700 disabled:cursor-not-allowed disabled:opacity-50",
         className,
       )}
       {...props}
@@ -808,7 +808,7 @@ export const PopoverContent = ({
         align={align}
         sideOffset={sideOffset}
         className={cn(
-          "z-50 max-w-screen overflow-x-auto rounded-xl border border-slate-200 bg-white p-4 text-emerald-950 shadow-lg outline-none",
+          "z-50 max-w-screen overflow-x-auto rounded-xl border border-slate-200 bg-white p-4 text-red-950 shadow-lg outline-none",
           className,
         )}
         {...props}
@@ -855,10 +855,10 @@ export const Progress = ({ className, value = 0, max = 100, ...props }: Progress
     <div
       {...props}
       data-state={current === maximum ? "complete" : "loading"}
-      className={cn("relative h-2 w-full overflow-hidden rounded-full bg-emerald-700/10", className)}
+      className={cn("relative h-2 w-full overflow-hidden rounded-full bg-red-700/10", className)}
     >
       <motion.div
-        className="h-full w-full flex-1 rounded-full bg-emerald-700 "
+        className="h-full w-full flex-1 rounded-full bg-red-700 "
         initial={false}
         animate={{ x: `${(current / maximum) * 100 - 100}%` }}
         transition={{ duration: 0.4, ease: "easeOut" }}
@@ -1230,7 +1230,7 @@ export const RegisterForm = () => {
   if (!hydrated) return <RegisterSkeleton />;
 
   return (
-    <Card className="min-h-0 max-h-full overflow-y-auto overscroll-contain bg-white/90 shadow-xl shadow-emerald-950/10 backdrop-blur-xl">
+    <Card className="min-h-0 max-h-full overflow-y-auto overscroll-contain bg-white/90 shadow-xl shadow-red-950/10 backdrop-blur-xl">
       <CardContent className="p-4 sm:p-6">
         <Stepper step={summary ? 4 : step} />
         {summary ? (
@@ -1267,7 +1267,7 @@ import { CardContent } from "@/components/ui/CardContent";
 import { Skeleton } from "@/components/ui/Skeleton";
 
 export const RegisterSkeleton = () => (
-  <Card className="min-h-0 max-h-full overflow-y-auto overscroll-contain bg-white/90 shadow-xl shadow-emerald-950/10 backdrop-blur-xl">
+  <Card className="min-h-0 max-h-full overflow-y-auto overscroll-contain bg-white/90 shadow-xl shadow-red-950/10 backdrop-blur-xl">
     <CardContent className="space-y-7 p-4 sm:p-6">
       <Skeleton className="w-full h-12" />
       <Skeleton className="w-3/4 h-10" />
@@ -1398,16 +1398,16 @@ export const ImageDropZone = ({ dragging, ...props }: ImageDropZoneProps) => (
     {...props}
     type="button"
     className={cn(
-      "field-control flex w-full cursor-pointer disabled:cursor-wait flex-col items-center rounded-xl border border-slate-200 border-dashed bg-slate-100/25 px-4 py-6 text-center hover:border-emerald-700 hover:bg-emerald-700/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700",
-      dragging && "border-emerald-700 bg-emerald-700/10",
+      "field-control flex w-full cursor-pointer disabled:cursor-wait flex-col items-center rounded-xl border border-slate-200 border-dashed bg-slate-100/25 px-4 py-6 text-center hover:border-red-700 hover:bg-red-700/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-700",
+      dragging && "border-red-700 bg-red-700/10",
     )}
   >
-    <span className="grid mb-3 rounded-full size-9 place-items-center bg-emerald-700/10 text-emerald-700">
+    <span className="grid mb-3 rounded-full size-9 place-items-center bg-red-700/10 text-red-700">
       <UploadCloud className="shrink-0" size={18} />
     </span>
 
     <span className="text-xs">
-      <strong className="font-semibold text-emerald-700">Click to upload</strong> or drag and drop
+      <strong className="font-semibold text-red-700">Click to upload</strong> or drag and drop
     </span>
     <span className="mt-1 text-xs text-slate-600">JPG, PNG or WebP · Up to 5 MB</span>
   </button>
@@ -1671,12 +1671,12 @@ export const StepIndicator = ({ step, number }: StepIndicatorProps) => {
         transition={{ type: "spring", stiffness: 300, damping: 22 }}
         className={cn(
           "relative z-10 grid size-8 place-items-center rounded-full border border-slate-200 text-xs font-semibold ",
-          step >= number ? "border-emerald-700 bg-emerald-700 text-white shadow-sm" : "border-slate-200 bg-white text-slate-600",
+          step >= number ? "border-red-700 bg-red-700 text-white shadow-sm" : "border-slate-200 bg-white text-slate-600",
         )}
       >
         {step > number ? <Check size={15} /> : number}
       </motion.span>
-      <span className={cn("flex items-center gap-1.5 text-xs", step === number ? "font-semibold text-emerald-950" : "text-slate-600")}>
+      <span className={cn("flex items-center gap-1.5 text-xs", step === number ? "font-semibold text-red-950" : "text-slate-600")}>
         <Icon size={12} />
         {label}
       </span>
@@ -1695,7 +1695,7 @@ import { cn } from "@/lib/utils";
 export const StepConnector = ({ filled }: { filled: boolean }) => (
   <span
     className={cn(
-      "flex-1 origin-left bg-emerald-700 transition-transform duration-300 motion-reduce:transition-none",
+      "flex-1 origin-left bg-red-700 transition-transform duration-300 motion-reduce:transition-none",
       filled ? "scale-x-100" : "scale-x-0",
     )}
   />
@@ -1753,7 +1753,7 @@ export const RegisterStep = ({ step, form, disabled }: RegisterStepType) => {
   return (
     <>
       <MotionPanel key={`heading-${step}`} className="mb-4">
-        <p className="mb-2 text-xs font-semibold tracking-widest text-emerald-700 uppercase">Step {step} of 3</p>
+        <p className="mb-2 text-xs font-semibold tracking-widest text-red-700 uppercase">Step {step} of 3</p>
         <h2 className="text-3xl font-semibold tracking-tight">{title}</h2>
         <p className="mt-2 text-xs leading-5 text-slate-600">{description}</p>
       </MotionPanel>
@@ -1874,7 +1874,7 @@ export const StepSuccess = ({ data, onReset }: StepSuccessType) => {
           height={96}
           src={data.profileImage}
           alt={`${data.firstName}'s profile`}
-          className="object-cover border-4 rounded-full shadow-lg size-24 border-green-50"
+          className="object-cover border-4 rounded-full shadow-lg size-24 border-red-50"
         />
         <motion.span
           initial={{ scale: 0 }}
@@ -1882,10 +1882,10 @@ export const StepSuccess = ({ data, onReset }: StepSuccessType) => {
           transition={{ type: "spring", stiffness: 280, damping: 18 }}
           className="absolute bottom-0 right-0"
         >
-          <CheckCircle2 className="rounded-full size-8 bg-white text-emerald-700" />
+          <CheckCircle2 className="rounded-full size-8 bg-white text-red-700" />
         </motion.span>
       </div>
-      <p className="mb-2 text-xs font-semibold tracking-widest uppercase text-emerald-700">You’re all set</p>
+      <p className="mb-2 text-xs font-semibold tracking-widest uppercase text-red-700">You’re all set</p>
       <h2 className="text-3xl font-semibold tracking-tight">
         Welcome, {data.firstName}.
       </h2>
@@ -2101,7 +2101,7 @@ export default ErrorBoundary;
 <summary><code>src/app/icon.svg</code></summary>
 
 ```svg
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><style>.fill-emerald-700{fill:oklch(50.8% 0.118 165.612)}.stroke-white{stroke:white}</style><rect width="64" height="64" rx="20" class="fill-emerald-700"/><g class="stroke-white" stroke-width="5" stroke-linecap="round"><path d="M32 15v34M17 23l30 18M17 41l30-18"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><style>.fill-red-700{fill:oklch(50.5% 0.213 27.518)}.stroke-white{stroke:white}</style><rect width="64" height="64" rx="20" class="fill-red-700"/><g class="stroke-white" stroke-width="5" stroke-linecap="round"><path d="M32 15v34M17 23l30 18M17 41l30-18"/></g></svg>
 ```
 
 </details>
@@ -2123,7 +2123,7 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: LayoutProps<"/">) => {
   return (
     <html lang="en">
-      <body className="m-0 bg-green-50 font-sans text-emerald-950 antialiased scheme-light">
+      <body className="m-0 bg-red-50 font-sans text-red-950 antialiased scheme-light">
         <MotionProvider>
           {children}
           <Toaster richColors position="bottom-right" />
@@ -2151,7 +2151,7 @@ const Home = () => {
     <div className="flex h-dvh flex-col overflow-clip px-4 sm:px-10">
       <header className="flex items-center justify-between h-12 shrink-0 w-full mx-auto max-w-7xl lg:h-16">
         <Link href="/" className="flex items-center gap-2 text-2xl font-bold tracking-tight">
-          <span className="grid rounded-full size-8 place-items-center bg-emerald-700 text-white">
+          <span className="grid rounded-full size-8 place-items-center bg-red-700 text-white">
             <Asterisk size={25} />
           </span>
           Firstleaf
@@ -2160,18 +2160,18 @@ const Home = () => {
 
       <main className="mx-auto grid min-h-0 w-full max-w-xl flex-1 grid-rows-1 items-center py-2 lg:max-w-6xl lg:grid-cols-2 lg:gap-16">
         <section className="relative hidden lg:block max-h-full overflow-y-auto">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-slate-200 border-emerald-700/15 bg-emerald-700/5 px-3 py-1.5 text-xs font-semibold tracking-widest text-emerald-700">
-            <span className="size-1.5 rounded-full bg-emerald-700" /> A FRESH START, MADE SIMPLE
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-slate-200 border-red-700/15 bg-red-700/5 px-3 py-1.5 text-xs font-semibold tracking-widest text-red-700">
+            <span className="size-1.5 rounded-full bg-red-700" /> A FRESH START, MADE SIMPLE
           </div>
           <h1 className="max-w-lg text-5xl leading-none font-semibold tracking-tighter sm:text-6xl">
             Big possibilities.
-            <br />A little more <span className="font-serif italic font-normal text-emerald-700">you.</span>
+            <br />A little more <span className="italic font-normal text-red-700">you.</span>
           </h1>
           <p className="max-w-sm mt-6 text-base leading-7 text-slate-600">
             Good things start with a hello. Create your profile and make space for what’s next.
           </p>
           <div className="flex items-center gap-3 mt-10 text-xs text-slate-600">
-            <ShieldCheck className="size-5 text-emerald-700" />
+            <ShieldCheck className="size-5 text-red-700" />
             <span>Your details. Your control. Always.</span>
           </div>
         </section>

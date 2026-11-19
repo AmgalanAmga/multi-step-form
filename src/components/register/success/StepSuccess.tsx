@@ -22,7 +22,7 @@ export const StepSuccess = ({ data, onReset }: StepSuccessType) => {
           height={96}
           src={data.profileImage}
           alt={`${data.firstName}'s profile`}
-          className="object-cover border-4 rounded-full shadow-lg size-24 border-green-50"
+          className="object-cover border-4 rounded-full shadow-lg size-24 border-red-50"
         />
         <motion.span
           initial={{ scale: 0 }}
@@ -30,10 +30,10 @@ export const StepSuccess = ({ data, onReset }: StepSuccessType) => {
           transition={{ type: "spring", stiffness: 280, damping: 18 }}
           className="absolute bottom-0 right-0"
         >
-          <CheckCircle2 className="rounded-full size-8 bg-white text-emerald-700" />
+          <CheckCircle2 className="rounded-full size-8 bg-white text-red-700" />
         </motion.span>
       </div>
-      <p className="mb-2 text-xs font-semibold tracking-widest uppercase text-emerald-700">You’re all set</p>
+      <p className="mb-2 text-xs font-semibold tracking-widest uppercase text-red-700">You’re all set</p>
       <h2 className="text-3xl font-semibold tracking-tight">Welcome, {data.firstName}.</h2>
       <p className="mt-3 text-sm text-slate-600">Your profile is ready for its next chapter.</p>
       <dl className="px-4 text-left border divide-y my-7 rounded-xl border-slate-200 bg-slate-100/25">
