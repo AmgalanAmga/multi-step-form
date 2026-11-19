@@ -33,6 +33,6 @@
   * { @apply border-border; }
 }
 
-[data-slot="field"][data-invalid="true"] :is([data-slot="input"], [data-field-control]) {
+.invalid-field .field-control {
   @apply border-red-600 focus-visible:ring-red-600/25;
 }

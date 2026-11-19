@@ -2,9 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { useForm, type SubmitErrorHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, draftSchema, successSchema, type RegisterValues } from "@/lib/validations/register.schema";
-import { STORAGE_KEYS } from "@/lib/constants";
+import { defaults, fields, STORAGE_KEYS } from "@/lib/constants";
 import { readStorage, writeStorage, removeStorage } from "@/lib/storage";
-import { defaults, fields } from "@/components/register/form/register-config";
 import { useRegistrationSubmission } from "./useRegistrationSubmission";
 
 export const useRegisterForm = () => {

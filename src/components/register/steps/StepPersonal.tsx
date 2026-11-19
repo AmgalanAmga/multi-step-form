@@ -1,9 +1,9 @@
 "use client";
 
-import type { UseFormReturn } from "react-hook-form";
-import type { RegisterValues } from "@/lib/validations/register.schema";
 import { NameInput } from "../input/NameInput";
 import { EmailInput } from "../input/EmailInput";
+import type { UseFormReturn } from "react-hook-form";
+import type { RegisterValues } from "@/lib/validations/register.schema";
 
 type StepPersonalType = { form: UseFormReturn<RegisterValues> };
 

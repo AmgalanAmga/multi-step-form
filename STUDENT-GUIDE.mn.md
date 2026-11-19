@@ -73,11 +73,11 @@ cd firstleaf
 export const EmailInput = ({ name, control }: RegistrationFieldProps<"email">) => {
   const { field, fieldState } = useController({ name, control });
   return (
-    <Field data-invalid={fieldState.invalid} className="gap-2">
+    <Field className={fieldState.invalid ? "invalid-field gap-2 text-destructive" : "gap-2"}>
       <FieldLabel htmlFor={field.name}>Email address</FieldLabel>
       <div className="relative">
         <Mail className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-600" />
-        <Input id={field.name} {...field} type="email" autoComplete="email" placeholder="you@example.com" className="h-11 pl-10" />
+        <Input id={field.name} {...field} type="email" autoComplete="email" placeholder="you@example.com" className="field-control h-11 pl-10" />
       </div>
       <FieldError id={`${field.name}-error`}>{fieldState.error?.message}</FieldError>
       <p className="text-xs text-slate-600">A little connection starts with the right address.</p>
@@ -130,7 +130,7 @@ StepPersonal дотор талбарыг дараах байдлаар холб�
 Доорх шилжилтүүдийг `src/hooks/useRegisterForm.ts` дотор хэрэгжүүл. `RegisterActions` нь товчнуудыг харуулна. Continue болон эцсийн илгээх товч хоёулаа HTML формын submit үйлдлийг эхлүүлдэг учраас аль үйлдлийг хийхийг `handleSubmit` одоогийн алхмаар шийднэ.
 
 
-1. `form/register-config.ts` дотор `defaults`, алхам бүрийн талбарын нэрсийг агуулсан `fields`, дэлгэцийн гарчиг, тайлбар бүхий `copy`-г зарла.
+1. `src/lib/constants.ts` дотор `defaults`, алхам бүрийн талбарын нэрсийг агуулсан `fields`, дэлгэцийн гарчиг, тайлбар бүхий `copy`-г зарла.
 2. Continue дарахад `await form.trigger(fields[step], { shouldFocus: true })` ажиллуул. Алдаатай бол одоогийн алхамдаа үлдэнэ. Зөв бол дараагийн алхмын дугаар болон зөвшөөрсөн утгуудыг localStorage-д бичээд алхмыг солино.
 3. Back дарахад өмнөх алхам руу шилж. Бүх алхамд нэг useForm ашигласнаар бичсэн утга хадгалагдана.
 4. `src/lib/storage.ts` дотор унших, бичих, устгах функц үүсгэ. Сэргээхдээ JSON-ийг схемээр шалга. Эвдэрсэн өгөгдөл байвал формоо анхны төлвөөс нээ.
@@ -193,6 +193,9 @@ export const uploadImage = async (file: File): Promise<UploadResult> => {
 <summary><code>src/lib/constants.ts</code></summary>
 
 ```ts
+import type { FieldPath } from "react-hook-form";
+import type { RegisterValues } from "@/lib/validations/register.schema";
+
 export const STORAGE_KEYS = {
   draft: "orbit:registration:v1",
   success: "orbit:registration:success:v1",
@@ -207,6 +210,37 @@ export const MIN_AGE = 13;
 export const STEPS = ["Personal info", "Security", "Profile"] as const;
 
 export const UPLOAD_TIMEOUT_MS = 60_000;
+
+export const defaults = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  phoneNumber: "",
+  dateOfBirth: "",
+};
+
+export const fields: Record<FormStep, FieldPath<RegisterValues>[]> = {
+  1: ["firstName", "lastName", "email"],
+  2: ["password", "confirmPassword"],
+  3: ["phoneNumber", "dateOfBirth", "profileImage"],
+};
+
+export const copy = {
+  1: {
+    title: "Let’s start with you.",
+    description: "A few details to make this space your own.",
+  },
+  2: {
+    title: "Keep it just yours.",
+    description: "A strong password for everything that’s ahead.",
+  },
+  3: {
+    title: "Make yourself at home.",
+    description: "The finishing touches. A little personality goes a long way.",
+  },
+};
 ```
 
 </details>
@@ -960,9 +994,8 @@ import { useEffect, useRef, useState } from "react";
 import { useForm, type SubmitErrorHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, draftSchema, successSchema, type RegisterValues } from "@/lib/validations/register.schema";
-import { STORAGE_KEYS } from "@/lib/constants";
+import { defaults, fields, STORAGE_KEYS } from "@/lib/constants";
 import { readStorage, writeStorage, removeStorage } from "@/lib/storage";
-import { defaults, fields } from "@/components/register/form/register-config";
 import { useRegistrationSubmission } from "./useRegistrationSubmission";
 
 export const useRegisterForm = () => {
@@ -1249,46 +1282,6 @@ export const RegisterSkeleton = () => (
 
 </details>
 
-<details>
-<summary><code>src/components/register/form/register-config.ts</code></summary>
-
-```ts
-import type { FieldPath } from "react-hook-form";
-import type { RegisterValues } from "@/lib/validations/register.schema";
-
-export const defaults = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
-  phoneNumber: "",
-  dateOfBirth: "",
-};
-
-export const fields: Record<FormStep, FieldPath<RegisterValues>[]> = {
-  1: ["firstName", "lastName", "email"],
-  2: ["password", "confirmPassword"],
-  3: ["phoneNumber", "dateOfBirth", "profileImage"],
-};
-
-export const copy = {
-  1: {
-    title: "Let’s start with you.",
-    description: "A few details to make this space your own.",
-  },
-  2: {
-    title: "Keep it just yours.",
-    description: "A strong password for everything that’s ahead.",
-  },
-  3: {
-    title: "Make yourself at home.",
-    description: "The finishing touches. A little personality goes a long way.",
-  },
-};
-```
-
-</details>
 
 <details>
 <summary><code>src/components/register/input/DateOfBirthInput.tsx</code></summary>
@@ -1328,11 +1321,11 @@ export const DateOfBirthInput = ({ name, control }: RegistrationFieldProps<"date
     return date > latestBirthDate() || date < new Date(1900, 0);
   };
   return (
-    <Field data-invalid={fieldState.invalid} className="gap-2">
+    <Field className={fieldState.invalid ? "invalid-field gap-2 text-destructive" : "gap-2"}>
       <FieldLabel htmlFor={name}>Date of birth</FieldLabel>
       <Popover open={open} onOpenChange={handleOpenChange}>
         <PopoverTrigger asChild>
-          <Button id={name} ref={inputRef} type="button" variant="outline" className="h-11 w-full justify-start gap-3 rounded-lg border-input px-3.5 font-normal shadow-none">
+          <Button id={name} ref={inputRef} type="button" variant="outline" className="field-control h-11 w-full justify-start gap-3 rounded-lg border-input px-3.5 font-normal shadow-none">
             <CalendarIcon className="size-4 shrink-0 text-slate-600" />
             {value ? format(parseISO(value), "MMMM d, yyyy") : <span className="text-slate-600">Choose your birthday</span>}
           </Button>
@@ -1375,11 +1368,11 @@ import { Input } from "@/components/ui/input";
 export const EmailInput = ({ name, control }: RegistrationFieldProps<"email">) => {
   const { field, fieldState } = useController({ name, control });
   return (
-    <Field data-invalid={fieldState.invalid} className="gap-2">
+    <Field className={fieldState.invalid ? "invalid-field gap-2 text-destructive" : "gap-2"}>
       <FieldLabel htmlFor={field.name}>Email address</FieldLabel>
       <div className="relative">
         <Mail className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-600" />
-        <Input id={field.name} {...field} type="email" autoComplete="email" placeholder="you@example.com" className="h-11 pl-10" />
+        <Input id={field.name} {...field} type="email" autoComplete="email" placeholder="you@example.com" className="field-control h-11 pl-10" />
       </div>
       <FieldError id={`${field.name}-error`}>{fieldState.error?.message}</FieldError>
       <p className="text-xs text-slate-600">A little connection starts with the right address.</p>
@@ -1405,7 +1398,7 @@ export const ImageDropZone = ({ dragging, ...props }: ImageDropZoneProps) => (
     {...props}
     type="button"
     className={cn(
-      "flex w-full cursor-pointer disabled:cursor-wait flex-col items-center rounded-xl border border-slate-200 border-dashed bg-slate-100/25 px-4 py-6 text-center hover:border-emerald-700 hover:bg-emerald-700/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700",
+      "field-control flex w-full cursor-pointer disabled:cursor-wait flex-col items-center rounded-xl border border-slate-200 border-dashed bg-slate-100/25 px-4 py-6 text-center hover:border-emerald-700 hover:bg-emerald-700/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700",
       dragging && "border-emerald-700 bg-emerald-700/10",
     )}
   >
@@ -1498,7 +1491,7 @@ type ImageUploadPreviewProps = {
 };
 
 export const ImageUploadPreview = ({ preview, filename, onChoose, onRemove, ...buttonProps }: ImageUploadPreviewProps) => (
-  <div className="flex items-center gap-4 p-4 border rounded-xl border-slate-200 bg-slate-100/30">
+  <div className="field-control flex items-center gap-4 p-4 border rounded-xl border-slate-200 bg-slate-100/30">
     <Image unoptimized width={64} height={64} src={preview} alt="Selected profile preview" className="object-cover rounded-full size-16" />
     <div className="flex-1 min-w-0">
       <p className="text-sm font-medium truncate">{filename}</p>
@@ -1531,7 +1524,7 @@ export const NameInput = ({ name, control }: RegistrationFieldProps<"firstName" 
   const { field, fieldState } = useController({ name, control });
   const isFirstName = field.name === "firstName";
   return (
-    <Field data-invalid={fieldState.invalid} className="gap-2">
+    <Field className={fieldState.invalid ? "invalid-field gap-2 text-destructive" : "gap-2"}>
       <FieldLabel htmlFor={field.name}>{isFirstName ? "First name" : "Last name"}</FieldLabel>
       <div className="relative">
         <User className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-600" />
@@ -1539,7 +1532,7 @@ export const NameInput = ({ name, control }: RegistrationFieldProps<"firstName" 
           {...field}
           autoComplete={isFirstName ? "given-name" : "family-name"}
           placeholder={isFirstName ? "e.g. Alex" : "e.g. Morgan"}
-          className="h-11 pl-10"
+          className="field-control h-11 pl-10"
         />
       </div>
       <FieldError id={`${field.name}-error`}>{fieldState.error?.message}</FieldError>
@@ -1573,7 +1566,7 @@ export const PasswordInput = ({ name, control }: RegistrationFieldProps<"passwor
   const handleTogglePassword = () => setVisible(invertVisibility);
 
   return (
-    <Field data-invalid={fieldState.invalid} className="gap-2">
+    <Field className={fieldState.invalid ? "invalid-field gap-2 text-destructive" : "gap-2"}>
       <FieldLabel htmlFor={field.name}>{isPassword ? "Password" : "Confirm password"}</FieldLabel>
       <div className="relative">
         <Lock className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-600" />
@@ -1581,7 +1574,7 @@ export const PasswordInput = ({ name, control }: RegistrationFieldProps<"passwor
           {...field}
           type={visible ? "text" : "password"}
           autoComplete="new-password"
-          className="h-11 px-10"
+          className="field-control h-11 px-10"
           placeholder={isPassword ? "Create a strong password" : "Enter your password again"}
         />
         <Button type="button" variant="ghost" size="icon" title={visible ? "Hide password" : "Show password"} className="absolute top-1/2 right-1 size-9 -translate-y-1/2" onClick={handleTogglePassword}>
@@ -1611,11 +1604,11 @@ import { Input } from "@/components/ui/input";
 export const PhoneNumberInput = ({ name, control }: RegistrationFieldProps<"phoneNumber">) => {
   const { field, fieldState } = useController({ name, control });
   return (
-    <Field data-invalid={fieldState.invalid} className="gap-2">
+    <Field className={fieldState.invalid ? "invalid-field gap-2 text-destructive" : "gap-2"}>
       <FieldLabel htmlFor={field.name}>Phone number</FieldLabel>
       <div className="relative">
         <Phone className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-600" />
-        <Input id={field.name} {...field} type="tel" autoComplete="tel" placeholder="+97699112233" className="h-11 pl-10" />
+        <Input id={field.name} {...field} type="tel" autoComplete="tel" placeholder="+97699112233" className="field-control h-11 pl-10" />
       </div>
       <FieldError id={`${field.name}-error`}>{fieldState.error?.message}</FieldError>
     </Field>
@@ -1639,7 +1632,7 @@ import { ImageUpload } from "./ImageUpload";
 export const ProfileImageInput = ({ name, control }: RegistrationFieldProps<"profileImage">) => {
   const { field, fieldState, formState } = useController({ name, control });
   return (
-    <Field data-invalid={fieldState.invalid} className="gap-2">
+    <Field className={fieldState.invalid ? "invalid-field gap-2 text-destructive" : "gap-2"}>
       <FieldLabel htmlFor={field.name}>Profile photo</FieldLabel>
       <ImageUpload id={field.name} value={field.value} disabled={formState.isSubmitting} onChange={field.onChange} onBlur={field.onBlur} />
       <FieldError id={`${field.name}-error`}>{fieldState.error?.message}</FieldError>
@@ -1652,7 +1645,7 @@ export const ProfileImageInput = ({ name, control }: RegistrationFieldProps<"pro
 
 
 <details>
-<summary><code>src/components/register/stepper/Stepper.tsx</code></summary>
+<summary><code>src/components/register/stepper/StepIndicator.tsx</code></summary>
 
 ```tsx
 "use client";
@@ -1664,57 +1657,73 @@ import { Check, User, Lock, Camera } from "lucide-react";
 
 const icons = [User, Lock, Camera];
 
-type StepperType = {
-  step: number;
-};
+type StepIndicatorProps = { step: number; number: 1 | 2 | 3 };
 
-export const Stepper = ({ step }: StepperType) => {
-  const renderConnector = (label: string, index: number) => (
-    <span
-      key={label}
-      className={cn(
-        "flex-1 origin-left bg-emerald-700 transition-transform duration-300 motion-reduce:transition-none",
-        step > index + 1 ? "scale-x-100" : "scale-x-0",
-      )}
-    />
-  );
-
-  const renderStep = (label: string, index: number) => {
-    const number = index + 1;
-    const Icon = icons[index];
-
-    return (
-      <li key={label} className="flex flex-col items-center gap-2.5 first:items-start last:items-end">
-        <motion.span
-          initial={false}
-          animate={{ scale: step === number ? 1.08 : 1 }}
-          transition={{ type: "spring", stiffness: 300, damping: 22 }}
-          className={cn(
-            "relative z-10 grid size-8 place-items-center rounded-full border border-slate-200 text-xs font-semibold ",
-            step >= number ? "border-emerald-700 bg-emerald-700 text-white shadow-sm" : "border-slate-200 bg-white text-slate-600",
-          )}
-        >
-          {step > number ? <Check size={15} /> : number}
-        </motion.span>
-        <span className={cn("flex items-center gap-1.5 text-xs", step === number ? "font-semibold text-emerald-950" : "text-slate-600")}>
-          <Icon size={12} />
-          {label}
-        </span>
-      </li>
-    );
-  };
+export const StepIndicator = ({ step, number }: StepIndicatorProps) => {
+  const Icon = icons[number - 1];
+  const label = STEPS[number - 1];
 
   return (
-    <nav className="relative mb-6">
-      <div className="absolute inset-x-4 top-4 flex h-0.5 bg-slate-200">
-        {STEPS.slice(1).map(renderConnector)}
-      </div>
-      <ol className="grid grid-cols-3">{STEPS.map(renderStep)}</ol>
-    </nav>
+    <li className="flex flex-col items-center gap-2.5 first:items-start last:items-end">
+      <motion.span
+        initial={false}
+        animate={{ scale: step === number ? 1.08 : 1 }}
+        transition={{ type: "spring", stiffness: 300, damping: 22 }}
+        className={cn(
+          "relative z-10 grid size-8 place-items-center rounded-full border border-slate-200 text-xs font-semibold ",
+          step >= number ? "border-emerald-700 bg-emerald-700 text-white shadow-sm" : "border-slate-200 bg-white text-slate-600",
+        )}
+      >
+        {step > number ? <Check size={15} /> : number}
+      </motion.span>
+      <span className={cn("flex items-center gap-1.5 text-xs", step === number ? "font-semibold text-emerald-950" : "text-slate-600")}>
+        <Icon size={12} />
+        {label}
+      </span>
+    </li>
   );
 };
 ```
+</details>
 
+<details>
+<summary><code>src/components/register/stepper/StepConnector.tsx</code></summary>
+
+```tsx
+import { cn } from "@/lib/utils";
+
+export const StepConnector = ({ filled }: { filled: boolean }) => (
+  <span
+    className={cn(
+      "flex-1 origin-left bg-emerald-700 transition-transform duration-300 motion-reduce:transition-none",
+      filled ? "scale-x-100" : "scale-x-0",
+    )}
+  />
+);
+```
+</details>
+
+<details>
+<summary><code>src/components/register/stepper/Stepper.tsx</code></summary>
+
+```tsx
+import { StepConnector } from "./StepConnector";
+import { StepIndicator } from "./StepIndicator";
+
+export const Stepper = ({ step }: { step: number }) => (
+  <nav className="relative mb-6">
+    <div className="absolute inset-x-4 top-4 flex h-0.5 bg-slate-200">
+      <StepConnector filled={step > 1} />
+      <StepConnector filled={step > 2} />
+    </div>
+    <ol className="grid grid-cols-3">
+      <StepIndicator step={step} number={1} />
+      <StepIndicator step={step} number={2} />
+      <StepIndicator step={step} number={3} />
+    </ol>
+  </nav>
+);
+```
 </details>
 
 <details>
@@ -1724,7 +1733,7 @@ export const Stepper = ({ step }: StepperType) => {
 import type { UseFormReturn } from "react-hook-form";
 import type { RegisterValues } from "@/lib/validations/register.schema";
 import { MotionPanel } from "@/components/ui/MotionPanel";
-import { copy } from "../form/register-config";
+import { copy } from "@/lib/constants";
 import { StepPersonal } from "./StepPersonal";
 import { StepSecurity } from "./StepSecurity";
 import { StepProfile } from "./StepProfile";
@@ -1845,7 +1854,6 @@ export const StepSecurity = ({ form }: StepSecurityType) => (
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
 import { CheckCircle2, ArrowRight, Mail, Phone, Calendar, User } from "lucide-react";
 import { format, parseISO } from "date-fns";
 import { Button } from "@/components/ui/Button";
@@ -1857,12 +1865,6 @@ type StepSuccessType = {
 };
 
 export const StepSuccess = ({ data, onReset }: StepSuccessType) => {
-  const heading = useRef<HTMLHeadingElement>(null);
-  const focusSuccessHeading = () => {
-    heading.current?.focus();
-  };
-  useEffect(focusSuccessHeading, []);
-
   return (
     <motion.section initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="text-center">
       <div className="relative mx-auto mb-6 w-fit">
@@ -1884,7 +1886,7 @@ export const StepSuccess = ({ data, onReset }: StepSuccessType) => {
         </motion.span>
       </div>
       <p className="mb-2 text-xs font-semibold tracking-widest uppercase text-emerald-700">You’re all set</p>
-      <h2 ref={heading} tabIndex={-1} className="text-3xl font-semibold tracking-tight">
+      <h2 className="text-3xl font-semibold tracking-tight">
         Welcome, {data.firstName}.
       </h2>
       <p className="mt-3 text-sm text-slate-600">Your profile is ready for its next chapter.</p>

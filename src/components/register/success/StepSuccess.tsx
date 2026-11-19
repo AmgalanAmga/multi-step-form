@@ -1,12 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
-import { CheckCircle2, ArrowRight, Mail, Phone, Calendar, User } from "lucide-react";
+import { motion } from "framer-motion";
+import { SummaryRow } from "./SummaryRow";
 import { format, parseISO } from "date-fns";
 import { Button } from "@/components/ui/button";
-import { SummaryRow } from "./SummaryRow";
+import { CheckCircle2, ArrowRight, Mail, Phone, Calendar, User } from "lucide-react";
 
 type StepSuccessType = {
   data: RegistrationSummary;
@@ -14,12 +13,6 @@ type StepSuccessType = {
 };
 
 export const StepSuccess = ({ data, onReset }: StepSuccessType) => {
-  const heading = useRef<HTMLHeadingElement>(null);
-  const focusSuccessHeading = () => {
-    heading.current?.focus();
-  };
-  useEffect(focusSuccessHeading, []);
-
   return (
     <motion.section initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="text-center">
       <div className="relative mx-auto mb-6 w-fit">
@@ -41,9 +34,7 @@ export const StepSuccess = ({ data, onReset }: StepSuccessType) => {
         </motion.span>
       </div>
       <p className="mb-2 text-xs font-semibold tracking-widest uppercase text-emerald-700">You’re all set</p>
-      <h2 ref={heading} tabIndex={-1} className="text-3xl font-semibold tracking-tight">
-        Welcome, {data.firstName}.
-      </h2>
+      <h2 className="text-3xl font-semibold tracking-tight">Welcome, {data.firstName}.</h2>
       <p className="mt-3 text-sm text-slate-600">Your profile is ready for its next chapter.</p>
       <dl className="px-4 text-left border divide-y my-7 rounded-xl border-slate-200 bg-slate-100/25">
         <SummaryRow icon={User} label="Name" value={`${data.firstName} ${data.lastName}`} />
