@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { useForm, type SubmitErrorHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { registerSchema, draftSchema, successSchema, type RegisterValues } from "@/lib/validations/register.schema";
 import { defaults, fields, STORAGE_KEYS } from "@/lib/constants";
-import { readStorage, writeStorage, removeStorage } from "@/lib/storage";
+import { useForm, type SubmitErrorHandler } from "react-hook-form";
 import { useRegistrationSubmission } from "./useRegistrationSubmission";
+import { readStorage, writeStorage, removeStorage } from "@/lib/storage";
+import { registerSchema, draftSchema, successSchema, type RegisterValues } from "@/lib/validations/register.schema";
 
 export const useRegisterForm = () => {
   const form = useForm<RegisterValues>({
@@ -12,11 +12,12 @@ export const useRegisterForm = () => {
     mode: "onTouched",
     defaultValues: defaults,
   });
+
+  const pending = useRef(false);
+  const [busy, setBusy] = useState(false);
   const [step, setStep] = useState<FormStep>(1);
   const [hydrated, setHydrated] = useState(false);
   const [summary, setSummary] = useState<RegistrationSummary | null>(null);
-  const [busy, setBusy] = useState(false);
-  const pending = useRef(false);
 
   const { reset, setFocus } = form;
 
