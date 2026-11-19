@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { X } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 
 type ImageUploadPreviewProps = {
   preview: string;

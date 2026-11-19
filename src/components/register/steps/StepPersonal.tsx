@@ -1,7 +1,7 @@
 "use client";
 
 import type { UseFormReturn } from "react-hook-form";
-import { FormField } from "@/components/ui/FormField";
+import { FormField } from "@/components/register/form/FormField";
 import type { RegisterValues } from "@/lib/validations/register.schema";
 import { NameInput } from "../input/NameInput";
 import { EmailInput } from "../input/EmailInput";

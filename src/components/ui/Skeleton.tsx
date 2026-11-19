@@ -1,19 +1,13 @@
-"use client";
-import { motion, useReducedMotion, type HTMLMotionProps } from "framer-motion";
-import { cn } from "@/lib/utils";
-type SkeletonType = HTMLMotionProps<"div">;
-export const Skeleton = ({ className, ...props }: SkeletonType) => {
-  const reducedMotion = useReducedMotion();
+import { cn } from "cn";
+
+function Skeleton({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <motion.div
-      className={cn("rounded-lg bg-slate-100", className)}
-      animate={{ opacity: reducedMotion ? 1 : [1, 0.45, 1] }}
-      transition={{
-        duration: 1.8,
-        repeat: reducedMotion ? 0 : Infinity,
-        ease: "easeInOut",
-      }}
+    <div
+      data-slot="skeleton"
+      className={cn("animate-pulse rounded-md bg-muted", className)}
       {...props}
     />
   );
-};
+}
+
+export { Skeleton };

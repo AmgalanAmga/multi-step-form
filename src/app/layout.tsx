@@ -1,6 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Toaster } from "@/components/ui/Sonner";
+import { Toaster } from "@/components/ui/sonner";
 import { MotionProvider } from "@/components/MotionProvider";
 
 export const metadata: Metadata = {

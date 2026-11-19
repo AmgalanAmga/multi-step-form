@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { CheckCircle2, ArrowRight, Mail, Phone, Calendar, User } from "lucide-react";
 import { format, parseISO } from "date-fns";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { SummaryRow } from "./SummaryRow";
 
 type StepSuccessType = {

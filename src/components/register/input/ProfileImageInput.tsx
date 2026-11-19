@@ -1,28 +1,19 @@
 "use client";
 
-import { useFormContext } from "react-hook-form";
-import { FormItem } from "@/components/ui/FormItem";
-import { FormLabel } from "@/components/ui/FormLabel";
-import { FormControl } from "@/components/ui/FormControl";
-import { FormMessage } from "@/components/ui/FormMessage";
+import { FormItem } from "@/components/register/form/FormItem";
+import { Label as FormLabel } from "@/components/ui/label";
+import { Slot as FormControl } from "@radix-ui/react-slot";
+import { FormMessage } from "@/components/register/form/FormMessage";
 import { ImageUpload } from "./ImageUpload";
-import { type RegisterValues } from "@/lib/validations/register.schema";
 
-export const ProfileImageInput: RegistrationFieldRendererType<"profileImage"> = ({ field }) => {
-  const form = useFormContext<RegisterValues>();
-
-  const handleChange = (file: File | undefined) => {
-    field.onChange(file);
-    void form.trigger("profileImage");
-  };
-
+export const ProfileImageInput: RegistrationFieldRendererType<"profileImage"> = ({ field, fieldState, formState }) => {
   return (
     <FormItem>
-      <FormLabel>Profile photo</FormLabel>
-      <FormControl>
-        <ImageUpload value={field.value} disabled={form.formState.isSubmitting} onChange={handleChange} onBlur={field.onBlur} />
+      <FormLabel htmlFor={field.name}>Profile photo</FormLabel>
+      <FormControl id={field.name} aria-invalid={fieldState.invalid} aria-describedby={fieldState.error ? `${field.name}-error` : undefined}>
+        <ImageUpload value={field.value} disabled={formState.isSubmitting} onChange={field.onChange} onBlur={field.onBlur} />
       </FormControl>
-      <FormMessage />
+      <FormMessage id={`${field.name}-error`} message={fieldState.error?.message} />
     </FormItem>
   );
 };

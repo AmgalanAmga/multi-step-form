@@ -1,6 +1,6 @@
 import type { UseFormReturn } from "react-hook-form";
 import type { RegisterValues } from "@/lib/validations/register.schema";
-import { MotionPanel } from "@/components/ui/MotionPanel";
+import { MotionPanel } from "@/components/register/form/MotionPanel";
 import { copy } from "../form/register-config";
 import { StepPersonal } from "./StepPersonal";
 import { StepSecurity } from "./StepSecurity";

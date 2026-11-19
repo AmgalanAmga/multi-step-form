@@ -81,6 +81,7 @@ const eslintConfig = defineConfig([
   ...nextTs,
   {
     files: ["src/**/*.{ts,tsx}"],
+    ignores: ["src/components/ui/**"],
     rules: {
       "no-restricted-syntax": [
         "error",
@@ -111,6 +112,7 @@ const eslintConfig = defineConfig([
   },
   {
     files: ["src/**/*.{js,jsx,ts,tsx}"],
+    ignores: ["src/components/ui/**"],
     plugins: { spacing: { rules: { "between-functions": functionSpacing } } },
     rules: { "spacing/between-functions": "error" },
   },
