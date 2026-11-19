@@ -1,4 +1,4 @@
-import type { ControllerProps, FieldPath } from "react-hook-form";
+import type { Control, FieldPath } from "react-hook-form";
 import type { z } from "zod";
 import type { RegisterValues, successSchema, draftSchema } from "@/lib/validations/register.schema";
 
@@ -15,5 +15,5 @@ declare global {
 
   type ApiError = { error: string };
 
-  type RegistrationFieldRendererType<Name extends FieldPath<RegisterValues>> = ControllerProps<RegisterValues, Name>["render"];
+  type RegistrationFieldProps<Name extends FieldPath<RegisterValues>> = { control: Control<RegisterValues>; name: Name };
 }

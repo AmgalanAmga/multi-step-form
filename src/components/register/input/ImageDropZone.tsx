@@ -7,6 +7,7 @@ type ImageDropZoneProps = ComponentProps<"button"> & { dragging: boolean };
 export const ImageDropZone = ({ dragging, ...props }: ImageDropZoneProps) => (
   <button
     {...props}
+    data-field-control
     type="button"
     className={cn(
       "flex w-full cursor-pointer disabled:cursor-wait flex-col items-center rounded-xl border border-slate-200 border-dashed bg-slate-100/25 px-4 py-6 text-center hover:border-emerald-700 hover:bg-emerald-700/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700",

@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { LoadingSpinner } from "@/components/register/form/LoadingSpinner";
-import { ArrowLeft, ArrowRight, LockKeyhole } from "lucide-react";
+import { ArrowLeft, ArrowRight, Loader2, LockKeyhole } from "lucide-react";
 
 type RegisterActionsType = {
   busy: boolean;
@@ -26,7 +25,7 @@ export const RegisterActions = ({ step, busy, submitting, submissionStage, onBac
           </Button>
         )}
         <Button type="submit" disabled={disabled} className="flex-1 text-xs font-semibold h-11">
-          {disabled && <LoadingSpinner />}
+          {disabled && <Loader2 className="size-4 animate-spin motion-reduce:animate-none" />}
           {label}
           {!disabled && <ArrowRight className="shrink-0 size-4" />}
         </Button>

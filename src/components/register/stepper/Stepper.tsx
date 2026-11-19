@@ -27,7 +27,7 @@ export const Stepper = ({ step }: StepperType) => {
     const Icon = icons[index];
 
     return (
-      <li key={label} aria-current={step === number ? "step" : undefined} className="flex flex-col items-center gap-2.5 first:items-start last:items-end">
+      <li key={label} className="flex flex-col items-center gap-2.5 first:items-start last:items-end">
         <motion.span
           initial={false}
           animate={{ scale: step === number ? 1.08 : 1 }}
@@ -37,7 +37,7 @@ export const Stepper = ({ step }: StepperType) => {
             step >= number ? "border-emerald-700 bg-emerald-700 text-white shadow-sm" : "border-slate-200 bg-white text-slate-600",
           )}
         >
-          {step > number ? <><Check size={15} aria-hidden="true" /><span className="sr-only">Completed</span></> : number}
+          {step > number ? <Check size={15} /> : number}
         </motion.span>
         <span className={cn("flex items-center gap-1.5 text-xs", step === number ? "font-semibold text-emerald-950" : "text-slate-600")}>
           <Icon size={12} />
@@ -48,8 +48,8 @@ export const Stepper = ({ step }: StepperType) => {
   };
 
   return (
-    <nav aria-label="Registration steps" className="relative mb-6">
-      <div aria-hidden="true" className="absolute inset-x-4 top-4 flex h-0.5 bg-slate-200">
+    <nav className="relative mb-6">
+      <div className="absolute inset-x-4 top-4 flex h-0.5 bg-slate-200">
         {STEPS.slice(1).map(renderConnector)}
       </div>
       <ol className="grid grid-cols-3">{STEPS.map(renderStep)}</ol>

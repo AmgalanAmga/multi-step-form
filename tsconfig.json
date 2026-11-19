@@ -19,7 +19,7 @@
       }
     ],
     "paths": {
-      "@/registry/new-york-v4/ui/button": ["./src/components/ui/button"],
+      "@/registry/new-york-v4/ui/*": ["./src/components/ui/*"],
       "@/*": ["./src/*"]
     }
   },

@@ -26,7 +26,7 @@ export const RegisterForm = () => {
             <RegisterStep step={step} form={form} disabled={disabled} />
             {error && (
               <div
-                role="alert"
+
                 className="flex gap-2 p-3 mt-5 text-xs border rounded-lg border-slate-200 border-rose-700/20 bg-rose-700/5 text-rose-700"
               >
                 <AlertCircle className="size-4 shrink-0" />

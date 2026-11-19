@@ -20,8 +20,7 @@ export const ImageUpload = ({ value, disabled = false, onChange, onBlur, ...butt
         type="file"
         disabled={disabled}
         accept={IMAGE_TYPES.join(",")}
-        className="sr-only"
-        tabIndex={-1}
+        hidden
         onChange={handleFileChange}
       />
       {preview ? (

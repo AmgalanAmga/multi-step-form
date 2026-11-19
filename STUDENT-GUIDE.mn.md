@@ -50,18 +50,18 @@ cd firstleaf
 
 ## 3. shadcn/ui загварын суурь компонентуудаа зарлах
 
-`src/components/ui/` дотор **компонент бүрийг өөрийн нэртэй файлд** зарлаж, нэрээр нь export хий. Доорх хүснэгтийн нэг мөрөнд хамтран ажиллах компонентуудыг бүлэглэв. Firstleaf-ийн FormField нь талбар зурах компонентыг `component` prop-оор авдаг. Лавлах код энэ хувилбарыг бүрэн агуулна.
+Талбарын бүтэц, шошго, алдааны мэдээлэлд shadcn/ui-ийн `Field`, `FieldLabel`, `FieldError` компонентыг ашиглана.
 
 | Үүсгэх компонент, файл | Хийх ажил |
 |---|---|
 | Button, Input, Label | HTML-ийн props-ийг үндсэн элементэд дамжуул. Button-д харагдах хувилбар, хэмжээ, disabled болон focus төлөв нэм. |
 | Card, CardContent | Гадна хүрээ, доторх зайг хоёр тусдаа компонентод хариуцуул. |
-| FormField | useController ашиглан талбарыг бүртгээд утга болон алдааны төлөвийг props-оор дамжуул. |
-| FormItem, FormLabel, FormControl, FormMessage | Нэг талбарт useId-ээр ID үүсгэ. Label-ийн htmlFor болон удирдлагын id-г тааруул. FormMessage зөвхөн тухайн талбарын алдааг харуулна. |
+| useController | Алхам бүр талбарын нэр болон control-ийг дамжуулна. Талбарын компонент useController ашиглан утга болон алдааны төлөвийг авна. |
+| Field, FieldLabel, FieldError | FieldLabel-ийн htmlFor утгыг оролтын id-тай тааруулж, алдааг FieldError дотор харуулна. |
 | Popover, PopoverTrigger, PopoverContent | Төрсөн өдөр сонгох цонхыг Radix Popover ашиглан нээж, хаа. |
 | Calendar, CalendarDayButton, CalendarOption | DayPicker-ийн өдөр болон сонголтыг тусдаа компонентоор зур. Өнөөдөр болон сонгосон өдрийг ялга. |
 | Progress, Skeleton, Toaster | Алхмын ахиц, сэргээж буй формын түр дүрс, үйлдлийн мэдэгдлийг харуул. Toaster-ийг Sonner.tsx файлд зарлана. |
-| MotionPanel, LoadingSpinner | Алхам солигдох хөдөлгөөн болон хүсэлт хүлээх тэмдгийг үүсгэ. MotionProvider-ийг src/components/MotionProvider.tsx дотор зарла. |
+| MotionPanel, Loader2 | Алхам солигдох хөдөлгөөн болон хүсэлт хүлээх тэмдгийг үүсгэ. MotionProvider-ийг src/components/MotionProvider.tsx дотор зарла. |
 
 `src/lib/utils.ts` доторх `cn` функцээр үндсэн болон гаднаас өгсөн className-ийг нэгтгэ. Cursor, өнгө, хэмжээ зэрэг Tailwind class-ийг тухайн товч, дүрс, сонголтын өөрийнх нь элементэд бич.
 
@@ -70,21 +70,26 @@ cd firstleaf
 Эхлээд `register/input/EmailInput.tsx` болон `register/steps/StepPersonal.tsx` үүсгэ. Доорх жишээнд `field` нь одоогийн утга, өөрчлөлтийн функц, blur болон focus-д хэрэгтэй ref-ийг агуулна.
 
 ```tsx
-export const EmailInput: RegistrationFieldRendererType<"email"> = ({ field, fieldState }) => (
-  <FormItem>
-    <FormLabel htmlFor={field.name}>Email</FormLabel>
-    <FormControl id={field.name} aria-invalid={fieldState.invalid} aria-describedby={fieldState.error ? "email-error" : undefined}>
-      <Input {...field} type="email" autoComplete="email" />
-    </FormControl>
-    <FormMessage id="email-error" message={fieldState.error?.message} />
-  </FormItem>
-);
+export const EmailInput = ({ name, control }: RegistrationFieldProps<"email">) => {
+  const { field, fieldState } = useController({ name, control });
+  return (
+    <Field data-invalid={fieldState.invalid} className="gap-2">
+      <FieldLabel htmlFor={field.name}>Email address</FieldLabel>
+      <div className="relative">
+        <Mail className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-600" />
+        <Input id={field.name} {...field} type="email" autoComplete="email" placeholder="you@example.com" className="h-11 pl-10" />
+      </div>
+      <FieldError id={`${field.name}-error`}>{fieldState.error?.message}</FieldError>
+      <p className="text-xs text-slate-600">A little connection starts with the right address.</p>
+    </Field>
+  );
+};
 ```
 
 StepPersonal дотор талбарыг дараах байдлаар холбоно.
 
 ```tsx
-<FormField control={form.control} name="email" component={EmailInput} />
+<EmailInput control={form.control} name="email" />
 ```
 
 `src/hooks/useRegisterForm.ts` дотор `useForm<RegisterValues>` зарлаж, `resolver: zodResolver(registerSchema)`, `mode: "onTouched"`, `defaultValues: defaults` тохируул. Энэ шатанд hook-оос `{ form }` буцаахад хангалттай. `RegisterForm.tsx`-ийн эхэнд `"use client";` бичээд компонент дотроо `const { form } = useRegisterForm();` гэж дууд. `<Form {...form}>` дотор жинхэнэ `<form>` байрлуулж, эхний алхмаа зур. `src/app/page.tsx`-аас RegisterForm-ийг дууд.
@@ -102,7 +107,7 @@ StepPersonal дотор талбарыг дараах байдлаар холб�
 | input | PhoneNumberInput, DateOfBirthInput | Утасны утгыг мөрөөр хадгал. Календарийн Date утгыг сонгоход YYYY-MM-DD мөр болгон field.onChange-д дамжуул. |
 | input | ImageDropZone, ImageUploadPreview | Файл байхгүй үед ImageDropZone сонгох товчийг харуулна. Файлтай үед ImageUploadPreview зураг, нэр, солих болон устгах товчийг харуулна. |
 | input | ImageUpload, ProfileImageInput | ImageUpload нь value, onChange, onBlur, disabled авна. Файл сонгох, чирж оруулах, урьдчилж харах, устгах үйлдэлтэй байна. ProfileImageInput үүнийг формын талбарт холбоно. |
-| steps | StepPersonal, StepSecurity, StepProfile | Тус бүр form prop авч, хоёрдугаар хэсгийн хүснэгтэд заасан талбаруудаа FormField-ээр зурна. |
+| steps | StepPersonal, StepSecurity, StepProfile | Тус бүр form prop авч, хоёрдугаар хэсгийн хүснэгтэд заасан талбаруудаа харгалзах оролтын компонентоор харуулна. |
 | steps | RegisterStep | step, form, disabled авч, тухайн алхмын гарчиг, тайлбар, талбаруудыг зурна. |
 | stepper | Stepper | Алхам бүрийн дугаар, нэр, төлөвийг харуулж, алхмуудыг шугамаар холбоно. Дараагийн алхамд шилжихэд хоёр алхмын хоорондох шугам ногоон болно. |
 | form | RegisterActions, RegisterSkeleton | Эхний алхамд Continue, дараа нь Back, эцэст нь илгээх товч харуул. Түр хадгалсан төлвийг унших үед RegisterSkeleton үзүүл. |
@@ -655,103 +660,10 @@ export const CardContent = ({ className, ...props }: CardContentType) => {
 </details>
 
 
-<details>
-<summary><code>src/components/ui/FormControl.tsx</code></summary>
 
-```tsx
-export { Slot as FormControl } from "@radix-ui/react-slot";
-```
 
-</details>
 
-<details>
-<summary><code>src/components/ui/FormField.tsx</code></summary>
 
-```tsx
-"use client";
-
-import { type ComponentType } from "react";
-import { useController, type ControllerProps, type FieldPath, type FieldValues } from "react-hook-form";
-
-type FormFieldType<T extends FieldValues, N extends FieldPath<T>> = Omit<
-  ControllerProps<T, N>,
-  "render"
-> & {
-  component: ComponentType<Parameters<ControllerProps<T, N>["render"]>[0]>;
-};
-
-export const FormField = <T extends FieldValues, N extends FieldPath<T>>({
-  component: Component,
-  ...props
-}: FormFieldType<T, N>) => {
-  const controller = useController(props);
-  return <Component {...controller} />;
-};
-```
-
-</details>
-
-<details>
-<summary><code>src/components/ui/FormItem.tsx</code></summary>
-
-```tsx
-"use client";
-
-import { type ComponentProps } from "react";
-import { cn } from "@/lib/utils";
-
-type FormItemType = ComponentProps<"div">;
-
-export const FormItem = ({ className, ...props }: FormItemType) => {
-  return <div className={cn("space-y-2", className)} {...props} />;
-};
-```
-
-</details>
-
-<details>
-<summary><code>src/components/ui/FormLabel.tsx</code></summary>
-
-```tsx
-export { Label as FormLabel } from "./Label";
-```
-
-</details>
-
-<details>
-<summary><code>src/components/ui/FormMessage.tsx</code></summary>
-
-```tsx
-"use client";
-
-import { MotionPanel } from "./MotionPanel";
-import { type ComponentProps } from "react";
-import { AlertCircle } from "lucide-react";
-import { cn } from "@/lib/utils";
-
-type FormMessageType = ComponentProps<"p"> & { message?: string };
-
-export const FormMessage = ({ message, className, ...props }: FormMessageType) => {
-  if (!message) return null;
-  return (
-    <MotionPanel>
-      <p
-        role="alert"
-        className={cn(
-          "flex items-start gap-1.5 text-xs text-rose-700",
-          className,
-        )}
-        {...props}
-      >
-        <AlertCircle className="mt-0.5 size-3 shrink-0" />
-        {message}
-      </p>
-    </MotionPanel>
-  );
-};
-```
-
-</details>
 
 <details>
 <summary><code>src/components/ui/Input.tsx</code></summary>
@@ -800,34 +712,6 @@ export const Label = ({ className, ...props }: LabelType) => {
 
 </details>
 
-<details>
-<summary><code>src/components/ui/LoadingSpinner.tsx</code></summary>
-
-```tsx
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
-import { Loader2 } from "lucide-react";
-
-export const LoadingSpinner = () => {
-  const reducedMotion = useReducedMotion();
-  return (
-    <motion.span
-      className="inline-flex"
-      animate={{ rotate: reducedMotion ? 0 : 360 }}
-      transition={{
-        duration: 1,
-        repeat: reducedMotion ? 0 : Infinity,
-        ease: "linear",
-      }}
-    >
-      <Loader2 className="shrink-0 size-4" />
-    </motion.span>
-  );
-};
-```
-
-</details>
 
 <details>
 <summary><code>src/components/ui/MotionPanel.tsx</code></summary>
@@ -1249,8 +1133,7 @@ export const useRegistrationSubmission = (onSuccess: (summary: RegistrationSumma
 
 ```tsx
 import { Button } from "@/components/ui/Button";
-import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
-import { ArrowLeft, ArrowRight, LockKeyhole } from "lucide-react";
+import { ArrowLeft, ArrowRight, Loader2, LockKeyhole } from "lucide-react";
 
 type RegisterActionsType = {
   busy: boolean;
@@ -1276,7 +1159,7 @@ export const RegisterActions = ({ step, busy, submitting, submissionStage, onBac
           </Button>
         )}
         <Button type="submit" disabled={disabled} className="flex-1 text-xs font-semibold h-11">
-          {disabled && <LoadingSpinner />}
+          {disabled && <Loader2 className="size-4 animate-spin motion-reduce:animate-none" />}
           {label}
           {!disabled && <ArrowRight className="shrink-0 size-4" />}
         </Button>
@@ -1324,7 +1207,7 @@ export const RegisterForm = () => {
             <RegisterStep step={step} form={form} disabled={disabled} />
             {error && (
               <div
-                role="alert"
+
                 className="flex gap-2 p-3 mt-5 text-xs border rounded-lg border-slate-200 border-rose-700/20 bg-rose-700/5 text-rose-700"
               >
                 <AlertCircle className="size-4 shrink-0" />
@@ -1413,21 +1296,21 @@ export const copy = {
 ```tsx
 "use client";
 
+import { useController } from "react-hook-form";
+import { Field, FieldLabel, FieldError } from "@/components/ui/field";
+
 import { useState } from "react";
 import { format, parseISO } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
-import { FormItem } from "@/components/ui/FormItem";
-import { FormLabel } from "@/components/ui/FormLabel";
-import { FormControl } from "@/components/ui/FormControl";
-import { FormMessage } from "@/components/ui/FormMessage";
-import { Button } from "@/components/ui/Button";
-import { Calendar } from "@/components/ui/Calendar";
-import { Popover } from "@/components/ui/Popover";
-import { PopoverTrigger } from "@/components/ui/PopoverTrigger";
-import { PopoverContent } from "@/components/ui/PopoverContent";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover } from "@/components/ui/popover";
+import { PopoverTrigger } from "@/components/ui/popover";
+import { PopoverContent } from "@/components/ui/popover";
 import { latestBirthDate } from "@/lib/validations/register.schema";
 
-export const DateOfBirthInput: RegistrationFieldRendererType<"dateOfBirth"> = ({ field: { name, ref: inputRef, value, onChange, onBlur }, fieldState }) => {
+export const DateOfBirthInput = ({ name, control }: RegistrationFieldProps<"dateOfBirth">) => {
+  const { field: { ref: inputRef, value, onChange, onBlur }, fieldState } = useController({ name, control });
   const [open, setOpen] = useState(false);
 
   const handleOpenChange = (value: boolean) => {
@@ -1445,16 +1328,14 @@ export const DateOfBirthInput: RegistrationFieldRendererType<"dateOfBirth"> = ({
     return date > latestBirthDate() || date < new Date(1900, 0);
   };
   return (
-    <FormItem>
-      <FormLabel htmlFor={name}>Date of birth</FormLabel>
+    <Field data-invalid={fieldState.invalid} className="gap-2">
+      <FieldLabel htmlFor={name}>Date of birth</FieldLabel>
       <Popover open={open} onOpenChange={handleOpenChange}>
         <PopoverTrigger asChild>
-          <FormControl id={name} aria-invalid={fieldState.invalid} aria-describedby={fieldState.error ? `${name}-error` : undefined}>
-            <Button ref={inputRef} type="button" variant="outline" className="justify-start w-full font-normal h-11">
-              <CalendarIcon className="shrink-0 mr-2 size-4 text-slate-600" />
-              {value ? format(parseISO(value), "MMMM d, yyyy") : <span className="text-slate-600">Choose your birthday</span>}
-            </Button>
-          </FormControl>
+          <Button id={name} ref={inputRef} type="button" variant="outline" className="h-11 w-full justify-start gap-3 rounded-lg border-input px-3.5 font-normal shadow-none">
+            <CalendarIcon className="size-4 shrink-0 text-slate-600" />
+            {value ? format(parseISO(value), "MMMM d, yyyy") : <span className="text-slate-600">Choose your birthday</span>}
+          </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
           <Calendar
@@ -1470,9 +1351,9 @@ export const DateOfBirthInput: RegistrationFieldRendererType<"dateOfBirth"> = ({
           />
         </PopoverContent>
       </Popover>
-      <FormMessage id={`${name}-error`} message={fieldState.error?.message} />
+      <FieldError id={`${name}-error`}>{fieldState.error?.message}</FieldError>
       <p className="text-xs text-slate-600">You must be 13 or older to join.</p>
-    </FormItem>
+    </Field>
   );
 };
 ```
@@ -1485,26 +1366,26 @@ export const DateOfBirthInput: RegistrationFieldRendererType<"dateOfBirth"> = ({
 ```tsx
 "use client";
 
-import { Mail } from "lucide-react";
-import { FormItem } from "@/components/ui/FormItem";
-import { FormLabel } from "@/components/ui/FormLabel";
-import { FormControl } from "@/components/ui/FormControl";
-import { FormMessage } from "@/components/ui/FormMessage";
-import { Input } from "@/components/ui/Input";
+import { useController } from "react-hook-form";
+import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 
-export const EmailInput: RegistrationFieldRendererType<"email"> = ({ field, fieldState }) => (
-  <FormItem>
-    <FormLabel htmlFor={field.name}>Email address</FormLabel>
-    <div className="relative">
-      <Mail className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-slate-600" />
-      <FormControl id={field.name} aria-invalid={fieldState.invalid} aria-describedby={fieldState.error ? `${field.name}-error` : undefined}>
-        <Input {...field} type="email" autoComplete="email" placeholder="you@example.com" className="pl-10" />
-      </FormControl>
-    </div>
-    <FormMessage id={`${field.name}-error`} message={fieldState.error?.message} />
-    <p className="text-xs text-slate-600">A little connection starts with the right address.</p>
-  </FormItem>
-);
+import { Mail } from "lucide-react";
+import { Input } from "@/components/ui/input";
+
+export const EmailInput = ({ name, control }: RegistrationFieldProps<"email">) => {
+  const { field, fieldState } = useController({ name, control });
+  return (
+    <Field data-invalid={fieldState.invalid} className="gap-2">
+      <FieldLabel htmlFor={field.name}>Email address</FieldLabel>
+      <div className="relative">
+        <Mail className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-600" />
+        <Input id={field.name} {...field} type="email" autoComplete="email" placeholder="you@example.com" className="h-11 pl-10" />
+      </div>
+      <FieldError id={`${field.name}-error`}>{fieldState.error?.message}</FieldError>
+      <p className="text-xs text-slate-600">A little connection starts with the right address.</p>
+    </Field>
+  );
+};
 ```
 
 </details>
@@ -1568,8 +1449,7 @@ export const ImageUpload = ({ value, disabled = false, onChange, onBlur, ...butt
         type="file"
         disabled={disabled}
         accept={IMAGE_TYPES.join(",")}
-        className="sr-only"
-        tabIndex={-1}
+        hidden
         onChange={handleFileChange}
       />
       {preview ? (
@@ -1626,7 +1506,7 @@ export const ImageUploadPreview = ({ preview, filename, onChoose, onRemove, ...b
         Choose another photo
       </Button>
     </div>
-    <Button type="button" size="icon" variant="ghost" disabled={buttonProps.disabled} aria-label="Remove photo" onClick={onRemove}>
+    <Button type="button" size="icon" variant="ghost" disabled={buttonProps.disabled} title="Remove photo" onClick={onRemove}>
       <X className="shrink-0" size={16} />
     </Button>
   </div>
@@ -1641,31 +1521,29 @@ export const ImageUploadPreview = ({ preview, filename, onChoose, onRemove, ...b
 ```tsx
 "use client";
 
-import { User } from "lucide-react";
-import { FormItem } from "@/components/ui/FormItem";
-import { FormLabel } from "@/components/ui/FormLabel";
-import { FormControl } from "@/components/ui/FormControl";
-import { FormMessage } from "@/components/ui/FormMessage";
-import { Input } from "@/components/ui/Input";
+import { useController } from "react-hook-form";
+import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 
-export const NameInput: RegistrationFieldRendererType<"firstName" | "lastName"> = ({ field, fieldState }) => {
+import { User } from "lucide-react";
+import { Input } from "@/components/ui/input";
+
+export const NameInput = ({ name, control }: RegistrationFieldProps<"firstName" | "lastName">) => {
+  const { field, fieldState } = useController({ name, control });
   const isFirstName = field.name === "firstName";
   return (
-    <FormItem>
-      <FormLabel htmlFor={field.name}>{isFirstName ? "First name" : "Last name"}</FormLabel>
+    <Field data-invalid={fieldState.invalid} className="gap-2">
+      <FieldLabel htmlFor={field.name}>{isFirstName ? "First name" : "Last name"}</FieldLabel>
       <div className="relative">
-        <User className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-slate-600" />
-        <FormControl id={field.name} aria-invalid={fieldState.invalid} aria-describedby={fieldState.error ? `${field.name}-error` : undefined}>
-          <Input
-            {...field}
-            autoComplete={isFirstName ? "given-name" : "family-name"}
-            placeholder={isFirstName ? "e.g. Alex" : "e.g. Morgan"}
-            className="pl-10"
-          />
-        </FormControl>
+        <User className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-600" />
+        <Input id={field.name}
+          {...field}
+          autoComplete={isFirstName ? "given-name" : "family-name"}
+          placeholder={isFirstName ? "e.g. Alex" : "e.g. Morgan"}
+          className="h-11 pl-10"
+        />
       </div>
-      <FormMessage id={`${field.name}-error`} message={fieldState.error?.message} />
-    </FormItem>
+      <FieldError id={`${field.name}-error`}>{fieldState.error?.message}</FieldError>
+    </Field>
   );
 };
 ```
@@ -1678,42 +1556,40 @@ export const NameInput: RegistrationFieldRendererType<"firstName" | "lastName"> 
 ```tsx
 "use client";
 
+import { useController } from "react-hook-form";
+import { Field, FieldLabel, FieldError } from "@/components/ui/field";
+
 import { useState } from "react";
 import { Eye, EyeOff, Lock } from "lucide-react";
-import { FormItem } from "@/components/ui/FormItem";
-import { FormLabel } from "@/components/ui/FormLabel";
-import { FormControl } from "@/components/ui/FormControl";
-import { FormMessage } from "@/components/ui/FormMessage";
-import { Input } from "@/components/ui/Input";
-import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const invertVisibility = (previous: boolean) => !previous;
 
-export const PasswordInput: RegistrationFieldRendererType<"password" | "confirmPassword"> = ({ field, fieldState }) => {
+export const PasswordInput = ({ name, control }: RegistrationFieldProps<"password" | "confirmPassword">) => {
+  const { field, fieldState } = useController({ name, control });
   const [visible, setVisible] = useState(false);
   const isPassword = field.name === "password";
   const handleTogglePassword = () => setVisible(invertVisibility);
 
   return (
-    <FormItem>
-      <FormLabel htmlFor={field.name}>{isPassword ? "Password" : "Confirm password"}</FormLabel>
+    <Field data-invalid={fieldState.invalid} className="gap-2">
+      <FieldLabel htmlFor={field.name}>{isPassword ? "Password" : "Confirm password"}</FieldLabel>
       <div className="relative">
-        <Lock className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-slate-600" />
-        <FormControl id={field.name} aria-invalid={fieldState.invalid} aria-describedby={fieldState.error ? `${field.name}-error` : undefined}>
-          <Input
-            {...field}
-            type={visible ? "text" : "password"}
-            autoComplete="new-password"
-            className="px-10"
-            placeholder={isPassword ? "Create a strong password" : "Enter your password again"}
-          />
-        </FormControl>
-        <Button type="button" variant="ghost" size="icon" className="absolute top-1 right-1 size-9" onClick={handleTogglePassword}>
+        <Lock className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-600" />
+        <Input id={field.name}
+          {...field}
+          type={visible ? "text" : "password"}
+          autoComplete="new-password"
+          className="h-11 px-10"
+          placeholder={isPassword ? "Create a strong password" : "Enter your password again"}
+        />
+        <Button type="button" variant="ghost" size="icon" title={visible ? "Hide password" : "Show password"} className="absolute top-1/2 right-1 size-9 -translate-y-1/2" onClick={handleTogglePassword}>
           {visible ? <EyeOff className="shrink-0" size={16} /> : <Eye className="shrink-0" size={16} />}
         </Button>
       </div>
-      <FormMessage id={`${field.name}-error`} message={fieldState.error?.message} />
-    </FormItem>
+      <FieldError id={`${field.name}-error`}>{fieldState.error?.message}</FieldError>
+    </Field>
   );
 };
 ```
@@ -1726,25 +1602,23 @@ export const PasswordInput: RegistrationFieldRendererType<"password" | "confirmP
 ```tsx
 "use client";
 
-import { Phone } from "lucide-react";
-import { FormItem } from "@/components/ui/FormItem";
-import { FormLabel } from "@/components/ui/FormLabel";
-import { FormControl } from "@/components/ui/FormControl";
-import { FormMessage } from "@/components/ui/FormMessage";
-import { Input } from "@/components/ui/Input";
+import { useController } from "react-hook-form";
+import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 
-export const PhoneNumberInput: RegistrationFieldRendererType<"phoneNumber"> = ({ field, fieldState }) => {
+import { Phone } from "lucide-react";
+import { Input } from "@/components/ui/input";
+
+export const PhoneNumberInput = ({ name, control }: RegistrationFieldProps<"phoneNumber">) => {
+  const { field, fieldState } = useController({ name, control });
   return (
-    <FormItem>
-      <FormLabel htmlFor={field.name}>Phone number</FormLabel>
+    <Field data-invalid={fieldState.invalid} className="gap-2">
+      <FieldLabel htmlFor={field.name}>Phone number</FieldLabel>
       <div className="relative">
-        <Phone className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-slate-600" />
-        <FormControl id={field.name} aria-invalid={fieldState.invalid} aria-describedby={fieldState.error ? `${field.name}-error` : undefined}>
-          <Input {...field} type="tel" autoComplete="tel" placeholder="+97699112233" className="pl-10" />
-        </FormControl>
+        <Phone className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-600" />
+        <Input id={field.name} {...field} type="tel" autoComplete="tel" placeholder="+97699112233" className="h-11 pl-10" />
       </div>
-      <FormMessage id={`${field.name}-error`} message={fieldState.error?.message} />
-    </FormItem>
+      <FieldError id={`${field.name}-error`}>{fieldState.error?.message}</FieldError>
+    </Field>
   );
 };
 ```
@@ -1757,21 +1631,19 @@ export const PhoneNumberInput: RegistrationFieldRendererType<"phoneNumber"> = ({
 ```tsx
 "use client";
 
-import { FormItem } from "@/components/ui/FormItem";
-import { FormLabel } from "@/components/ui/FormLabel";
-import { FormControl } from "@/components/ui/FormControl";
-import { FormMessage } from "@/components/ui/FormMessage";
+import { useController } from "react-hook-form";
+import { Field, FieldLabel, FieldError } from "@/components/ui/field";
+
 import { ImageUpload } from "./ImageUpload";
 
-export const ProfileImageInput: RegistrationFieldRendererType<"profileImage"> = ({ field, fieldState, formState }) => {
+export const ProfileImageInput = ({ name, control }: RegistrationFieldProps<"profileImage">) => {
+  const { field, fieldState, formState } = useController({ name, control });
   return (
-    <FormItem>
-      <FormLabel htmlFor={field.name}>Profile photo</FormLabel>
-      <FormControl id={field.name} aria-invalid={fieldState.invalid} aria-describedby={fieldState.error ? `${field.name}-error` : undefined}>
-        <ImageUpload value={field.value} disabled={formState.isSubmitting} onChange={field.onChange} onBlur={field.onBlur} />
-      </FormControl>
-      <FormMessage id={`${field.name}-error`} message={fieldState.error?.message} />
-    </FormItem>
+    <Field data-invalid={fieldState.invalid} className="gap-2">
+      <FieldLabel htmlFor={field.name}>Profile photo</FieldLabel>
+      <ImageUpload id={field.name} value={field.value} disabled={formState.isSubmitting} onChange={field.onChange} onBlur={field.onBlur} />
+      <FieldError id={`${field.name}-error`}>{fieldState.error?.message}</FieldError>
+    </Field>
   );
 };
 ```
@@ -1812,7 +1684,7 @@ export const Stepper = ({ step }: StepperType) => {
     const Icon = icons[index];
 
     return (
-      <li key={label} aria-current={step === number ? "step" : undefined} className="flex flex-col items-center gap-2.5 first:items-start last:items-end">
+      <li key={label} className="flex flex-col items-center gap-2.5 first:items-start last:items-end">
         <motion.span
           initial={false}
           animate={{ scale: step === number ? 1.08 : 1 }}
@@ -1822,7 +1694,7 @@ export const Stepper = ({ step }: StepperType) => {
             step >= number ? "border-emerald-700 bg-emerald-700 text-white shadow-sm" : "border-slate-200 bg-white text-slate-600",
           )}
         >
-          {step > number ? <><Check size={15} aria-hidden="true" /><span className="sr-only">Completed</span></> : number}
+          {step > number ? <Check size={15} /> : number}
         </motion.span>
         <span className={cn("flex items-center gap-1.5 text-xs", step === number ? "font-semibold text-emerald-950" : "text-slate-600")}>
           <Icon size={12} />
@@ -1833,8 +1705,8 @@ export const Stepper = ({ step }: StepperType) => {
   };
 
   return (
-    <nav aria-label="Registration steps" className="relative mb-6">
-      <div aria-hidden="true" className="absolute inset-x-4 top-4 flex h-0.5 bg-slate-200">
+    <nav className="relative mb-6">
+      <div className="absolute inset-x-4 top-4 flex h-0.5 bg-slate-200">
         {STEPS.slice(1).map(renderConnector)}
       </div>
       <ol className="grid grid-cols-3">{STEPS.map(renderStep)}</ol>
@@ -1895,7 +1767,6 @@ export const RegisterStep = ({ step, form, disabled }: RegisterStepType) => {
 "use client";
 
 import type { UseFormReturn } from "react-hook-form";
-import { FormField } from "@/components/ui/FormField";
 import type { RegisterValues } from "@/lib/validations/register.schema";
 import { NameInput } from "../input/NameInput";
 import { EmailInput } from "../input/EmailInput";
@@ -1905,10 +1776,10 @@ type StepPersonalType = { form: UseFormReturn<RegisterValues> };
 export const StepPersonal = ({ form }: StepPersonalType) => (
   <div className="space-y-5">
     <div className="grid gap-5 sm:grid-cols-2">
-      <FormField control={form.control} name="firstName" component={NameInput} />
-      <FormField control={form.control} name="lastName" component={NameInput} />
+      <NameInput control={form.control} name="firstName" />
+      <NameInput control={form.control} name="lastName" />
     </div>
-    <FormField control={form.control} name="email" component={EmailInput} />
+    <EmailInput control={form.control} name="email" />
   </div>
 );
 ```
@@ -1922,7 +1793,6 @@ export const StepPersonal = ({ form }: StepPersonalType) => (
 "use client";
 
 import { type UseFormReturn } from "react-hook-form";
-import { FormField } from "@/components/ui/FormField";
 import { type RegisterValues } from "@/lib/validations/register.schema";
 import { PhoneNumberInput } from "../input/PhoneNumberInput";
 import { DateOfBirthInput } from "../input/DateOfBirthInput";
@@ -1935,9 +1805,9 @@ type StepProfileType = {
 export const StepProfile = ({ form }: StepProfileType) => {
   return (
     <div className="space-y-5">
-      <FormField control={form.control} name="phoneNumber" component={PhoneNumberInput} />
-      <FormField control={form.control} name="dateOfBirth" component={DateOfBirthInput} />
-      <FormField control={form.control} name="profileImage" component={ProfileImageInput} />
+      <PhoneNumberInput control={form.control} name="phoneNumber" />
+      <DateOfBirthInput control={form.control} name="dateOfBirth" />
+      <ProfileImageInput control={form.control} name="profileImage" />
     </div>
   );
 };
@@ -1952,7 +1822,6 @@ export const StepProfile = ({ form }: StepProfileType) => {
 "use client";
 
 import type { UseFormReturn } from "react-hook-form";
-import { FormField } from "@/components/ui/FormField";
 import type { RegisterValues } from "@/lib/validations/register.schema";
 import { PasswordInput } from "../input/PasswordInput";
 
@@ -1960,8 +1829,8 @@ type StepSecurityType = { form: UseFormReturn<RegisterValues> };
 
 export const StepSecurity = ({ form }: StepSecurityType) => (
   <div className="space-y-5">
-    <FormField control={form.control} name="password" component={PasswordInput} />
-    <FormField control={form.control} name="confirmPassword" component={PasswordInput} />
+    <PasswordInput control={form.control} name="password" />
+    <PasswordInput control={form.control} name="confirmPassword" />
   </div>
 );
 ```
