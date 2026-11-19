@@ -1,6 +1,6 @@
 import "server-only";
-import { randomUUID } from "node:crypto";
 import { put } from "@vercel/blob";
+import { randomUUID } from "node:crypto";
 import { successSchema } from "@/lib/validations/register.schema";
 
 type StoredRegistrationType = RegistrationSummary & {
