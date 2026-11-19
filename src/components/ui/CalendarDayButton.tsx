@@ -7,8 +7,8 @@ export const CalendarDayButton = ({ modifiers, className, ...props }: DayButtonP
     modifiers={modifiers}
     className={cn(
       className,
-      modifiers.selected && "bg-primary text-primary-foreground",
-      modifiers.today && "ring-1 ring-primary/40",
+      modifiers.selected && "bg-emerald-700 text-white",
+      modifiers.today && "ring-1 ring-emerald-700/40",
     )}
   />
 );

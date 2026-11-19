@@ -38,8 +38,8 @@ export const DateOfBirthInput: RegistrationFieldRendererType<"dateOfBirth"> = ({
         <PopoverTrigger asChild>
           <FormControl>
             <Button ref={inputRef} type="button" variant="outline" className="justify-start w-full font-normal h-11">
-              <CalendarIcon className="shrink-0 mr-2 size-4 text-muted-foreground" />
-              {value ? format(parseISO(value), "MMMM d, yyyy") : <span className="text-muted-foreground">Choose your birthday</span>}
+              <CalendarIcon className="shrink-0 mr-2 size-4 text-slate-600" />
+              {value ? format(parseISO(value), "MMMM d, yyyy") : <span className="text-slate-600">Choose your birthday</span>}
             </Button>
           </FormControl>
         </PopoverTrigger>
@@ -58,7 +58,7 @@ export const DateOfBirthInput: RegistrationFieldRendererType<"dateOfBirth"> = ({
         </PopoverContent>
       </Popover>
       <FormMessage />
-      <p className="text-[11px] text-muted-foreground">You must be 13 or older to join.</p>
+      <p className="text-[11px] text-slate-600">You must be 13 or older to join.</p>
     </FormItem>
   );
 };

@@ -24,23 +24,23 @@ export const Calendar = ({
       caption_label: "flex items-center gap-1 text-sm font-medium",
       dropdowns: "flex items-center gap-2",
       dropdown_root:
-        "relative rounded-md px-1 focus-within:ring-2 focus-within:ring-ring",
+        "relative rounded-md px-1 focus-within:ring-2 focus-within:ring-emerald-700",
       dropdown:
         "absolute inset-0 w-full cursor-pointer opacity-0",
       nav: "absolute inset-x-0 top-0 flex justify-between",
       button_previous:
-        "z-10 grid cursor-pointer disabled:cursor-wait size-9 place-items-center rounded-md hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-30",
+        "z-10 grid cursor-pointer disabled:cursor-wait size-9 place-items-center rounded-md hover:bg-emerald-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 disabled:opacity-30",
       button_next:
-        "z-10 grid cursor-pointer disabled:cursor-wait size-9 place-items-center rounded-md hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-30",
+        "z-10 grid cursor-pointer disabled:cursor-wait size-9 place-items-center rounded-md hover:bg-emerald-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 disabled:opacity-30",
       chevron: "size-4 fill-current",
       month_grid: "w-full border-collapse",
       weekday:
-        "h-8 w-9 text-center text-[11px] font-normal text-muted-foreground",
+        "h-8 w-9 text-center text-[11px] font-normal text-slate-600",
       day: "size-9 p-0 text-center",
       day_button:
-        "grid cursor-pointer disabled:cursor-wait size-9 place-items-center rounded-md text-xs hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+        "grid cursor-pointer disabled:cursor-wait size-9 place-items-center rounded-md text-xs hover:bg-emerald-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700",
       today: "font-bold",
-      outside: "text-muted-foreground opacity-40",
+      outside: "text-slate-600 opacity-40",
       disabled: "pointer-events-none opacity-30",
       hidden: "invisible",
       ...classNames,

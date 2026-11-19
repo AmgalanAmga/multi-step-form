@@ -11,12 +11,12 @@ export const EmailInput: RegistrationFieldRendererType<"email"> = ({ field }) =>
   <FormItem>
     <FormLabel>Email address</FormLabel>
     <div className="relative">
-      <Mail className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-muted-foreground" />
+      <Mail className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-slate-600" />
       <FormControl>
         <Input {...field} type="email" autoComplete="email" placeholder="you@example.com" className="pl-10" />
       </FormControl>
     </div>
     <FormMessage />
-    <p className="text-[11px] text-muted-foreground">A little connection starts with the right address.</p>
+    <p className="text-[11px] text-slate-600">A little connection starts with the right address.</p>
   </FormItem>
 );

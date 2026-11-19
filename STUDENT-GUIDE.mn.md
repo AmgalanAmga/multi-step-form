@@ -2,6 +2,17 @@
 
 Энэ төслийг дуусгахад хэрэглэгч гурван алхмаар мэдээллээ оруулж, профайл зургаа сонгон, бүртгэлээ хадгалж чадна. Эхлээд **нэг талбарыг эхнээс нь дуустал** ажиллуул. Дараа нь ижил зарчмаар бусад талбарыг нэм. Алхам бүрийн шалгалтыг хийсний дараа цааш үргэлжлээрэй. Гацвал төгсгөл дэх **Файл бүрийн лавлах код** хэсгээс файлын нэрээр хайж, өөрийн бичсэн хэсэгтэй харьцуул.
 
+### Эхлээд хаана код бичихээ сонго
+
+| Хийх зүйл | Хаана бичих вэ? | Жишээ |
+|---|---|---|
+| Хэрэглэгчид харагдах хэсэг | `src/components/register/` | Сонгосон зургийн нэр, солих товчийг `ImageUploadPreview.tsx` дотор байрлуулна. |
+| React-ийн төлөв, үйлдлийг хамтад нь удирдах | `src/hooks/` | Зураг солигдоход өмнөх урьдчилсан харагдацын URL-ийг `useImageUpload.ts` чөлөөлнө. |
+| Өгөгдөл шалгах, унших, хадгалах | `src/lib/` | Имэйл хаягийн дүрмийг `register.schema.ts` дотор тодорхойлно. |
+| HTTP хүсэлт хүлээн авах | `src/app/api/` | `upload/route.ts` нь формоор ирсэн зургийг шалгаад хадгална. |
+
+Төслийн компонент бүрийг нэртэй нь ижил файлд зарла. Жишээлбэл, `ImageDropZone` компонентыг `ImageDropZone.tsx` дотор байрлуулна. ESLint энэ дүрмийг `src/components/ui/`-аас бусад хэсэгт шалгана. Next.js-ийн тусгай файлууд `page.tsx`, `layout.tsx` зэрэг нэрээ хадгална. Үйлдэл бүрд утгатай нэр бүхий суман функц зарлаж, зэрэгцээ хоёр функцийн хооронд нэг хоосон мөр үлдээгээрэй.
+
 ## 1. Ажлын орчноо бэлдэх
 
 Бэлэн төслийн хавтсанд ажиллаж байгаа бол терминалдаа дараах командыг ажиллуул.
@@ -76,7 +87,7 @@ StepPersonal дотор талбарыг дараах байдлаар холб�
 <FormField control={form.control} name="email" component={EmailInput} />
 ```
 
-`register/form/RegisterForm.tsx` дотор `useForm<RegisterValues>` зарлаж, `resolver: zodResolver(registerSchema)`, `mode: "onTouched"`, `defaultValues: defaults` тохируул. `<Form {...form}>` дотор жинхэнэ `<form>` байрлуулж, эхний алхмаа зур. `src/app/page.tsx`-аас RegisterForm-ийг дууд.
+`src/hooks/useRegisterForm.ts` дотор `useForm<RegisterValues>` зарлаж, `resolver: zodResolver(registerSchema)`, `mode: "onTouched"`, `defaultValues: defaults` тохируул. Энэ шатанд hook-оос `{ form }` буцаахад хангалттай. `RegisterForm.tsx`-ийн эхэнд `"use client";` бичээд компонент дотроо `const { form } = useRegisterForm();` гэж дууд. `<Form {...form}>` дотор жинхэнэ `<form>` байрлуулж, эхний алхмаа зур. `src/app/page.tsx`-аас RegisterForm-ийг дууд.
 
 **Шалгах.** Имэйлд `test` бичээд өөр талбар руу шилж. Алдаа имэйлийн доор гарна. `bat@example.com` болгоход алдаа арилна. Label дээр дарахад имэйлийн талбар focus авна.
 
@@ -89,17 +100,30 @@ StepPersonal дотор талбарыг дараах байдлаар холб�
 | input | NameInput, EmailInput | NameInput-ийг firstName, lastName хоёрт дахин ашигла. field.name-аас шалтгаалан label, placeholder-ийг сонго. |
 | input | PasswordInput | password болон confirmPassword-д ашигла. Нүдний товчоор type-ийг соль. Товч нь type="button" байна. |
 | input | PhoneNumberInput, DateOfBirthInput | Утасны утгыг мөрөөр хадгал. Календарийн Date утгыг сонгоход YYYY-MM-DD мөр болгон field.onChange-д дамжуул. |
+| input | ImageDropZone, ImageUploadPreview | Файл байхгүй үед ImageDropZone сонгох товчийг харуулна. Файлтай үед ImageUploadPreview зураг, нэр, солих болон устгах товчийг харуулна. |
 | input | ImageUpload, ProfileImageInput | ImageUpload нь value, onChange, onBlur, disabled авна. Файл сонгох, чирж оруулах, урьдчилж харах, устгах үйлдэлтэй байна. ProfileImageInput үүнийг формын талбарт холбоно. |
 | steps | StepPersonal, StepSecurity, StepProfile | Тус бүр form prop авч, хоёрдугаар хэсгийн хүснэгтэд заасан талбаруудаа FormField-ээр зурна. |
 | steps | RegisterStep | step, form, disabled авч, тухайн алхмын гарчиг, тайлбар, талбаруудыг зурна. |
 | stepper | StepIndicator, Stepper | StepIndicator нэг алхмын дугаар, тэмдэг, нэрийг зурна. Stepper гурвыг холбох шугам, ахицын зурвасыг хариуцна. |
 | form | RegisterActions, RegisterSkeleton | Эхний алхамд Continue, дараа нь Back, эцэст нь илгээх товч харуул. Түр хадгалсан төлвийг унших үед RegisterSkeleton үзүүл. |
 | success | SummaryRow, StepSuccess | SummaryRow-д icon, label, value дамжуул. StepSuccess-д data, onReset дамжуулж зураг, мэдээллийн мөрүүд, дахин эхлэх товчийг зур. |
-| form | RegisterForm | Идэвхтэй алхам, шалгалт, сэргээх, илгээх болон амжилтын төлөвийг нэг дор удирд. |
+| form | RegisterForm | `useRegisterForm()`-оос ирсэн төлвөөр дэлгэцээ сонго. Сэргээж байвал RegisterSkeleton, амжилттай бол StepSuccess, бусад үед RegisterStep болон RegisterActions харуул. |
 
 **Шалгах.** Нууц үг харах товч алхам солих ёсгүй. Төрсөн өдрөө сонгоход огнооны цонх хаагдана. Зургийг солиход шинэ зураг харагдаж, устгахад файл сонгох хэсэг дахин гарна. Object URL ашигласан бол зураг солигдох болон компонент салгагдахад өмнөх URL-ийг чөлөөл.
 
+### Зургийн талбарыг бие даан угсрах
+
+1. `src/hooks/useImageUpload.ts` дотор `value`, `disabled`, `onChange`, `onBlur` авдаг hook зарла. Нууц file input-д хандах ref, файл чирж байгаа эсэх төлөв, урьдчилсан харагдацын URL энд байна.
+2. Файл сонгоход `event.target.files?.[0]`-ийг, чирж оруулахад `event.dataTransfer.files[0]`-ийг ав. Аль ч тохиолдолд `onChange(file)`, дараа нь `onBlur()` дууд. Ижил файлыг дахин сонгоход change event үүсэхийн тулд сонгосны дараа file input-ийн утгыг хоосол.
+3. `ImageUpload.tsx` дотор hook-оо дууд. Далд input-д ref-ийг холбо. Урьдчилсан харагдац бэлэн үед ImageUploadPreview-д файлын нэр, URL, солих болон устгах функц дамжуул. Бусад үед ImageDropZone-д дарах, чирэх, буулгах функцүүдийг дамжуул.
+4. `ProfileImageInput.tsx` дотор хэрэглэгч файл сонгоход `field.onChange(file)` дуудаад `form.trigger("profileImage")` ажиллуул. Ингэснээр файлын алдааг хэрэглэгч илгээх товч дарахаас өмнө харна.
+
+**Туршилт.** Нэг зураг сонгоод устга. Яг тэр зургаа дахин сонгоход нэр, зураг хоёулаа гарч байвал input зөв шинэчлэгдэж байна. Энэ үед Network хэсэгт upload хүсэлт гарах ёсгүй. Сервер рүү зураг илгээх үйлдэл сүүлийн алхмын товчоор эхэлнэ.
+
 ## 6. Алхам шилжүүлэх ба түр хадгалах
+
+Доорх шилжилтүүдийг `src/hooks/useRegisterForm.ts` дотор хэрэгжүүл. `RegisterActions` нь товчнуудыг харуулна. Continue болон эцсийн илгээх товч хоёулаа HTML формын submit үйлдлийг эхлүүлдэг учраас аль үйлдлийг хийхийг `handleSubmit` одоогийн алхмаар шийднэ.
+
 
 1. `form/register-config.ts` дотор `defaults`, алхам бүрийн талбарын нэрсийг агуулсан `fields`, дэлгэцийн гарчиг, тайлбар бүхий `copy`-г зарла.
 2. Continue дарахад `await form.trigger(fields[step], { shouldFocus: true })` ажиллуул. Алдаатай бол одоогийн алхамдаа үлдэнэ. Зөв бол дараагийн алхмын дугаар болон зөвшөөрсөн утгуудыг localStorage-д бичээд алхмыг солино.
@@ -119,9 +143,11 @@ Vercel дээр private Blob store бэлдэж, төслийн үндсэн х�
 | GET /api/profile-images/[id] | URL дахь зургийн ID | Хадгалсан зургийн байтыг тохирох Content-Type-тай буцаана. Энэ URL-ийг мэддэг хүн зургийг үзэж чадна. |
 | POST /api/register | Нэр, овог, имэйл, утас, төрсөн огноо, өмнөх хүсэлтээр авсан зургийн URL | successSchema-аар шалгаад registrations/<id>.json замд хадгална. Амжилттай бол 201 буцаана. |
 
-`src/lib/blob.ts`, `registrations.ts` дотор хадгалах үйлдлээ, route handler бүрд тухайн үйлдэлд тохирох алдааны хариуг бич. Дараа нь гурван route handler-аа холбо. `registration-client.ts` дотор эхлээд `uploadProfileImage(file)`, дараа нь `saveProfile(values, imageUrl)` дуудна. JSON-д зөвшөөрсөн талбаруудыг нэрээр нь сонгож оруул. Энэ дасгалын нууц үгийг браузерт шалгадаг бөгөөд нэвтрэх эрх үүсгэхгүй.
+`src/lib/blob.ts`, `registrations.ts` дотор хадгалах үйлдлээ, route handler бүрд тухайн үйлдэлд тохирох алдааны хариуг бич. Дараа нь гурван route handler-аа холбо. `src/lib/registration-client.ts` дотор `uploadProfileImage` болон `saveProfile` функцийг зарла. Харин аль функцийг хэзээ дуудахыг `src/hooks/useRegistrationSubmission.ts` шийднэ. Эхлээд `uploadProfileImage(file)`-аас URL авч, дараа нь тэр URL-ийг `saveProfile(values, imageUrl)`-д дамжуул. JSON-д зөвшөөрсөн талбаруудыг нэрээр нь сонгож оруул. Энэ дасгалын нууц үгийг браузерт шалгадаг бөгөөд нэвтрэх эрх үүсгэхгүй.
 
 Илгээж байхдаа давхар хүсэлтээс хамгаалж товчнуудаа идэвхгүй болго. Зураг амжилттай хадгалагдаад бүртгэл хадгалах хүсэлт алдаа өгвөл ижил файлтай дахин оролдохдоо өмнөх URL-ийг ашигла. Амжилттай үед түр бүртгэлээ устгаж, үр дүнгээ хадгалаад StepSuccess харуул.
+
+**Дахин оролдох үйлдлийг шалгах.** Хөтчийн хөгжүүлэгчийн хэрэгслээр зөвхөн `/api/register` хүсэлтийг түр хориглоод формоо илгээ. Зураг амжилттай илгээгдсэн ч бүртгэл хадгалагдаагүй тул алдаа гарна. Хоригийг цуцлаад зургаа солилгүй дахин илгээ. Network хэсэгт хоёр дахь оролдлогоор зөвхөн register хүсэлт нэмэгдэх ёстой. Хэрэв upload дахин гарвал `useRegistrationSubmission` дотор өмнөх файл болон URL-ийг хадгалсан ref-ээ шалга.
 
 ## 8. Дэлгэцийг нэгтгэж, төслөө шалгах
 
@@ -252,7 +278,7 @@ Vercel дээр private Blob store бэлдэж, төслийн үндсэн х�
     "config": "",
     "css": "src/app/globals.css",
     "baseColor": "neutral",
-    "cssVariables": true
+    "cssVariables": false
   },
   "aliases": {
     "components": "@/components",
@@ -300,26 +326,6 @@ import type { Config } from "tailwindcss";
 const config = {
   theme: {
     extend: {
-      colors: {
-        background: "#f0f8f1",
-        foreground: "#153a2b",
-        card: "#ffffff",
-        "card-foreground": "#153a2b",
-        popover: "#ffffff",
-        "popover-foreground": "#153a2b",
-        primary: "#167148",
-        "primary-foreground": "#ffffff",
-        secondary: "#e4f3e7",
-        "secondary-foreground": "#153a2b",
-        muted: "#eff5ef",
-        "muted-foreground": "#506757",
-        accent: "#d6efdb",
-        "accent-foreground": "#153a2b",
-        destructive: "#b02749",
-        border: "#d2e2d5",
-        input: "#788f7e",
-        ring: "#167148",
-      },
       fontFamily: { sans: ["Arial", "Helvetica", "sans-serif"] },
     },
   },
@@ -523,9 +529,13 @@ export const STORAGE_KEYS = {
   draft: "orbit:registration:v1",
   success: "orbit:registration:success:v1",
 } as const;
+
 export const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
+
 export const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"] as const;
+
 export const MIN_AGE = 13;
+
 export const STEPS = ["Personal info", "Security", "Profile"] as const;
 
 export const UPLOAD_TIMEOUT_MS = 60_000;
@@ -656,7 +666,6 @@ export const removeStorage = (key: string): void => {
 
 </details>
 
-
 <details>
 <summary><code>src/lib/utils.ts</code></summary>
 
@@ -699,7 +708,9 @@ const securityFields = z.object({
   confirmPassword: z.string().min(1, "Confirm your password."),
 });
 type PasswordConfirmationType = { password: string; confirmPassword: string };
+
 const passwordsMatch = (values: PasswordConfirmationType) => values.password === values.confirmPassword;
+
 const matchError = {
   message: "Passwords do not match.",
   path: ["confirmPassword"],
@@ -735,12 +746,14 @@ const isNotFutureDate = (value: string) => {
 const meetsMinimumAge = (value: string) => {
   return new Date(`${value}T00:00:00`) <= latestBirthDate();
 };
+
 export const dateOfBirthSchema = z
   .string()
   .min(1, "Select your date of birth.")
   .refine(isValidDate, "Choose a valid date.")
   .refine(isNotFutureDate, "Date cannot be in the future.")
   .refine(meetsMinimumAge, "You must be at least 13 years old.");
+
 const isFile = (value: unknown) => {
   return typeof File !== "undefined" && value instanceof File;
 };
@@ -753,8 +766,10 @@ const isSupportedImage = (file: File) => {
   const matchesImageType = (type: "image/jpeg" | "image/png" | "image/webp") => {
     return type === file.type;
   };
+
   return !file || IMAGE_TYPES.some(matchesImageType);
 };
+
 export const imageSchema = z
   .custom<File>(isFile, "Choose a profile image.")
   .refine(isWithinSizeLimit, "Image must be 5 MB or smaller.")
@@ -803,16 +818,16 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 export const buttonVariants = cva(
-  "inline-flex cursor-pointer disabled:cursor-wait items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex cursor-pointer disabled:cursor-wait items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90",
+          "bg-emerald-700 text-white shadow-sm hover:bg-emerald-700/90",
         outline:
-          "border border-border border-input bg-background hover:bg-accent",
-        ghost: "hover:bg-accent",
-        link: "text-primary underline-offset-4 hover:underline",
+          "border border-slate-200 border-slate-400 bg-green-50 hover:bg-emerald-100",
+        ghost: "hover:bg-emerald-100",
+        link: "text-emerald-700 underline-offset-4 hover:underline",
       },
       size: { default: "h-10 px-4 py-2", sm: "h-9 px-3", icon: "size-10" },
     },
@@ -872,23 +887,23 @@ export const Calendar = ({
       caption_label: "flex items-center gap-1 text-sm font-medium",
       dropdowns: "flex items-center gap-2",
       dropdown_root:
-        "relative rounded-md px-1 focus-within:ring-2 focus-within:ring-ring",
+        "relative rounded-md px-1 focus-within:ring-2 focus-within:ring-emerald-700",
       dropdown:
         "absolute inset-0 w-full cursor-pointer opacity-0",
       nav: "absolute inset-x-0 top-0 flex justify-between",
       button_previous:
-        "z-10 grid cursor-pointer disabled:cursor-wait size-9 place-items-center rounded-md hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-30",
+        "z-10 grid cursor-pointer disabled:cursor-wait size-9 place-items-center rounded-md hover:bg-emerald-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 disabled:opacity-30",
       button_next:
-        "z-10 grid cursor-pointer disabled:cursor-wait size-9 place-items-center rounded-md hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-30",
+        "z-10 grid cursor-pointer disabled:cursor-wait size-9 place-items-center rounded-md hover:bg-emerald-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 disabled:opacity-30",
       chevron: "size-4 fill-current",
       month_grid: "w-full border-collapse",
       weekday:
-        "h-8 w-9 text-center text-[11px] font-normal text-muted-foreground",
+        "h-8 w-9 text-center text-[11px] font-normal text-slate-600",
       day: "size-9 p-0 text-center",
       day_button:
-        "grid cursor-pointer disabled:cursor-wait size-9 place-items-center rounded-md text-xs hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+        "grid cursor-pointer disabled:cursor-wait size-9 place-items-center rounded-md text-xs hover:bg-emerald-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700",
       today: "font-bold",
-      outside: "text-muted-foreground opacity-40",
+      outside: "text-slate-600 opacity-40",
       disabled: "pointer-events-none opacity-30",
       hidden: "invisible",
       ...classNames,
@@ -913,8 +928,8 @@ export const CalendarDayButton = ({ modifiers, className, ...props }: DayButtonP
     modifiers={modifiers}
     className={cn(
       className,
-      modifiers.selected && "bg-primary text-primary-foreground",
-      modifiers.today && "ring-1 ring-primary/40",
+      modifiers.selected && "bg-emerald-700 text-white",
+      modifiers.today && "ring-1 ring-emerald-700/40",
     )}
   />
 );
@@ -930,7 +945,7 @@ import type { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
 
 export const CalendarOption = ({ className, ...props }: ComponentProps<"option">) => (
-  <option {...props} className={cn("bg-popover text-popover-foreground", className)} />
+  <option {...props} className={cn("bg-white text-emerald-950", className)} />
 );
 ```
 
@@ -949,7 +964,7 @@ export const Card = ({ className, ...props }: CardType) => {
   return (
     <div
       className={cn(
-        "rounded-2xl border border-border bg-card text-card-foreground shadow-sm",
+        "rounded-2xl border border-slate-200 bg-white text-emerald-950 shadow-sm",
         className,
       )}
       {...props}
@@ -1112,7 +1127,7 @@ export const FormMessage = ({ className, ...props }: FormMessageType) => {
         id={`${id}-message`}
         role="alert"
         className={cn(
-          "flex items-start gap-1.5 text-[11px] text-destructive",
+          "flex items-start gap-1.5 text-[11px] text-rose-700",
           className,
         )}
         {...props}
@@ -1139,7 +1154,7 @@ export const Input = ({ className, type, ...props }: InputType) => {
     <input
       type={type}
       className={cn(
-        "flex h-11 w-full rounded-lg border border-border border-input bg-background/60 px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50",
+        "flex h-11 w-full rounded-lg border border-slate-200 border-slate-400 bg-green-50/60 px-3 py-2 text-sm shadow-xs placeholder:text-slate-600/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700/40 focus-visible:border-emerald-700 disabled:cursor-not-allowed disabled:opacity-50",
         className,
       )}
       {...props}
@@ -1264,7 +1279,7 @@ export const PopoverContent = ({
         align={align}
         sideOffset={sideOffset}
         className={cn(
-          "z-50 max-w-[calc(100vw-2rem)] rounded-xl border border-border bg-popover p-4 text-popover-foreground shadow-lg outline-none",
+          "z-50 max-w-[calc(100vw-2rem)] rounded-xl border border-slate-200 bg-white p-4 text-emerald-950 shadow-lg outline-none",
           className,
         )}
         {...props}
@@ -1311,10 +1326,10 @@ export const Progress = ({ className, value = 0, max = 100, ...props }: Progress
     <div
       {...props}
       data-state={current === maximum ? "complete" : "loading"}
-      className={cn("relative h-2 w-full overflow-hidden rounded-full bg-primary/10", className)}
+      className={cn("relative h-2 w-full overflow-hidden rounded-full bg-emerald-700/10", className)}
     >
       <motion.div
-        className="h-full w-full flex-1 rounded-full bg-primary "
+        className="h-full w-full flex-1 rounded-full bg-emerald-700 "
         initial={false}
         animate={{ x: `${(current / maximum) * 100 - 100}%` }}
         transition={{ duration: 0.4, ease: "easeOut" }}
@@ -1338,7 +1353,7 @@ export const Skeleton = ({ className, ...props }: SkeletonType) => {
   const reducedMotion = useReducedMotion();
   return (
     <motion.div
-      className={cn("rounded-lg bg-muted", className)}
+      className={cn("rounded-lg bg-slate-100", className)}
       animate={{ opacity: reducedMotion ? 1 : [1, 0.45, 1] }}
       transition={{
         duration: 1.8,
@@ -1382,104 +1397,75 @@ export const ItemContext = createContext({ id: "" });
 
 </details>
 
-### Бүртгэлийн компонентууд
+### Custom hook-ууд
 
 <details>
-<summary><code>src/components/register/form/RegisterActions.tsx</code></summary>
+<summary><code>src/hooks/useImageUpload.ts</code></summary>
 
-```tsx
-import { Button } from "@/components/ui/Button";
-import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
-import { ArrowLeft, ArrowRight, LockKeyhole } from "lucide-react";
+```ts
+import { useEffect, useRef, useState } from "react";
 
-type RegisterActionsType = {
-  busy: boolean;
-  step: FormStep;
-  onBack: () => void;
-  submitting: boolean;
-  submissionStage: "uploading" | "saving";
+export type ImageUploadOptions = {
+  value?: File;
+  disabled?: boolean;
+  onChange: (file: File | undefined) => void;
+  onBlur: () => void;
 };
 
-export const RegisterActions = ({ step, busy, submitting, submissionStage, onBack }: RegisterActionsType) => {
-  const disabled = busy || submitting;
-  let label = step === 3 ? "Create my profile" : "Continue";
-  if (busy) label = "Checking...";
-  if (submitting) label = submissionStage === "uploading" ? "Uploading..." : "Saving...";
+export const useImageUpload = ({ value, disabled, onChange, onBlur }: ImageUploadOptions) => {
+  const [preview, setPreview] = useState<string>();
+  const [dragging, setDragging] = useState(false);
+  const input = useRef<HTMLInputElement>(null);
 
-  return (
-    <>
-      <div className="flex gap-3 mt-4">
-        {step > 1 && (
-          <Button type="button" variant="outline" className="h-11" disabled={disabled} onClick={onBack}>
-            <ArrowLeft className="shrink-0" size={15} />
-            Back
-          </Button>
-        )}
-        <Button type="submit" disabled={disabled} className="flex-1 text-xs font-semibold h-11">
-          {disabled && <LoadingSpinner />}
-          {label}
-          {!disabled && <ArrowRight className="shrink-0 size-4" />}
-        </Button>
-      </div>
-      <p className="mt-5 flex items-center justify-center gap-1.5 text-[10px] text-muted-foreground">
-        <LockKeyhole size={11} />
-        Progress is saved when you click Continue.
-      </p>
-    </>
-  );
-};
-```
+  const syncImagePreview = () => {
+    if (!value) {
+      setPreview(undefined);
+      return;
+    }
+    const url = URL.createObjectURL(value);
+    setPreview(url);
+    const revokePreview = () => {
+      return URL.revokeObjectURL(url);
+    };
+    return revokePreview;
+  };
 
-</details>
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(syncImagePreview, [value]);
 
-<details>
-<summary><code>src/components/register/form/RegisterForm.tsx</code></summary>
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
+    onChange(event.target.files?.[0]);
+    onBlur();
+    event.target.value = "";
+  };
 
-```tsx
-"use client";
+  const openFilePicker = () => {
+    return input.current?.click();
+  };
 
-import { AlertCircle } from "lucide-react";
-import { Form } from "@/components/ui/Form";
-import { Card } from "@/components/ui/Card";
-import { CardContent } from "@/components/ui/CardContent";
-import { Stepper } from "../stepper/Stepper";
-import { StepSuccess } from "../success/StepSuccess";
-import { RegisterStep } from "../steps/RegisterStep";
-import { RegisterActions } from "./RegisterActions";
-import { RegisterSkeleton } from "./RegisterSkeleton";
-import { useRegisterForm } from "@/hooks/useRegisterForm";
+  const removeImage = () => {
+    onChange(undefined);
+    onBlur();
+  };
 
-export const RegisterForm = () => {
-  const { form, step, hydrated, summary, error, busy, disabled, submissionStage, startOver, handleSubmit, handleBack } = useRegisterForm();
+  const handleDragOver = (event: React.DragEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setDragging(true);
+  };
 
-  if (!hydrated) return <RegisterSkeleton />;
+  const handleDragLeave = () => {
+    return setDragging(false);
+  };
 
-  return (
-    <Card className="min-h-0 max-h-full overflow-y-auto overscroll-contain bg-card/90 shadow-[0_20px_80px_-35px_#193e2b33,0_3px_10px_#193e2b05] backdrop-blur-xl">
-      <CardContent className="p-4 sm:p-6 [@media(min-height:850px)]:sm:p-9">
-        <Stepper step={summary ? 4 : step} />
-        {summary ? (
-          <StepSuccess data={summary} onReset={startOver} />
-        ) : (
-          <Form {...form}>
-            <form noValidate onSubmit={handleSubmit}>
-              <RegisterStep step={step} form={form} disabled={disabled} />
-              {error && (
-                <div
-                  role="alert"
-                  className="flex gap-2 p-3 mt-5 text-xs border rounded-lg border-border border-destructive/20 bg-destructive/5 text-destructive"
-                >
-                  <AlertCircle className="size-4 shrink-0" />
-                  {error}
-                </div>
-              )}
-              <RegisterActions step={step} busy={busy} submitting={form.formState.isSubmitting} submissionStage={submissionStage} onBack={handleBack} />
-            </form>
-          </Form>
-        )}
-      </CardContent>
-    </Card>
-  );
+  const handleDrop = (event: React.DragEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setDragging(false);
+    if (disabled) return;
+    onChange(event.dataTransfer.files[0]);
+    onBlur();
+  };
+
+  return { preview, dragging, input, handleFileChange, openFilePicker, removeImage, handleDragOver, handleDragLeave, handleDrop };
 };
 ```
 
@@ -1659,6 +1645,109 @@ export const useRegistrationSubmission = (onSuccess: (summary: RegistrationSumma
 
 </details>
 
+### Бүртгэлийн компонентууд
+
+<details>
+<summary><code>src/components/register/form/RegisterActions.tsx</code></summary>
+
+```tsx
+import { Button } from "@/components/ui/Button";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
+import { ArrowLeft, ArrowRight, LockKeyhole } from "lucide-react";
+
+type RegisterActionsType = {
+  busy: boolean;
+  step: FormStep;
+  onBack: () => void;
+  submitting: boolean;
+  submissionStage: "uploading" | "saving";
+};
+
+export const RegisterActions = ({ step, busy, submitting, submissionStage, onBack }: RegisterActionsType) => {
+  const disabled = busy || submitting;
+  let label = step === 3 ? "Create my profile" : "Continue";
+  if (busy) label = "Checking...";
+  if (submitting) label = submissionStage === "uploading" ? "Uploading..." : "Saving...";
+
+  return (
+    <>
+      <div className="flex gap-3 mt-4">
+        {step > 1 && (
+          <Button type="button" variant="outline" className="h-11" disabled={disabled} onClick={onBack}>
+            <ArrowLeft className="shrink-0" size={15} />
+            Back
+          </Button>
+        )}
+        <Button type="submit" disabled={disabled} className="flex-1 text-xs font-semibold h-11">
+          {disabled && <LoadingSpinner />}
+          {label}
+          {!disabled && <ArrowRight className="shrink-0 size-4" />}
+        </Button>
+      </div>
+      <p className="mt-5 flex items-center justify-center gap-1.5 text-[10px] text-slate-600">
+        <LockKeyhole size={11} />
+        Progress is saved when you click Continue.
+      </p>
+    </>
+  );
+};
+```
+
+</details>
+
+<details>
+<summary><code>src/components/register/form/RegisterForm.tsx</code></summary>
+
+```tsx
+"use client";
+
+import { AlertCircle } from "lucide-react";
+import { Form } from "@/components/ui/Form";
+import { Card } from "@/components/ui/Card";
+import { CardContent } from "@/components/ui/CardContent";
+import { Stepper } from "../stepper/Stepper";
+import { StepSuccess } from "../success/StepSuccess";
+import { RegisterStep } from "../steps/RegisterStep";
+import { RegisterActions } from "./RegisterActions";
+import { RegisterSkeleton } from "./RegisterSkeleton";
+import { useRegisterForm } from "@/hooks/useRegisterForm";
+
+export const RegisterForm = () => {
+  const { form, step, hydrated, summary, error, busy, disabled, submissionStage, startOver, handleSubmit, handleBack } = useRegisterForm();
+
+  if (!hydrated) return <RegisterSkeleton />;
+
+  return (
+    <Card className="min-h-0 max-h-full overflow-y-auto overscroll-contain bg-white/90 shadow-xl shadow-emerald-950/10 backdrop-blur-xl">
+      <CardContent className="p-4 sm:p-6 [@media(min-height:850px)]:sm:p-9">
+        <Stepper step={summary ? 4 : step} />
+        {summary ? (
+          <StepSuccess data={summary} onReset={startOver} />
+        ) : (
+          <Form {...form}>
+            <form noValidate onSubmit={handleSubmit}>
+              <RegisterStep step={step} form={form} disabled={disabled} />
+              {error && (
+                <div
+                  role="alert"
+                  className="flex gap-2 p-3 mt-5 text-xs border rounded-lg border-slate-200 border-rose-700/20 bg-rose-700/5 text-rose-700"
+                >
+                  <AlertCircle className="size-4 shrink-0" />
+                  {error}
+                </div>
+              )}
+              <RegisterActions step={step} busy={busy} submitting={form.formState.isSubmitting} submissionStage={submissionStage} onBack={handleBack} />
+            </form>
+          </Form>
+        )}
+      </CardContent>
+    </Card>
+  );
+};
+```
+
+</details>
+
 <details>
 <summary><code>src/components/register/form/RegisterSkeleton.tsx</code></summary>
 
@@ -1668,7 +1757,7 @@ import { CardContent } from "@/components/ui/CardContent";
 import { Skeleton } from "@/components/ui/Skeleton";
 
 export const RegisterSkeleton = () => (
-  <Card className="min-h-0 max-h-full overflow-y-auto overscroll-contain bg-card/90 shadow-[0_20px_80px_-35px_#193e2b33,0_3px_10px_#193e2b05] backdrop-blur-xl">
+  <Card className="min-h-0 max-h-full overflow-y-auto overscroll-contain bg-white/90 shadow-xl shadow-emerald-950/10 backdrop-blur-xl">
     <CardContent className="space-y-7 p-4 sm:p-6 [@media(min-height:850px)]:sm:p-9">
       <Skeleton className="w-full h-12" />
       <Skeleton className="w-3/4 h-10" />
@@ -1768,8 +1857,8 @@ export const DateOfBirthInput: RegistrationFieldRendererType<"dateOfBirth"> = ({
         <PopoverTrigger asChild>
           <FormControl>
             <Button ref={inputRef} type="button" variant="outline" className="justify-start w-full font-normal h-11">
-              <CalendarIcon className="shrink-0 mr-2 size-4 text-muted-foreground" />
-              {value ? format(parseISO(value), "MMMM d, yyyy") : <span className="text-muted-foreground">Choose your birthday</span>}
+              <CalendarIcon className="shrink-0 mr-2 size-4 text-slate-600" />
+              {value ? format(parseISO(value), "MMMM d, yyyy") : <span className="text-slate-600">Choose your birthday</span>}
             </Button>
           </FormControl>
         </PopoverTrigger>
@@ -1788,7 +1877,7 @@ export const DateOfBirthInput: RegistrationFieldRendererType<"dateOfBirth"> = ({
         </PopoverContent>
       </Popover>
       <FormMessage />
-      <p className="text-[11px] text-muted-foreground">You must be 13 or older to join.</p>
+      <p className="text-[11px] text-slate-600">You must be 13 or older to join.</p>
     </FormItem>
   );
 };
@@ -1813,14 +1902,47 @@ export const EmailInput: RegistrationFieldRendererType<"email"> = ({ field }) =>
   <FormItem>
     <FormLabel>Email address</FormLabel>
     <div className="relative">
-      <Mail className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-muted-foreground" />
+      <Mail className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-slate-600" />
       <FormControl>
         <Input {...field} type="email" autoComplete="email" placeholder="you@example.com" className="pl-10" />
       </FormControl>
     </div>
     <FormMessage />
-    <p className="text-[11px] text-muted-foreground">A little connection starts with the right address.</p>
+    <p className="text-[11px] text-slate-600">A little connection starts with the right address.</p>
   </FormItem>
+);
+```
+
+</details>
+
+<details>
+<summary><code>src/components/register/input/ImageDropZone.tsx</code></summary>
+
+```tsx
+import type { ComponentProps } from "react";
+import { UploadCloud } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+type ImageDropZoneProps = ComponentProps<"button"> & { dragging: boolean };
+
+export const ImageDropZone = ({ dragging, ...props }: ImageDropZoneProps) => (
+  <button
+    {...props}
+    type="button"
+    className={cn(
+      "flex w-full cursor-pointer disabled:cursor-wait flex-col items-center rounded-xl border border-slate-200 border-dashed bg-slate-100/25 px-4 py-6 text-center hover:border-emerald-700 hover:bg-emerald-700/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700",
+      dragging && "border-emerald-700 bg-emerald-700/10",
+    )}
+  >
+    <span className="grid mb-3 rounded-full size-9 place-items-center bg-emerald-700/10 text-emerald-700">
+      <UploadCloud className="shrink-0" size={18} />
+    </span>
+
+    <span className="text-xs">
+      <strong className="font-semibold text-emerald-700">Click to upload</strong> or drag and drop
+    </span>
+    <span className="mt-1 text-[10px] text-slate-600">JPG, PNG or WebP · Up to 5 MB</span>
+  </button>
 );
 ```
 
@@ -1885,39 +2007,6 @@ export const ImageUpload = ({ value, disabled = false, onChange, onBlur, ...butt
 </details>
 
 <details>
-<summary><code>src/components/register/input/ImageDropZone.tsx</code></summary>
-
-```tsx
-import type { ComponentProps } from "react";
-import { UploadCloud } from "lucide-react";
-import { cn } from "@/lib/utils";
-
-type ImageDropZoneProps = ComponentProps<"button"> & { dragging: boolean };
-
-export const ImageDropZone = ({ dragging, ...props }: ImageDropZoneProps) => (
-  <button
-    {...props}
-    type="button"
-    className={cn(
-      "flex w-full cursor-pointer disabled:cursor-wait flex-col items-center rounded-xl border border-border border-dashed bg-muted/25 px-4 py-6 text-center hover:border-primary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-      dragging && "border-primary bg-primary/10",
-    )}
-  >
-    <span className="grid mb-3 rounded-full size-9 place-items-center bg-primary/10 text-primary">
-      <UploadCloud className="shrink-0" size={18} />
-    </span>
-
-    <span className="text-xs">
-      <strong className="font-semibold text-primary">Click to upload</strong> or drag and drop
-    </span>
-    <span className="mt-1 text-[10px] text-muted-foreground">JPG, PNG or WebP · Up to 5 MB</span>
-  </button>
-);
-```
-
-</details>
-
-<details>
 <summary><code>src/components/register/input/ImageUploadPreview.tsx</code></summary>
 
 ```tsx
@@ -1935,7 +2024,7 @@ type ImageUploadPreviewProps = {
 };
 
 export const ImageUploadPreview = ({ preview, filename, onChoose, onRemove, ...buttonProps }: ImageUploadPreviewProps) => (
-  <div className="flex items-center gap-4 p-4 border rounded-xl border-border bg-muted/30">
+  <div className="flex items-center gap-4 p-4 border rounded-xl border-slate-200 bg-slate-100/30">
     <Image unoptimized width={64} height={64} src={preview} alt="Selected profile preview" className="object-cover rounded-full size-16" />
     <div className="flex-1 min-w-0">
       <p className="text-sm font-medium truncate">{filename}</p>
@@ -1948,78 +2037,6 @@ export const ImageUploadPreview = ({ preview, filename, onChoose, onRemove, ...b
     </Button>
   </div>
 );
-```
-
-</details>
-
-<details>
-<summary><code>src/hooks/useImageUpload.ts</code></summary>
-
-```ts
-import { useEffect, useRef, useState } from "react";
-
-export type ImageUploadOptions = {
-  value?: File;
-  disabled?: boolean;
-  onChange: (file: File | undefined) => void;
-  onBlur: () => void;
-};
-
-export const useImageUpload = ({ value, disabled, onChange, onBlur }: ImageUploadOptions) => {
-  const [preview, setPreview] = useState<string>();
-  const [dragging, setDragging] = useState(false);
-  const input = useRef<HTMLInputElement>(null);
-
-  const syncImagePreview = () => {
-    if (!value) {
-      setPreview(undefined);
-      return;
-    }
-    const url = URL.createObjectURL(value);
-    setPreview(url);
-    const revokePreview = () => {
-      return URL.revokeObjectURL(url);
-    };
-    return revokePreview;
-  };
-
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(syncImagePreview, [value]);
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
-    onChange(event.target.files?.[0]);
-    onBlur();
-    event.target.value = "";
-  };
-
-  const openFilePicker = () => {
-    return input.current?.click();
-  };
-
-  const removeImage = () => {
-    onChange(undefined);
-    onBlur();
-  };
-
-  const handleDragOver = (event: React.DragEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    setDragging(true);
-  };
-
-  const handleDragLeave = () => {
-    return setDragging(false);
-  };
-
-  const handleDrop = (event: React.DragEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    setDragging(false);
-    if (disabled) return;
-    onChange(event.dataTransfer.files[0]);
-    onBlur();
-  };
-
-  return { preview, dragging, input, handleFileChange, openFilePicker, removeImage, handleDragOver, handleDragLeave, handleDrop };
-};
 ```
 
 </details>
@@ -2043,7 +2060,7 @@ export const NameInput: RegistrationFieldRendererType<"firstName" | "lastName"> 
     <FormItem>
       <FormLabel>{isFirstName ? "First name" : "Last name"}</FormLabel>
       <div className="relative">
-        <User className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-muted-foreground" />
+        <User className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-slate-600" />
         <FormControl>
           <Input
             {...field}
@@ -2087,7 +2104,7 @@ export const PasswordInput: RegistrationFieldRendererType<"password" | "confirmP
     <FormItem>
       <FormLabel>{isPassword ? "Password" : "Confirm password"}</FormLabel>
       <div className="relative">
-        <Lock className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-muted-foreground" />
+        <Lock className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-slate-600" />
         <FormControl>
           <Input
             {...field}
@@ -2127,7 +2144,7 @@ export const PhoneNumberInput: RegistrationFieldRendererType<"phoneNumber"> = ({
     <FormItem>
       <FormLabel>Phone number</FormLabel>
       <div className="relative">
-        <Phone className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-muted-foreground" />
+        <Phone className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-slate-600" />
         <FormControl>
           <Input {...field} type="tel" autoComplete="tel" placeholder="+97699112233" className="pl-10" />
         </FormControl>
@@ -2203,13 +2220,13 @@ export const StepIndicator = ({ step, index }: StepIndicatorType) => {
         animate={{ scale: step === number ? 1.08 : 1 }}
         transition={{ type: "spring", stiffness: 300, damping: 22 }}
         className={cn(
-          "grid size-8 place-items-center rounded-full border border-border text-xs font-semibold ",
-          step >= number ? "border-primary bg-primary text-primary-foreground shadow-sm" : "border-border bg-card text-muted-foreground",
+          "grid size-8 place-items-center rounded-full border border-slate-200 text-xs font-semibold ",
+          step >= number ? "border-emerald-700 bg-emerald-700 text-white shadow-sm" : "border-slate-200 bg-white text-slate-600",
         )}
       >
         {step > number ? <Check size={15} /> : number}
       </motion.span>
-      <span className={cn("flex items-center gap-1.5 text-[11px]", step === number ? "font-semibold text-foreground" : "text-muted-foreground")}>
+      <span className={cn("flex items-center gap-1.5 text-[11px]", step === number ? "font-semibold text-emerald-950" : "text-slate-600")}>
         <Icon size={12} />
         {label}
       </span>
@@ -2237,7 +2254,7 @@ export const Stepper = ({ step }: StepperType) => {
   return (
     <nav className="mb-4">
       <div className="relative">
-        <div className="absolute h-px top-4 right-8 left-8 bg-border" />
+        <div className="absolute h-px top-4 right-8 left-8 bg-slate-200" />
         <ol className="relative flex justify-between">
           <StepIndicator step={step} index={0} />
           <StepIndicator step={step} index={1} />
@@ -2279,9 +2296,9 @@ export const RegisterStep = ({ step, form, disabled }: RegisterStepType) => {
   return (
     <>
       <MotionPanel key={`heading-${step}`} className="mb-4">
-        <p className="mb-2 text-[10px] font-semibold tracking-[.15em] text-primary uppercase">Step {step} of 3</p>
+        <p className="mb-2 text-[10px] font-semibold tracking-[.15em] text-emerald-700 uppercase">Step {step} of 3</p>
         <h2 className="text-[27px] font-semibold tracking-[-.04em]">{title}</h2>
-        <p className="mt-2 text-xs leading-5 text-muted-foreground">{description}</p>
+        <p className="mt-2 text-xs leading-5 text-slate-600">{description}</p>
       </MotionPanel>
       <fieldset disabled={disabled} className="min-w-0">
         <MotionPanel key={step}>
@@ -2410,7 +2427,7 @@ export const StepSuccess = ({ data, onReset }: StepSuccessType) => {
           height={96}
           src={data.profileImage}
           alt={`${data.firstName}'s profile`}
-          className="object-cover border-4 rounded-full shadow-lg size-24 border-background"
+          className="object-cover border-4 rounded-full shadow-lg size-24 border-green-50"
         />
         <motion.span
           initial={{ scale: 0 }}
@@ -2418,15 +2435,15 @@ export const StepSuccess = ({ data, onReset }: StepSuccessType) => {
           transition={{ type: "spring", stiffness: 280, damping: 18 }}
           className="absolute bottom-0 right-0"
         >
-          <CheckCircle2 className="rounded-full size-8 bg-card text-primary" />
+          <CheckCircle2 className="rounded-full size-8 bg-white text-emerald-700" />
         </motion.span>
       </div>
-      <p className="mb-2 text-xs font-semibold tracking-widest uppercase text-primary">You’re all set</p>
+      <p className="mb-2 text-xs font-semibold tracking-widest uppercase text-emerald-700">You’re all set</p>
       <h2 ref={heading} tabIndex={-1} className="text-3xl font-semibold tracking-tight">
         Welcome, {data.firstName}.
       </h2>
-      <p className="mt-3 text-sm text-muted-foreground">Your profile is ready for its next chapter.</p>
-      <dl className="px-4 text-left border divide-y my-7 rounded-xl border-border bg-muted/25">
+      <p className="mt-3 text-sm text-slate-600">Your profile is ready for its next chapter.</p>
+      <dl className="px-4 text-left border divide-y my-7 rounded-xl border-slate-200 bg-slate-100/25">
         <SummaryRow icon={User} label="Name" value={`${data.firstName} ${data.lastName}`} />
         <SummaryRow icon={Mail} label="Email" value={data.email} />
         <SummaryRow icon={Phone} label="Phone" value={data.phoneNumber} />
@@ -2460,9 +2477,9 @@ type SummaryRowType = {
 export const SummaryRow = ({ icon: Icon, label, value }: SummaryRowType) => {
   return (
     <div className="flex items-center gap-3 py-3">
-      <Icon className="size-4 shrink-0 text-muted-foreground" />
+      <Icon className="size-4 shrink-0 text-slate-600" />
       <div className="min-w-0">
-        <dt className="text-[10px] text-muted-foreground">{label}</dt>
+        <dt className="text-[10px] text-slate-600">{label}</dt>
         <dd className="text-sm wrap-break-word">{value}</dd>
       </div>
     </div>
@@ -2610,9 +2627,9 @@ const ErrorBoundary = ({ reset }: ErrorBoundaryType) => {
   return (
     <main className="grid min-h-screen place-items-center p-6">
       <section className="max-w-md space-y-5 text-center">
-        <AlertCircle className="mx-auto size-10 text-destructive" />
+        <AlertCircle className="mx-auto size-10 text-rose-700" />
         <h1 className="text-2xl font-semibold">Something went wrong</h1>
-        <p className="text-muted-foreground">Your saved progress is still on this device. Try opening the form again.</p>
+        <p className="text-slate-600">Your saved progress is still on this device. Try opening the form again.</p>
         <Button onClick={reset}>Try again</Button>
       </section>
     </main>
@@ -2637,7 +2654,7 @@ export default ErrorBoundary;
 <summary><code>src/app/icon.svg</code></summary>
 
 ```svg
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="20" fill="#167148"/><g stroke="#fff" stroke-width="5" stroke-linecap="round"><path d="M32 15v34M17 23l30 18M17 41l30-18"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><style>.fill-emerald-700{fill:oklch(50.8% 0.118 165.612)}.stroke-white{stroke:white}</style><rect width="64" height="64" rx="20" class="fill-emerald-700"/><g class="stroke-white" stroke-width="5" stroke-linecap="round"><path d="M32 15v34M17 23l30 18M17 41l30-18"/></g></svg>
 ```
 
 </details>
@@ -2659,7 +2676,7 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: LayoutProps<"/">) => {
   return (
     <html lang="en">
-      <body className="m-0 bg-background font-sans text-foreground antialiased scheme-light">
+      <body className="m-0 bg-green-50 font-sans text-emerald-950 antialiased scheme-light">
         <MotionProvider>
           {children}
           <Toaster richColors position="bottom-right" />
@@ -2687,7 +2704,7 @@ const Home = () => {
     <div className="grid h-dvh grid-rows-[auto_minmax(0,1fr)_auto] overflow-clip px-4 sm:px-10">
       <header className="flex items-center justify-between h-12 w-full mx-auto max-w-7xl lg:h-16">
         <Link href="/" className="flex items-center gap-2 text-2xl font-bold tracking-tight">
-          <span className="grid rounded-full size-8 place-items-center bg-primary text-primary-foreground">
+          <span className="grid rounded-full size-8 place-items-center bg-emerald-700 text-white">
             <Asterisk size={25} />
           </span>
           Firstleaf
@@ -2696,18 +2713,18 @@ const Home = () => {
 
       <main className="mx-auto grid min-h-0 w-full max-w-xl grid-rows-[minmax(0,1fr)] items-center py-2 lg:max-w-6xl lg:grid-cols-[1fr_1.12fr] lg:gap-16">
         <section className="relative hidden lg:block [@media(max-height:520px)]:max-h-full [@media(max-height:520px)]:overflow-hidden">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border border-primary/15 bg-primary/5 px-3 py-1.5 text-[11px] font-semibold tracking-[.13em] text-primary">
-            <span className="size-1.5 rounded-full bg-primary" /> A FRESH START, MADE SIMPLE
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-slate-200 border-emerald-700/15 bg-emerald-700/5 px-3 py-1.5 text-[11px] font-semibold tracking-[.13em] text-emerald-700">
+            <span className="size-1.5 rounded-full bg-emerald-700" /> A FRESH START, MADE SIMPLE
           </div>
           <h1 className="max-w-lg text-5xl leading-[1.08] font-semibold tracking-[-.055em] sm:text-6xl">
             Big possibilities.
-            <br />A little more <span className="font-serif italic font-normal text-primary">you.</span>
+            <br />A little more <span className="font-serif italic font-normal text-emerald-700">you.</span>
           </h1>
-          <p className="max-w-sm mt-6 text-base leading-7 text-muted-foreground">
+          <p className="max-w-sm mt-6 text-base leading-7 text-slate-600">
             Good things start with a hello. Create your profile and make space for what’s next.
           </p>
-          <div className="flex items-center gap-3 mt-10 text-xs text-muted-foreground">
-            <ShieldCheck className="size-5 text-primary" />
+          <div className="flex items-center gap-3 mt-10 text-xs text-slate-600">
+            <ShieldCheck className="size-5 text-emerald-700" />
             <span>Your details. Your control. Always.</span>
           </div>
         </section>
@@ -2715,7 +2732,7 @@ const Home = () => {
         <RegisterForm />
       </main>
 
-      <footer className="mx-auto hidden w-full lg:flex max-w-7xl flex-wrap justify-between gap-3 border-t border-border py-2 text-[11px] text-muted-foreground">
+      <footer className="mx-auto hidden w-full lg:flex max-w-7xl flex-wrap justify-between gap-3 border-t border-slate-200 py-2 text-[11px] text-slate-600">
         <span>© {new Date().getFullYear()} Firstleaf.</span>
         <span>Thoughtfully simple. Uniquely you.</span>
       </footer>

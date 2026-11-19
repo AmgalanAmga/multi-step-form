@@ -18,7 +18,7 @@ export const PopoverContent = ({
         align={align}
         sideOffset={sideOffset}
         className={cn(
-          "z-50 max-w-[calc(100vw-2rem)] rounded-xl border border-border bg-popover p-4 text-popover-foreground shadow-lg outline-none",
+          "z-50 max-w-[calc(100vw-2rem)] rounded-xl border border-slate-200 bg-white p-4 text-emerald-950 shadow-lg outline-none",
           className,
         )}
         {...props}

@@ -20,7 +20,7 @@ export const PasswordInput: RegistrationFieldRendererType<"password" | "confirmP
     <FormItem>
       <FormLabel>{isPassword ? "Password" : "Confirm password"}</FormLabel>
       <div className="relative">
-        <Lock className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-muted-foreground" />
+        <Lock className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-slate-600" />
         <FormControl>
           <Input
             {...field}

@@ -11,7 +11,7 @@ export const Stepper = ({ step }: StepperType) => {
   return (
     <nav className="mb-4">
       <div className="relative">
-        <div className="absolute h-px top-4 right-8 left-8 bg-border" />
+        <div className="absolute h-px top-4 right-8 left-8 bg-slate-200" />
         <ol className="relative flex justify-between">
           <StepIndicator step={step} index={0} />
           <StepIndicator step={step} index={1} />

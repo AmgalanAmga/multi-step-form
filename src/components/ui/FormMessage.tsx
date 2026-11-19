@@ -21,7 +21,7 @@ export const FormMessage = ({ className, ...props }: FormMessageType) => {
         id={`${id}-message`}
         role="alert"
         className={cn(
-          "flex items-start gap-1.5 text-[11px] text-destructive",
+          "flex items-start gap-1.5 text-[11px] text-rose-700",
           className,
         )}
         {...props}

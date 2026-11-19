@@ -17,7 +17,7 @@ export const RegisterForm = () => {
   if (!hydrated) return <RegisterSkeleton />;
 
   return (
-    <Card className="min-h-0 max-h-full overflow-y-auto overscroll-contain bg-card/90 shadow-[0_20px_80px_-35px_#193e2b33,0_3px_10px_#193e2b05] backdrop-blur-xl">
+    <Card className="min-h-0 max-h-full overflow-y-auto overscroll-contain bg-white/90 shadow-xl shadow-emerald-950/10 backdrop-blur-xl">
       <CardContent className="p-4 sm:p-6 [@media(min-height:850px)]:sm:p-9">
         <Stepper step={summary ? 4 : step} />
         {summary ? (
@@ -29,7 +29,7 @@ export const RegisterForm = () => {
               {error && (
                 <div
                   role="alert"
-                  className="flex gap-2 p-3 mt-5 text-xs border rounded-lg border-border border-destructive/20 bg-destructive/5 text-destructive"
+                  className="flex gap-2 p-3 mt-5 text-xs border rounded-lg border-slate-200 border-rose-700/20 bg-rose-700/5 text-rose-700"
                 >
                   <AlertCircle className="size-4 shrink-0" />
                   {error}

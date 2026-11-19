@@ -12,7 +12,7 @@ export const PhoneNumberInput: RegistrationFieldRendererType<"phoneNumber"> = ({
     <FormItem>
       <FormLabel>Phone number</FormLabel>
       <div className="relative">
-        <Phone className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-muted-foreground" />
+        <Phone className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-slate-600" />
         <FormControl>
           <Input {...field} type="tel" autoComplete="tel" placeholder="+97699112233" className="pl-10" />
         </FormControl>

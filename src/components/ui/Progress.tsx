@@ -16,10 +16,10 @@ export const Progress = ({ className, value = 0, max = 100, ...props }: Progress
     <div
       {...props}
       data-state={current === maximum ? "complete" : "loading"}
-      className={cn("relative h-2 w-full overflow-hidden rounded-full bg-primary/10", className)}
+      className={cn("relative h-2 w-full overflow-hidden rounded-full bg-emerald-700/10", className)}
     >
       <motion.div
-        className="h-full w-full flex-1 rounded-full bg-primary "
+        className="h-full w-full flex-1 rounded-full bg-emerald-700 "
         initial={false}
         animate={{ x: `${(current / maximum) * 100 - 100}%` }}
         transition={{ duration: 0.4, ease: "easeOut" }}

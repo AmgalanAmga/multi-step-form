@@ -13,7 +13,7 @@ export const NameInput: RegistrationFieldRendererType<"firstName" | "lastName"> 
     <FormItem>
       <FormLabel>{isFirstName ? "First name" : "Last name"}</FormLabel>
       <div className="relative">
-        <User className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-muted-foreground" />
+        <User className="pointer-events-none absolute left-3.5 top-3.75 size-3.75 text-slate-600" />
         <FormControl>
           <Input
             {...field}
