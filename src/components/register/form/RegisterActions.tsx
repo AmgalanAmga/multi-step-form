@@ -31,7 +31,7 @@ export const RegisterActions = ({ step, busy, submitting, submissionStage, onBac
           {!disabled && <ArrowRight className="shrink-0 size-4" />}
         </Button>
       </div>
-      <p className="mt-5 flex items-center justify-center gap-1.5 text-[10px] text-slate-600">
+      <p className="mt-5 flex items-center justify-center gap-1.5 text-xs text-slate-600">
         <LockKeyhole size={11} />
         Progress is saved when you click Continue.
       </p>

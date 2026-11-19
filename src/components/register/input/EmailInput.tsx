@@ -17,6 +17,6 @@ export const EmailInput: RegistrationFieldRendererType<"email"> = ({ field }) =>
       </FormControl>
     </div>
     <FormMessage />
-    <p className="text-[11px] text-slate-600">A little connection starts with the right address.</p>
+    <p className="text-xs text-slate-600">A little connection starts with the right address.</p>
   </FormItem>
 );

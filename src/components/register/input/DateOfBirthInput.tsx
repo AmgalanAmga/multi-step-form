@@ -58,7 +58,7 @@ export const DateOfBirthInput: RegistrationFieldRendererType<"dateOfBirth"> = ({
         </PopoverContent>
       </Popover>
       <FormMessage />
-      <p className="text-[11px] text-slate-600">You must be 13 or older to join.</p>
+      <p className="text-xs text-slate-600">You must be 13 or older to join.</p>
     </FormItem>
   );
 };

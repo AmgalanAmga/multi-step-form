@@ -35,7 +35,7 @@ export const Calendar = ({
       chevron: "size-4 fill-current",
       month_grid: "w-full border-collapse",
       weekday:
-        "h-8 w-9 text-center text-[11px] font-normal text-slate-600",
+        "h-8 w-9 text-center text-xs font-normal text-slate-600",
       day: "size-9 p-0 text-center",
       day_button:
         "grid cursor-pointer disabled:cursor-wait size-9 place-items-center rounded-md text-xs hover:bg-emerald-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700",

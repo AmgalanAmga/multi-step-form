@@ -18,7 +18,7 @@ export const RegisterForm = () => {
 
   return (
     <Card className="min-h-0 max-h-full overflow-y-auto overscroll-contain bg-white/90 shadow-xl shadow-emerald-950/10 backdrop-blur-xl">
-      <CardContent className="p-4 sm:p-6 [@media(min-height:850px)]:sm:p-9">
+      <CardContent className="p-4 sm:p-6">
         <Stepper step={summary ? 4 : step} />
         {summary ? (
           <StepSuccess data={summary} onReset={startOver} />

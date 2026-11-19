@@ -20,6 +20,6 @@ export const ImageDropZone = ({ dragging, ...props }: ImageDropZoneProps) => (
     <span className="text-xs">
       <strong className="font-semibold text-emerald-700">Click to upload</strong> or drag and drop
     </span>
-    <span className="mt-1 text-[10px] text-slate-600">JPG, PNG or WebP · Up to 5 MB</span>
+    <span className="mt-1 text-xs text-slate-600">JPG, PNG or WebP · Up to 5 MB</span>
   </button>
 );

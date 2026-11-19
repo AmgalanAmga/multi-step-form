@@ -27,7 +27,7 @@ export const StepIndicator = ({ step, index }: StepIndicatorType) => {
       >
         {step > number ? <Check size={15} /> : number}
       </motion.span>
-      <span className={cn("flex items-center gap-1.5 text-[11px]", step === number ? "font-semibold text-emerald-950" : "text-slate-600")}>
+      <span className={cn("flex items-center gap-1.5 text-xs", step === number ? "font-semibold text-emerald-950" : "text-slate-600")}>
         <Icon size={12} />
         {label}
       </span>

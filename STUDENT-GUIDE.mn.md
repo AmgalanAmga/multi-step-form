@@ -561,7 +561,7 @@ export const Calendar = ({
       chevron: "size-4 fill-current",
       month_grid: "w-full border-collapse",
       weekday:
-        "h-8 w-9 text-center text-[11px] font-normal text-slate-600",
+        "h-8 w-9 text-center text-xs font-normal text-slate-600",
       day: "size-9 p-0 text-center",
       day_button:
         "grid cursor-pointer disabled:cursor-wait size-9 place-items-center rounded-md text-xs hover:bg-emerald-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700",
@@ -790,7 +790,7 @@ export const FormMessage = ({ className, ...props }: FormMessageType) => {
         id={`${id}-message`}
         role="alert"
         className={cn(
-          "flex items-start gap-1.5 text-[11px] text-rose-700",
+          "flex items-start gap-1.5 text-xs text-rose-700",
           className,
         )}
         {...props}
@@ -942,7 +942,7 @@ export const PopoverContent = ({
         align={align}
         sideOffset={sideOffset}
         className={cn(
-          "z-50 max-w-[calc(100vw-2rem)] rounded-xl border border-slate-200 bg-white p-4 text-emerald-950 shadow-lg outline-none",
+          "z-50 max-w-screen overflow-x-auto rounded-xl border border-slate-200 bg-white p-4 text-emerald-950 shadow-lg outline-none",
           className,
         )}
         {...props}
@@ -1347,7 +1347,7 @@ export const RegisterActions = ({ step, busy, submitting, submissionStage, onBac
           {!disabled && <ArrowRight className="shrink-0 size-4" />}
         </Button>
       </div>
-      <p className="mt-5 flex items-center justify-center gap-1.5 text-[10px] text-slate-600">
+      <p className="mt-5 flex items-center justify-center gap-1.5 text-xs text-slate-600">
         <LockKeyhole size={11} />
         Progress is saved when you click Continue.
       </p>
@@ -1382,7 +1382,7 @@ export const RegisterForm = () => {
 
   return (
     <Card className="min-h-0 max-h-full overflow-y-auto overscroll-contain bg-white/90 shadow-xl shadow-emerald-950/10 backdrop-blur-xl">
-      <CardContent className="p-4 sm:p-6 [@media(min-height:850px)]:sm:p-9">
+      <CardContent className="p-4 sm:p-6">
         <Stepper step={summary ? 4 : step} />
         {summary ? (
           <StepSuccess data={summary} onReset={startOver} />
@@ -1421,7 +1421,7 @@ import { Skeleton } from "@/components/ui/Skeleton";
 
 export const RegisterSkeleton = () => (
   <Card className="min-h-0 max-h-full overflow-y-auto overscroll-contain bg-white/90 shadow-xl shadow-emerald-950/10 backdrop-blur-xl">
-    <CardContent className="space-y-7 p-4 sm:p-6 [@media(min-height:850px)]:sm:p-9">
+    <CardContent className="space-y-7 p-4 sm:p-6">
       <Skeleton className="w-full h-12" />
       <Skeleton className="w-3/4 h-10" />
       <Skeleton className="w-full h-5" />
@@ -1540,7 +1540,7 @@ export const DateOfBirthInput: RegistrationFieldRendererType<"dateOfBirth"> = ({
         </PopoverContent>
       </Popover>
       <FormMessage />
-      <p className="text-[11px] text-slate-600">You must be 13 or older to join.</p>
+      <p className="text-xs text-slate-600">You must be 13 or older to join.</p>
     </FormItem>
   );
 };
@@ -1571,7 +1571,7 @@ export const EmailInput: RegistrationFieldRendererType<"email"> = ({ field }) =>
       </FormControl>
     </div>
     <FormMessage />
-    <p className="text-[11px] text-slate-600">A little connection starts with the right address.</p>
+    <p className="text-xs text-slate-600">A little connection starts with the right address.</p>
   </FormItem>
 );
 ```
@@ -1604,7 +1604,7 @@ export const ImageDropZone = ({ dragging, ...props }: ImageDropZoneProps) => (
     <span className="text-xs">
       <strong className="font-semibold text-emerald-700">Click to upload</strong> or drag and drop
     </span>
-    <span className="mt-1 text-[10px] text-slate-600">JPG, PNG or WebP · Up to 5 MB</span>
+    <span className="mt-1 text-xs text-slate-600">JPG, PNG or WebP · Up to 5 MB</span>
   </button>
 );
 ```
@@ -1889,7 +1889,7 @@ export const StepIndicator = ({ step, index }: StepIndicatorType) => {
       >
         {step > number ? <Check size={15} /> : number}
       </motion.span>
-      <span className={cn("flex items-center gap-1.5 text-[11px]", step === number ? "font-semibold text-emerald-950" : "text-slate-600")}>
+      <span className={cn("flex items-center gap-1.5 text-xs", step === number ? "font-semibold text-emerald-950" : "text-slate-600")}>
         <Icon size={12} />
         {label}
       </span>
@@ -1959,8 +1959,8 @@ export const RegisterStep = ({ step, form, disabled }: RegisterStepType) => {
   return (
     <>
       <MotionPanel key={`heading-${step}`} className="mb-4">
-        <p className="mb-2 text-[10px] font-semibold tracking-[.15em] text-emerald-700 uppercase">Step {step} of 3</p>
-        <h2 className="text-[27px] font-semibold tracking-[-.04em]">{title}</h2>
+        <p className="mb-2 text-xs font-semibold tracking-widest text-emerald-700 uppercase">Step {step} of 3</p>
+        <h2 className="text-3xl font-semibold tracking-tight">{title}</h2>
         <p className="mt-2 text-xs leading-5 text-slate-600">{description}</p>
       </MotionPanel>
       <fieldset disabled={disabled} className="min-w-0">
@@ -2142,7 +2142,7 @@ export const SummaryRow = ({ icon: Icon, label, value }: SummaryRowType) => {
     <div className="flex items-center gap-3 py-3">
       <Icon className="size-4 shrink-0 text-slate-600" />
       <div className="min-w-0">
-        <dt className="text-[10px] text-slate-600">{label}</dt>
+        <dt className="text-xs text-slate-600">{label}</dt>
         <dd className="text-sm wrap-break-word">{value}</dd>
       </div>
     </div>
@@ -2364,8 +2364,8 @@ import { RegisterForm } from "@/components/register/form/RegisterForm";
 
 const Home = () => {
   return (
-    <div className="grid h-dvh grid-rows-[auto_minmax(0,1fr)_auto] overflow-clip px-4 sm:px-10">
-      <header className="flex items-center justify-between h-12 w-full mx-auto max-w-7xl lg:h-16">
+    <div className="flex h-dvh flex-col overflow-clip px-4 sm:px-10">
+      <header className="flex items-center justify-between h-12 shrink-0 w-full mx-auto max-w-7xl lg:h-16">
         <Link href="/" className="flex items-center gap-2 text-2xl font-bold tracking-tight">
           <span className="grid rounded-full size-8 place-items-center bg-emerald-700 text-white">
             <Asterisk size={25} />
@@ -2374,12 +2374,12 @@ const Home = () => {
         </Link>
       </header>
 
-      <main className="mx-auto grid min-h-0 w-full max-w-xl grid-rows-[minmax(0,1fr)] items-center py-2 lg:max-w-6xl lg:grid-cols-[1fr_1.12fr] lg:gap-16">
-        <section className="relative hidden lg:block [@media(max-height:520px)]:max-h-full [@media(max-height:520px)]:overflow-hidden">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-slate-200 border-emerald-700/15 bg-emerald-700/5 px-3 py-1.5 text-[11px] font-semibold tracking-[.13em] text-emerald-700">
+      <main className="mx-auto grid min-h-0 w-full max-w-xl flex-1 grid-rows-1 items-center py-2 lg:max-w-6xl lg:grid-cols-2 lg:gap-16">
+        <section className="relative hidden lg:block max-h-full overflow-y-auto">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-slate-200 border-emerald-700/15 bg-emerald-700/5 px-3 py-1.5 text-xs font-semibold tracking-widest text-emerald-700">
             <span className="size-1.5 rounded-full bg-emerald-700" /> A FRESH START, MADE SIMPLE
           </div>
-          <h1 className="max-w-lg text-5xl leading-[1.08] font-semibold tracking-[-.055em] sm:text-6xl">
+          <h1 className="max-w-lg text-5xl leading-none font-semibold tracking-tighter sm:text-6xl">
             Big possibilities.
             <br />A little more <span className="font-serif italic font-normal text-emerald-700">you.</span>
           </h1>
@@ -2395,7 +2395,7 @@ const Home = () => {
         <RegisterForm />
       </main>
 
-      <footer className="mx-auto hidden w-full lg:flex max-w-7xl flex-wrap justify-between gap-3 border-t border-slate-200 py-2 text-[11px] text-slate-600">
+      <footer className="mx-auto hidden w-full shrink-0 lg:flex max-w-7xl flex-wrap justify-between gap-3 border-t border-slate-200 py-2 text-xs text-slate-600">
         <span>© {new Date().getFullYear()} Firstleaf.</span>
         <span>Thoughtfully simple. Uniquely you.</span>
       </footer>
