@@ -4,8 +4,8 @@ import { RegisterForm } from "@/components/register/form/RegisterForm";
 
 const Home = () => {
   return (
-    <div className="min-h-screen px-5 sm:px-10">
-      <header className="flex items-center justify-between h-24 mx-auto max-w-7xl">
+    <div className="grid h-dvh grid-rows-[auto_minmax(0,1fr)_auto] overflow-clip px-4 sm:px-10">
+      <header className="flex items-center justify-between h-12 w-full mx-auto max-w-7xl lg:h-16">
         <Link href="/" className="flex items-center gap-2 text-2xl font-bold tracking-tight">
           <span className="grid rounded-full size-8 place-items-center bg-primary text-primary-foreground">
             <Asterisk size={25} />
@@ -14,8 +14,8 @@ const Home = () => {
         </Link>
       </header>
 
-      <main className="mx-auto grid max-w-6xl items-center gap-12 pb-16 pt-8 lg:min-h-[calc(100vh-176px)] lg:grid-cols-[1fr_1.12fr] lg:gap-20 lg:pt-0">
-        <section className="relative">
+      <main className="mx-auto grid min-h-0 w-full max-w-xl grid-rows-[minmax(0,1fr)] items-center py-2 lg:max-w-6xl lg:grid-cols-[1fr_1.12fr] lg:gap-16">
+        <section className="relative hidden lg:block [@media(max-height:520px)]:max-h-full [@media(max-height:520px)]:overflow-hidden">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border border-primary/15 bg-primary/5 px-3 py-1.5 text-[11px] font-semibold tracking-[.13em] text-primary">
             <span className="size-1.5 rounded-full bg-primary" /> A FRESH START, MADE SIMPLE
           </div>
@@ -35,7 +35,7 @@ const Home = () => {
         <RegisterForm />
       </main>
 
-      <footer className="mx-auto flex max-w-7xl flex-wrap justify-between gap-3 border-t border-border py-6 text-[11px] text-muted-foreground">
+      <footer className="mx-auto hidden w-full lg:flex max-w-7xl flex-wrap justify-between gap-3 border-t border-border py-2 text-[11px] text-muted-foreground">
         <span>© {new Date().getFullYear()} Firstleaf.</span>
         <span>Thoughtfully simple. Uniquely you.</span>
       </footer>

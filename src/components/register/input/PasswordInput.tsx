@@ -31,7 +31,7 @@ export const PasswordInput: RegistrationFieldRendererType<"password" | "confirmP
           />
         </FormControl>
         <Button type="button" variant="ghost" size="icon" className="absolute top-1 right-1 size-9" onClick={handleTogglePassword}>
-          {visible ? <EyeOff size={16} /> : <Eye size={16} />}
+          {visible ? <EyeOff className="shrink-0" size={16} /> : <Eye className="shrink-0" size={16} />}
         </Button>
       </div>
       <FormMessage />

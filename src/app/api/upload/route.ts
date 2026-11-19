@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { uploadImage } from "@/lib/blob";
-import { getUploadFailure } from "@/lib/upload-errors";
 import { imageSchema } from "@/lib/validations/register.schema";
 
 export const runtime = "nodejs";
@@ -27,8 +26,7 @@ export const POST = async (request: Request) => {
   try {
     const image = await uploadImage(result.data);
     return NextResponse.json<UploadResult>(image);
-  } catch (error) {
-    const failure = getUploadFailure(error);
-    return NextResponse.json<ApiError>(failure.body, { status: failure.status });
+  } catch {
+    return NextResponse.json<ApiError>({ error: "Image upload failed. Please try again." }, { status: 500 });
   }
 };

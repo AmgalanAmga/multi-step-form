@@ -24,7 +24,9 @@ const securityFields = z.object({
   confirmPassword: z.string().min(1, "Confirm your password."),
 });
 type PasswordConfirmationType = { password: string; confirmPassword: string };
+
 const passwordsMatch = (values: PasswordConfirmationType) => values.password === values.confirmPassword;
+
 const matchError = {
   message: "Passwords do not match.",
   path: ["confirmPassword"],
@@ -52,30 +54,38 @@ const isValidDate = (value: string) => {
     date.getDate() === Number(value.slice(8, 10))
   );
 };
+
 const isNotFutureDate = (value: string) => {
   return new Date(`${value}T00:00:00`) <= new Date();
 };
+
 const meetsMinimumAge = (value: string) => {
   return new Date(`${value}T00:00:00`) <= latestBirthDate();
 };
+
 export const dateOfBirthSchema = z
   .string()
   .min(1, "Select your date of birth.")
   .refine(isValidDate, "Choose a valid date.")
   .refine(isNotFutureDate, "Date cannot be in the future.")
   .refine(meetsMinimumAge, "You must be at least 13 years old.");
+
 const isFile = (value: unknown) => {
   return typeof File !== "undefined" && value instanceof File;
 };
+
 const isWithinSizeLimit = (file: File) => {
   return !file || file.size <= MAX_IMAGE_BYTES;
 };
+
 const isSupportedImage = (file: File) => {
   const matchesImageType = (type: "image/jpeg" | "image/png" | "image/webp") => {
     return type === file.type;
   };
+
   return !file || IMAGE_TYPES.some(matchesImageType);
 };
+
 export const imageSchema = z
   .custom<File>(isFile, "Choose a profile image.")
   .refine(isWithinSizeLimit, "Image must be 5 MB or smaller.")

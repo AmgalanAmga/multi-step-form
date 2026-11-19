@@ -53,7 +53,7 @@ export const StepSuccess = ({ data, onReset }: StepSuccessType) => {
       </dl>
       <Button onClick={onReset} className="w-full h-11">
         Start over
-        <ArrowRight size={16} />
+        <ArrowRight className="shrink-0" size={16} />
       </Button>
     </motion.section>
   );

@@ -10,6 +10,7 @@ export const readStorage = <T>(key: string, schema: z.ZodType<T>): T | null => {
     return null;
   }
 };
+
 export const writeStorage = <T>(key: string, value: T): boolean => {
   if (typeof window === "undefined") return false;
   try {
@@ -19,6 +20,7 @@ export const writeStorage = <T>(key: string, value: T): boolean => {
     return false;
   }
 };
+
 export const removeStorage = (key: string): void => {
   if (typeof window === "undefined") return;
 

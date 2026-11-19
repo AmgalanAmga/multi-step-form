@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { getUploadFailure } from "@/lib/upload-errors";
 import { saveRegistration } from "@/lib/registrations";
 import { successSchema } from "@/lib/validations/register.schema";
 
@@ -25,8 +24,7 @@ export const POST = async (request: Request) => {
   try {
     const registration = await saveRegistration(result.data);
     return NextResponse.json(registration, { status: 201 });
-  } catch (error) {
-    const failure = getUploadFailure(error);
-    return errorResponse(failure.body.error, failure.status);
+  } catch {
+    return errorResponse("Registration could not be saved. Please try again.", 500);
   }
 };

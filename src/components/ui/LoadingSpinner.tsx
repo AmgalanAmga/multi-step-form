@@ -15,7 +15,7 @@ export const LoadingSpinner = () => {
         ease: "linear",
       }}
     >
-      <Loader2 className="size-4" />
+      <Loader2 className="shrink-0 size-4" />
     </motion.span>
   );
 };

@@ -9,7 +9,7 @@ type StepperType = {
 
 export const Stepper = ({ step }: StepperType) => {
   return (
-    <nav className="mb-9">
+    <nav className="mb-4">
       <div className="relative">
         <div className="absolute h-px top-4 right-8 left-8 bg-border" />
         <ol className="relative flex justify-between">

@@ -18,17 +18,17 @@ export const RegisterActions = ({ step, busy, submitting, submissionStage, onBac
 
   return (
     <>
-      <div className="flex gap-3 mt-8">
+      <div className="flex gap-3 mt-4">
         {step > 1 && (
           <Button type="button" variant="outline" className="h-11" disabled={disabled} onClick={onBack}>
-            <ArrowLeft size={15} />
+            <ArrowLeft className="shrink-0" size={15} />
             Back
           </Button>
         )}
         <Button type="submit" disabled={disabled} className="flex-1 text-xs font-semibold h-11">
           {disabled && <LoadingSpinner />}
           {label}
-          {!disabled && <ArrowRight className="size-4" />}
+          {!disabled && <ArrowRight className="shrink-0 size-4" />}
         </Button>
       </div>
       <p className="mt-5 flex items-center justify-center gap-1.5 text-[10px] text-muted-foreground">

@@ -21,11 +21,13 @@ export const DateOfBirthInput: RegistrationFieldRendererType<"dateOfBirth"> = ({
     setOpen(value);
     if (!value) onBlur();
   };
+
   const handleSelect = (date: Date | undefined) => {
     onChange(date ? format(date, "yyyy-MM-dd") : "");
     onBlur();
     setOpen(false);
   };
+
   const isDateDisabled = (date: Date) => {
     return date > latestBirthDate() || date < new Date(1900, 0);
   };
@@ -36,7 +38,7 @@ export const DateOfBirthInput: RegistrationFieldRendererType<"dateOfBirth"> = ({
         <PopoverTrigger asChild>
           <FormControl>
             <Button ref={inputRef} type="button" variant="outline" className="justify-start w-full font-normal h-11">
-              <CalendarIcon className="mr-2 size-4 text-muted-foreground" />
+              <CalendarIcon className="shrink-0 mr-2 size-4 text-muted-foreground" />
               {value ? format(parseISO(value), "MMMM d, yyyy") : <span className="text-muted-foreground">Choose your birthday</span>}
             </Button>
           </FormControl>
