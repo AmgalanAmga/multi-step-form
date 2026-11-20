@@ -24,13 +24,16 @@
 }
 
 @layer base {
-  :root { --radius: 0.75rem; }
-  * { @apply border-border; }
+  :root {
+    --radius: 0.75rem;
+  }
+  * {
+    @apply border-border;
+  }
 }
 
 .laser-page {
-  background: radial-gradient(ellipse at 78% 30%, #241336 0%, transparent 46%),
-    radial-gradient(ellipse at 8% 96%, #1c112d, transparent 42%), #09070e;
+  background: radial-gradient(ellipse at 78% 30%, #241336 0%, transparent 46%), radial-gradient(ellipse at 8% 96%, #1c112d, transparent 42%), #09070e;
 }
 
 .laser-card {
@@ -55,18 +58,29 @@
   outline-offset: 2px;
 }
 
-.invalid-field .field-control, .field-control[aria-invalid="true"] { border-color: var(--color-destructive); }
+.invalid-field .field-control,
+.field-control[aria-invalid="true"] {
+  border-color: var(--color-destructive);
+}
 
 .laser-button {
   background: linear-gradient(105deg, #b694ff, #e5bdff);
   color: #241332;
   box-shadow: 0 3px 19px -9px #985aff;
 }
-.laser-button:hover:enabled { filter: brightness(1.08); }
-.step-marker.bg-primary { box-shadow: 0 0 14px #bc84ff50; }
-.hero-accent { text-shadow: 0 0 26px #ef95fe45; }
+.laser-button:hover:enabled {
+  filter: brightness(1.08);
+}
+.step-marker.bg-primary {
+  box-shadow: 0 0 14px #bc84ff50;
+}
+.hero-accent {
+  text-shadow: 0 0 26px #ef95fe45;
+}
 
-.laser-surface { border-radius: 20px; }
+.laser-surface {
+  border-radius: 20px;
+}
 
 .laser-stage {
   position: fixed;
@@ -74,24 +88,80 @@
   pointer-events: none;
 }
 
-.laser-card { position: relative; }
-
-
-.registration-shell { width: min(100%, 86rem); margin: auto; padding: 0 clamp(1rem, 4vw, 4rem); min-height: 100svh; display: flex; flex-direction: column; }
-.registration-header { position: relative; z-index: 1; display: flex; align-items: center; padding-block: 1.1rem; border-bottom: 1px solid #cab0ef24; }
-.brand-mark { background: #c5a6ff; }
-.registration-layout { flex: 1; display: grid; grid-template-columns: minmax(0,1fr); align-content: center; gap: 3rem; width: min(100%, 38rem); margin: auto; padding-block: 2rem; }
-.headline-panel { width: 100%; height: clamp(12rem, 48vw, 19rem); color: #faf5ff; }
-.registration-note { margin: .5rem 5% 0; max-width: 31ch; color: #cfc2df; line-height: 1.6; }
-.laser-surface { min-width: 0; }
-@media (min-width: 64rem) {
-  .registration-layout { width: min(100%, 76rem); grid-template-columns: minmax(0,1fr) minmax(0,.95fr); gap: clamp(2rem, 5vw, 6rem); align-items: center; padding-block: 5rem; }
-  .headline-panel { height: clamp(18rem, 29vw, 28rem); }
+.laser-card {
+  position: relative;
 }
 
-.registration-shell { min-height: 100dvh; isolation: isolate; }
-.registration-layout { min-height: 0; margin-block: 0; padding-block: clamp(.5rem, 3vh, 2rem); }
-.registration-form { display: flex; flex-direction: column; min-width: 0; }
+.registration-shell {
+  width: min(100%, 86rem);
+  margin: auto;
+  padding: 0 clamp(1rem, 4vw, 4rem);
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+.registration-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  padding-block: 1.1rem;
+  border-bottom: 1px solid #cab0ef24;
+}
+.brand-mark {
+  background: #c5a6ff;
+}
+.registration-layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: center;
+  gap: 3rem;
+  width: min(100%, 38rem);
+  margin: auto;
+  padding-block: 2rem;
+}
+.headline-panel {
+  width: 100%;
+  height: clamp(12rem, 48vw, 19rem);
+  color: #faf5ff;
+}
+.registration-note {
+  margin: 0.5rem 5% 0;
+  max-width: 31ch;
+  color: #cfc2df;
+  line-height: 1.6;
+}
+.laser-surface {
+  min-width: 0;
+}
+@media (min-width: 64rem) {
+  .registration-layout {
+    width: min(100%, 76rem);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: center;
+    padding-block: 5rem;
+  }
+  .headline-panel {
+    height: clamp(18rem, 29vw, 28rem);
+  }
+}
+
+.registration-shell {
+  min-height: 100dvh;
+  isolation: isolate;
+}
+.registration-layout {
+  min-height: 0;
+  margin-block: 0;
+  padding-block: clamp(0.5rem, 3vh, 2rem);
+}
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
 .registration-footer {
   border-radius: 1rem;
   flex: none;
@@ -100,9 +170,9 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: max(.65rem, env(safe-area-inset-bottom));
-  padding-block: clamp(.7rem, 1.6vh, 1rem);
-  padding-inline: clamp(.75rem, 2vw, 1.5rem);
+  margin-bottom: max(0.65rem, env(safe-area-inset-bottom));
+  padding-block: clamp(0.7rem, 1.6vh, 1rem);
+  padding-inline: clamp(0.75rem, 2vw, 1.5rem);
 }
 .registration-footer::after {
   content: "";
@@ -124,24 +194,67 @@
   height: 1px;
   background: linear-gradient(90deg, transparent, rgb(255 255 255 / 12%) 35%, rgb(255 255 255 / 60%) 50%, rgb(255 255 255 / 12%) 65%, transparent);
 }
-.registration-footer > :is(small, p) { position: relative; z-index: 1; }
-.registration-footer small { display: inline-flex; align-items: center; gap: .55rem; color: #d9cbe8; font-size: .75rem; white-space: nowrap; }
-.registration-footer p { margin: 0; color: #eadcf9; font: italic clamp(.88rem, 1.35vw, 1.15rem)/1.3 Georgia, serif; text-align: right; }
-.registration-footer .laser-stage { z-index: -1; }
+.registration-footer > :is(small, p) {
+  position: relative;
+  z-index: 1;
+}
+.registration-footer small {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: #d9cbe8;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+.registration-footer p {
+  margin: 0;
+  color: #eadcf9;
+  font:
+    italic clamp(0.88rem, 1.35vw, 1.15rem)/1.3 Georgia,
+    serif;
+  text-align: right;
+}
+.registration-footer .laser-stage {
+  z-index: -1;
+}
 @media (min-width: 64rem) {
-  .registration-layout { grid-template-columns: repeat(2,minmax(0,1fr)); grid-template-rows: auto; }
-  .headline-panel { height: min(29vw, 46dvh, 28rem); }
+  .registration-layout {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto;
+  }
+  .headline-panel {
+    height: min(29vw, 46dvh, 28rem);
+  }
 }
 @media (max-width: 63.999rem) {
-  .registration-layout { grid-template-rows: auto auto; gap: .5rem; }
-  .registration-form { align-self: stretch; justify-content: center; }
-  .headline-panel { height: clamp(4rem, 18dvh, 11rem); text-shadow: 0 1px 5px #150a24; }
-  .registration-note { display: none; }
-  .registration-header { padding-block: .5rem; }
+  .registration-layout {
+    grid-template-rows: auto auto;
+    gap: 0.5rem;
+  }
+  .registration-form {
+    align-self: stretch;
+    justify-content: center;
+  }
+  .headline-panel {
+    height: clamp(4rem, 18dvh, 11rem);
+    text-shadow: 0 1px 5px #150a24;
+  }
+  .registration-note {
+    display: none;
+  }
+  .registration-header {
+    padding-block: 0.5rem;
+  }
 }
 
-
-.registration-glass > .glass-surface__content { padding: 0; min-height: 0; height: auto; max-height: inherit; flex-direction: column; align-items: stretch; }
+.registration-glass > .glass-surface__content {
+  padding: 0;
+  min-height: 0;
+  height: auto;
+  max-height: inherit;
+  flex-direction: column;
+  align-items: stretch;
+}
 .registration-glass .laser-card {
   max-height: none;
   overflow: visible;
@@ -151,6 +264,11 @@
 }
 
 @media (max-width: 28rem) {
-  .registration-footer { flex-direction: column-reverse; gap: .25rem; }
-  .registration-footer p { text-align: center; }
+  .registration-footer {
+    flex-direction: column-reverse;
+    gap: 0.25rem;
+  }
+  .registration-footer p {
+    text-align: center;
+  }
 }
