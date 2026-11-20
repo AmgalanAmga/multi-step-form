@@ -2,7 +2,7 @@ import GlassSurface from "@/components/GlassSurface";
 import TechText from "@/components/TechText";
 import { LaserFooter } from "@/components/LaserFooter";
 import Link from "next/link";
-import { Sprout } from "lucide-react";
+import Image from "next/image";
 import { RegisterForm } from "@/components/register/form/RegisterForm";
 
 const headline = "Every great story\nbegins with a name.\nLet this be the start\nof yours.";
@@ -13,9 +13,9 @@ const Home = () => {
       <header className="registration-header">
         <Link href="/" className="flex items-center gap-2 text-2xl font-bold tracking-tight">
           <span className="grid text-primary-foreground brand-mark rounded-xl size-8 place-items-center">
-            <Sprout size={25} />
+            <Image src="/icon.svg" alt="" width={32} height={32} />
           </span>
-          Firstleaf
+          Veyra
         </Link>
       </header>
 
@@ -37,9 +37,7 @@ const Home = () => {
               sweep={false}
             />
           </h1>
-          <p className="registration-note">
-            Create your Firstleaf profile in three steps. Your progress is saved each time you select Continue.
-          </p>
+          <p className="registration-note">Create your Veyra profile in three steps. Your progress is saved each time you select Continue.</p>
         </section>
 
         <div className="registration-form">

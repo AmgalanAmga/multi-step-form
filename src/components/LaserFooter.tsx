@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import LaserFlow from "./LaserFlow";
 
 export const LaserFooter = ({ year }: { year: number }) => {
@@ -8,10 +9,12 @@ export const LaserFooter = ({ year }: { year: number }) => {
 
   return (
     <footer ref={footer} className="registration-footer">
+      <span className="footer-landing-edge" aria-hidden="true" />
       <div className="laser-stage" aria-hidden="true">
-        <LaserFlow surfaceRef={footer} beamPosition={0.5} spread={3.5} revealImage={null} dpr={1} />
+        <LaserFlow surfaceRef={footer} transmission={0.95} intensity={0.58} beamWidth={2.8} flare={1.15} beamPosition={0.5} spread={4} spill={0.55} revealImage={null} dpr={1} />
       </div>
-      <small>© {year} Firstleaf.</small>
+      <small><Image src="/icon.svg" alt="" width={20} height={20} />© {year} Veyra</small>
+      <p>Your next chapter starts here.</p>
     </footer>
   );
 };

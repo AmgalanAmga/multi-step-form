@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { MotionProvider } from "@/components/MotionProvider";
 
 export const metadata: Metadata = {
-  title: "Firstleaf",
+  title: "Veyra",
   description: "Create your profile in three simple steps.",
 };
 

@@ -20,6 +20,7 @@ uniform float uTime;
 uniform float uBeamX;
 uniform vec4 uSurface;
 uniform float uRadius;
+uniform float uTransmission;
 uniform vec3 uIntro;
 uniform vec4 uPour;
 uniform vec2 uRun;
@@ -307,7 +308,11 @@ void main() {
   }
 
   col *= uAmount.x * (1.0 + uIntro.z * 0.9 * exp(-length(vec2(dx, h * 1.6)) / 70.0));
-  col *= smoothstep(-0.75, 0.25, sd * uScale);
+  float outside = smoothstep(-0.75, 0.25, sd * uScale);
+  float depth = max(p.y - sy, 0.0);
+  float reflection = exp(-depth / 36.0) * (0.45 + 0.55 * exp(-adx / 150.0));
+  vec3 transmitted = sideK * reflection * uTransmission * bloom * flowMask * uAmount.x;
+  col = mix(transmitted, col, outside);
 
   vec3 emit = 1.0 - exp(-col * mix(1.0, 0.6, uTheme));
   float peak = max(emit.r, max(emit.g, emit.b));
@@ -423,6 +428,7 @@ export const LaserFlow = ({
   surfaceRef,
   beamPosition = 0.6,
   surfaceLevel = 1,
+  transmission = 0,
   color = '#9955ff',
   intensity = 1.8,
   beamWidth = 1.15,
@@ -453,6 +459,7 @@ export const LaserFlow = ({
   const settings = {
     surfaceRef,
     beamPosition: clamp(beamPosition, 0, 1),
+    transmission: clamp(transmission, 0, 1),
     surfaceLevel: clamp(surfaceLevel, 0, 1),
     color: String(color),
     intensity: Math.max(0, intensity),
@@ -516,6 +523,7 @@ export const LaserFlow = ({
         'uBeamX',
         'uSurface',
         'uRadius',
+        'uTransmission',
         'uIntro',
         'uPour',
         'uRun',
@@ -738,6 +746,7 @@ export const LaserFlow = ({
       gl.uniform1f(uniforms.uBeamX, beamX);
       gl.uniform4f(uniforms.uSurface, surface.left, surface.top, surface.right, surface.bottom);
       gl.uniform1f(uniforms.uRadius, surface.radius);
+      gl.uniform1f(uniforms.uTransmission, s.transmission);
       gl.uniform3f(uniforms.uIntro, front, bloom, flash);
       gl.uniform4f(uniforms.uPour, frontL, frontR, fillL, fillR);
       gl.uniform2f(uniforms.uRun, runFront, beadStrength);
