@@ -44,14 +44,14 @@ export const DateOfBirthInput = ({ name, control }: RegistrationFieldProps<"date
             ref={inputRef}
             type="button"
             variant="outline"
-            className="rounded-[9px]! border-[#d8c1f459]! bg-[linear-gradient(165deg,#eeddff21,#7e5fa20f_52%)] bg-[#110c1861]! shadow-[inset_0_1px_0_#ffffff24]! backdrop-blur-[10px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bd8aff] in-[.invalid-field]:border-[#ff92a7]! aria-invalid:border-[#ff92a7]! h-11 w-full justify-start gap-3 rounded-lg border-[#705e85] px-3.5 font-normal shadow-none"
+            className="rounded-[9px]! border-[#d8c1f459]! bg-[linear-gradient(165deg,#eeddff21,#7e5fa20f_52%)] bg-[#110c1861]! shadow-[inset_0_1px_0_#ffffff24]! backdrop-blur-[10px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bd8aff] in-[.invalid-field]:border-[#ff92a7]! h-11 w-full justify-start gap-3 rounded-lg border-[#705e85] px-3.5 font-normal shadow-none"
           >
             <CalendarIcon className="size-4 shrink-0 text-[#c3b7d4]" />
             {value ? format(parseISO(value), "MMMM d, yyyy") : <span className="text-[#c3b7d4]">Choose your birthday</span>}
           </Button>
         </PopoverTrigger>
 
-        <PopoverContent className="w-auto p-0" align="start">
+        <PopoverContent className="w-auto bg-[#21152e] p-0 text-[#f6f2ff]" align="start">
           <Calendar
             autoFocus
             mode="single"

@@ -9,7 +9,7 @@ export const LaserFooter = ({ year }: { year: number }) => {
 
   return (
     <footer ref={footer} className="relative mb-2.5 flex w-full flex-none flex-col-reverse items-center justify-between gap-1 rounded-2xl p-5 sm:flex-row sm:gap-4">
-      <div className="pointer-events-none fixed inset-0 -z-1" aria-hidden="true">
+      <div className="pointer-events-none fixed inset-0 -z-1">
         <LaserFlow
           surfaceRef={footer}
           transmission={1}

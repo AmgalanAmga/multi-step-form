@@ -11,8 +11,11 @@ type RegisterActionsType = {
 
 export const RegisterActions = ({ step, busy, submitting, submissionStage, onBack }: RegisterActionsType) => {
   const disabled = busy || submitting;
+
   let label = step === 3 ? "Create my profile" : "Continue";
+
   if (busy) label = "Checking...";
+  
   if (submitting) label = submissionStage === "uploading" ? "Uploading..." : "Saving...";
 
   return (

@@ -27,7 +27,7 @@ export const PasswordInput = ({ name, control }: RegistrationFieldProps<"passwor
           {...field}
           type={visible ? "text" : "password"}
           autoComplete="new-password"
-          className="px-10 rounded-[9px]! border-[#d8c1f459]! bg-[linear-gradient(165deg,#eeddff21,#7e5fa20f_52%)] bg-[#110c1861]! shadow-[inset_0_1px_0_#ffffff24]! backdrop-blur-[10px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bd8aff] in-[.invalid-field]:border-[#ff92a7]! aria-invalid:border-[#ff92a7]! h-11"
+          className="px-10 rounded-[9px]! border-[#d8c1f459]! bg-[linear-gradient(165deg,#eeddff21,#7e5fa20f_52%)] bg-[#110c1861]! shadow-[inset_0_1px_0_#ffffff24]! backdrop-blur-[10px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bd8aff] in-[.invalid-field]:border-[#ff92a7]! h-11"
           placeholder={isPassword ? "Create a strong password" : "Enter your password again"}
         />
         <Button

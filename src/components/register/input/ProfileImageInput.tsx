@@ -8,7 +8,7 @@ export const ProfileImageInput = ({ name, control }: RegistrationFieldProps<"pro
   const { field, fieldState, formState } = useController({ name, control });
 
   return (
-    <Field className={fieldState.invalid ? "invalid-field gap-2 text-[#ff92a7]" : "gap-2"}>
+    <Field className={fieldState.invalid ? "gap-2 text-[#ff92a7]" : "gap-2"}>
       <FieldLabel htmlFor={field.name}>Profile photo</FieldLabel>
 
       <ImageUpload id={field.name} value={field.value} disabled={formState.isSubmitting} onChange={field.onChange} onBlur={field.onBlur} />

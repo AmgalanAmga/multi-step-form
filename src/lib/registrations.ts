@@ -14,6 +14,7 @@ export const saveRegistration = async (values: RegistrationSummary): Promise<Sto
     id: randomUUID(),
     createdAt: new Date().toISOString(),
   };
+
   await put(`registrations/${registration.id}.json`, JSON.stringify(registration), {
     access: "private",
     contentType: "application/json",

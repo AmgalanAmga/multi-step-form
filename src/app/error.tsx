@@ -22,4 +22,5 @@ const ErrorBoundary = ({ reset }: ErrorBoundaryType) => {
     </main>
   );
 };
+
 export default ErrorBoundary;

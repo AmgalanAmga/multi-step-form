@@ -20,7 +20,7 @@ export const NameInput = ({ name, control }: RegistrationFieldProps<"firstName" 
           {...field}
           autoComplete={isFirstName ? "given-name" : "family-name"}
           placeholder={isFirstName ? "e.g. Alex" : "e.g. Morgan"}
-          className="pl-10 rounded-[9px]! border-[#d8c1f459]! bg-[linear-gradient(165deg,#eeddff21,#7e5fa20f_52%)] bg-[#110c1861]! shadow-[inset_0_1px_0_#ffffff24]! backdrop-blur-[10px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bd8aff] in-[.invalid-field]:border-[#ff92a7]! aria-invalid:border-[#ff92a7]! h-11"
+          className="pl-10 rounded-[9px]! border-[#d8c1f459]! bg-[linear-gradient(165deg,#eeddff21,#7e5fa20f_52%)] bg-[#110c1861]! shadow-[inset_0_1px_0_#ffffff24]! backdrop-blur-[10px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bd8aff] in-[.invalid-field]:border-[#ff92a7]! h-11"
         />
       </div>
 

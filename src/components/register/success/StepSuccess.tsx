@@ -42,7 +42,7 @@ export const StepSuccess = ({ data, onReset }: StepSuccessType) => {
         <SummaryRow icon={Phone} label="Phone" value={data.phoneNumber} />
         <SummaryRow icon={Calendar} label="Birthday" value={format(parseISO(data.dateOfBirth), "MMMM d, yyyy")} />
       </dl>
-      <Button onClick={onReset} className="w-full h-11">
+      <Button onClick={onReset} className="h-11 w-full bg-[linear-gradient(105deg,#b694ff,#e5bdff)] text-[#241332] enabled:hover:brightness-108">
         Start over
         <ArrowRight className="shrink-0" size={16} />
       </Button>

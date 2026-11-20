@@ -13,7 +13,7 @@ export const EmailInput = ({ name, control }: RegistrationFieldProps<"email">) =
 
       <div className="relative">
         <Mail className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-[#c3b7d4]" />
-        <Input id={field.name} {...field} type="email" autoComplete="email" placeholder="you@example.com" className="pl-10 rounded-[9px]! border-[#d8c1f459]! bg-[linear-gradient(165deg,#eeddff21,#7e5fa20f_52%)] bg-[#110c1861]! shadow-[inset_0_1px_0_#ffffff24]! backdrop-blur-[10px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bd8aff] in-[.invalid-field]:border-[#ff92a7]! aria-invalid:border-[#ff92a7]! h-11" />
+        <Input id={field.name} {...field} type="email" autoComplete="email" placeholder="you@example.com" className="pl-10 rounded-[9px]! border-[#d8c1f459]! bg-[linear-gradient(165deg,#eeddff21,#7e5fa20f_52%)] bg-[#110c1861]! shadow-[inset_0_1px_0_#ffffff24]! backdrop-blur-[10px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bd8aff] in-[.invalid-field]:border-[#ff92a7]! h-11" />
       </div>
 
       <FieldError id={`${field.name}-error`}>{fieldState.error?.message}</FieldError>
