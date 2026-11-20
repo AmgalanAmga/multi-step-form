@@ -3,7 +3,7 @@ import Image from "next/image";
 import TechText from "@/components/animated/TechText";
 import SplashCursor from "@/components/animated/SplashCursor";
 import GlassSurface from "@/components/animated/GlassSurface";
-import { LaserFooter } from "@/components/animated/LaserFooter";
+import { LaserFooter } from "@/components/LaserFooter";
 import { RegisterForm } from "@/components/register/form/RegisterForm";
 
 const headline = "Every great story\nbegins with a name.\nLet this be the start\nof yours.";

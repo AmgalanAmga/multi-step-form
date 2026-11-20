@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import LaserFlow from "./LaserFlow";
+import LaserFlow from "./animated/LaserFlow";
 
 export const LaserFooter = ({ year }: { year: number }) => {
   const footer = useRef<HTMLElement>(null);
