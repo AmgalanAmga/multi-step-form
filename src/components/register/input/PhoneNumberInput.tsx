@@ -13,7 +13,7 @@ export const PhoneNumberInput = ({ name, control }: RegistrationFieldProps<"phon
       <FieldLabel htmlFor={field.name}>Phone number</FieldLabel>
 
       <div className="relative">
-        <Phone className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-600" />
+        <Phone className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
         <Input id={field.name} {...field} type="tel" autoComplete="tel" placeholder="+97699112233" className="field-control pl-10 h-11" />
       </div>
 

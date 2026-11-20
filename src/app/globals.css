@@ -3,82 +3,66 @@
 @config "../../tailwind.config.ts";
 
 @theme inline {
-  --color-background: var(--color-white);
-  --color-foreground: var(--color-slate-950);
-  --color-card: var(--color-white);
-  --color-popover: var(--color-white);
-  --color-primary: var(--color-red-700);
-  --color-secondary: var(--color-slate-100);
-  --color-muted: var(--color-slate-100);
-  --color-accent: var(--color-red-50);
-  --color-destructive: var(--color-red-800);
-  --color-border: var(--color-slate-200);
-  --color-input: var(--color-slate-300);
-  --color-ring: var(--color-red-600);
-  --color-card-foreground: var(--color-slate-950);
-  --color-popover-foreground: var(--color-slate-950);
-  --color-primary-foreground: var(--color-white);
-  --color-secondary-foreground: var(--color-slate-900);
-  --color-muted-foreground: var(--color-slate-600);
-  --color-accent-foreground: var(--color-red-950);
+  --color-background: #0a0910;
+  --color-foreground: #faf6ff;
+  --color-card: #16121d;
+  --color-card-foreground: #faf6ff;
+  --color-popover: #211a2a;
+  --color-popover-foreground: #faf6ff;
+  --color-primary: #f0a7ff;
+  --color-primary-foreground: #27102c;
+  --color-secondary: #322737;
+  --color-secondary-foreground: #f8eaff;
+  --color-muted: #302736;
+  --color-muted-foreground: #bfb3c6;
+  --color-accent: #39283e;
+  --color-accent-foreground: #fff2ff;
+  --color-destructive: #ff92a7;
+  --color-border: #49394f;
+  --color-input: #67556d;
+  --color-ring: #eb9dff;
 }
 
 @layer base {
-  :root {
-    --popover: var(--color-white);
-    --popover-foreground: var(--color-slate-950);
-    --border: var(--color-slate-200);
-    --radius: 0.5rem;
-  }
-
+  :root { --radius: 0.75rem; }
   * { @apply border-border; }
 }
 
-.invalid-field .field-control {
-  @apply border-red-800 focus-visible:ring-red-800/25;
+.laser-page {
+  background: radial-gradient(ellipse at 78% 30%, #181730 0%, transparent 46%),
+    radial-gradient(ellipse at 8% 96%, #1a1427, transparent 42%), #09080d;
 }
 
-.toaster.toaster {
-  font-family: inherit;
-}
-
-.sketch-paper {
-  background-color: #faf7ef;
-  background-image: radial-gradient(circle, #80766a36 0.8px, transparent 1px);
-  background-size: 18px 18px;
-}
-
-.sketch-card {
-  background: #fffdf7;
-  border: 2px solid #403831;
-  border-radius: 15px 10px 18px 9px / 9px 18px 11px 15px;
-  box-shadow: 3px 4px 0 #403831;
+.laser-card {
+  background: linear-gradient(150deg, #221927, #15111c 48%, #19141f);
+  border: 1px solid #725379;
+  border-top-color: #666483;
+  border-radius: 20px;
+  box-shadow: 0 16px 60px #05030799;
 }
 
 .field-control {
-  border-color: #897e73;
-  border-radius: 7px 10px 6px 9px / 9px 6px 9px 6px;
+  background-color: #100e16;
+  border-radius: 9px;
 }
 
-.sketch-marker {
-  border-radius: 47% 53% 45% 55% / 54% 46% 54% 46%;
-  outline: 1px solid #584c41;
+.invalid-field .field-control { border-color: var(--color-destructive); }
+
+.laser-button {
+  background: linear-gradient(105deg, #eeb3ff, #ffade4);
+  color: #28132e;
+  box-shadow: 0 3px 19px -9px #ed80fd;
+}
+.laser-button:hover:enabled { filter: brightness(1.08); }
+.step-marker.bg-primary { box-shadow: 0 0 14px #e387fc50; }
+.hero-accent { text-shadow: 0 0 26px #ef95fe45; }
+
+.laser-surface { border-radius: 20px; }
+
+.laser-stage {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
 }
 
-.sketch-button {
-  border: 1px solid #403831;
-  border-radius: 8px 5px 9px 6px;
-  box-shadow: 2px 2px 0 #403831;
-}
-
-.sketch-button:active:enabled {
-  translate: 1px 1px;
-  box-shadow: 1px 1px 0 #403831;
-}
-
-.pencil-underline {
-  text-decoration: underline;
-  text-decoration-style: wavy;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.12em;
-}
+.laser-card { position: relative; }

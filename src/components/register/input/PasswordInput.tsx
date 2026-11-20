@@ -21,7 +21,7 @@ export const PasswordInput = ({ name, control }: RegistrationFieldProps<"passwor
       <FieldLabel htmlFor={field.name}>{isPassword ? "Password" : "Confirm password"}</FieldLabel>
 
       <div className="relative">
-        <Lock className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-600" />
+        <Lock className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           id={field.name}
           {...field}

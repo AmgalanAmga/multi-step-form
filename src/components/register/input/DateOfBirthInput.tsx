@@ -46,8 +46,8 @@ export const DateOfBirthInput = ({ name, control }: RegistrationFieldProps<"date
             variant="outline"
             className="field-control h-11 w-full justify-start gap-3 rounded-lg border-input px-3.5 font-normal shadow-none"
           >
-            <CalendarIcon className="size-4 shrink-0 text-slate-600" />
-            {value ? format(parseISO(value), "MMMM d, yyyy") : <span className="text-slate-600">Choose your birthday</span>}
+            <CalendarIcon className="size-4 shrink-0 text-muted-foreground" />
+            {value ? format(parseISO(value), "MMMM d, yyyy") : <span className="text-muted-foreground">Choose your birthday</span>}
           </Button>
         </PopoverTrigger>
 
@@ -67,7 +67,7 @@ export const DateOfBirthInput = ({ name, control }: RegistrationFieldProps<"date
       </Popover>
       
       <FieldError id={`${name}-error`}>{fieldState.error?.message}</FieldError>
-      <p className="text-xs text-slate-600">You must be 13 or older to join.</p>
+      <p className="text-xs text-muted-foreground">You must be 13 or older to join.</p>
     </Field>
   );
 };

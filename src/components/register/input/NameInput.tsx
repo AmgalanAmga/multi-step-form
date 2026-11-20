@@ -14,7 +14,7 @@ export const NameInput = ({ name, control }: RegistrationFieldProps<"firstName" 
       <FieldLabel htmlFor={field.name}>{isFirstName ? "First name" : "Last name"}</FieldLabel>
 
       <div className="relative">
-        <User className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-600" />
+        <User className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           id={field.name}
           {...field}

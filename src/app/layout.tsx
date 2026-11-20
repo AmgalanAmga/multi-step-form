@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: LayoutProps<"/">) => {
   return (
     <html lang="en">
-      <body className="sketch-paper m-0 font-sans text-stone-900 antialiased scheme-light">
+      <body className="laser-page m-0 font-sans text-foreground antialiased scheme-dark">
         <MotionProvider>
           {children}
           <Toaster richColors position="bottom-right" />

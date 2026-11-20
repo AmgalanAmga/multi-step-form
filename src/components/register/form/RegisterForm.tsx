@@ -16,7 +16,7 @@ export const RegisterForm = () => {
   if (!hydrated) return <RegisterSkeleton />;
 
   return (
-    <Card className="sketch-card min-h-0 max-h-full gap-0 overflow-y-auto overscroll-contain py-0">
+    <Card className="laser-card min-h-0 max-h-full gap-0 overflow-y-auto overscroll-contain py-0">
       <CardContent className="p-4 sm:p-6">
         <Stepper step={summary ? 4 : step} />
         {summary ? (
@@ -25,7 +25,7 @@ export const RegisterForm = () => {
           <form noValidate onSubmit={handleSubmit}>
             <RegisterStep step={step} form={form} disabled={disabled} />
             {error && (
-              <div className="flex gap-2 p-3 mt-5 text-xs border rounded-lg border-slate-200 border-rose-700/20 bg-rose-700/5 text-rose-700">
+              <div className="flex gap-2 p-3 mt-5 text-xs border rounded-lg border-border border-destructive/20 bg-destructive/5 text-destructive">
                 <AlertCircle className="size-4 shrink-0" />
                 {error}
               </div>

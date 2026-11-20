@@ -12,7 +12,7 @@ type ImageUploadPreviewProps = {
 };
 
 export const ImageUploadPreview = ({ preview, filename, onChoose, onRemove, ...buttonProps }: ImageUploadPreviewProps) => (
-  <div className="flex items-center gap-4 p-4 border field-control rounded-xl border-slate-200 bg-slate-100/30">
+  <div className="flex items-center gap-4 p-4 border field-control rounded-xl border-border bg-muted/30">
     <Image unoptimized width={64} height={64} src={preview} alt="Selected profile preview" className="object-cover rounded-full size-16" />
 
     <div className="flex-1 min-w-0">
