@@ -61,7 +61,7 @@ cd firstleaf
 | Popover, PopoverTrigger, PopoverContent | Төрсөн өдөр сонгох цонхыг Radix Popover ашиглан нээж, хаа. |
 | Calendar, CalendarDayButton, CalendarOption | DayPicker-ийн өдөр болон сонголтыг тусдаа компонентоор зур. Өнөөдөр болон сонгосон өдрийг ялга. |
 | Progress, Skeleton, Toaster | Алхмын ахиц, сэргээж буй формын түр дүрс, үйлдлийн мэдэгдлийг харуул. Toaster-ийг Sonner.tsx файлд зарлана. |
-| MotionPanel, Loader2 | Алхам солигдох хөдөлгөөн болон хүсэлт хүлээх тэмдгийг үүсгэ. MotionProvider-ийг src/components/MotionProvider.tsx дотор зарла. |
+| MotionPanel, Loader2 | Алхам солигдох хөдөлгөөн болон хүсэлт хүлээх тэмдгийг үүсгэ. MotionProvider-ийг src/components/animated/MotionProvider.tsx дотор зарла. |
 
 `src/lib/utils.ts` доторх `cn` функцээр үндсэн болон гаднаас өгсөн className-ийг нэгтгэ. Cursor, өнгө, хэмжээ зэрэг Tailwind class-ийг тухайн товч, дүрс, сонголтын өөрийнх нь элементэд бич.
 
@@ -1939,7 +1939,7 @@ export const SummaryRow = ({ icon: Icon, label, value }: SummaryRowType) => {
 ### Хуудас ба API
 
 <details>
-<summary><code>src/components/MotionProvider.tsx</code></summary>
+<summary><code>src/components/animated/MotionProvider.tsx</code></summary>
 
 ```tsx
 "use client";
@@ -2113,7 +2113,7 @@ export default ErrorBoundary;
 import "./globals.css";
 import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/Sonner";
-import { MotionProvider } from "@/components/MotionProvider";
+import { MotionProvider } from "@/components/animated/MotionProvider";
 
 export const metadata: Metadata = {
   title: "Firstleaf",

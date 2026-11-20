@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import LaserFlow from "@/components/LaserFlow";
+import LaserFlow from "@/components/animated/LaserFlow";
 
 export function LaserFormSurface({ children }) {
   const surfaceRef = useRef(null);

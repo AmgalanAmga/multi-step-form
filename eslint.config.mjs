@@ -117,7 +117,7 @@ const eslintConfig = defineConfig([
     rules: { "spacing/between-functions": "error" },
   },
   // The registry component manages its renderer and feature detection internally.
-  { files: ["src/components/GlassSurface.jsx"], rules: { "react-hooks/refs": "off", "react-hooks/set-state-in-effect": "off", "react-hooks/immutability": "off" } },
+  { files: ["src/components/animated/GlassSurface.jsx"], rules: { "react-hooks/refs": "off", "react-hooks/set-state-in-effect": "off", "react-hooks/immutability": "off" } },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:

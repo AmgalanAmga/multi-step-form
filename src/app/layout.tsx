@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/sonner";
-import { MotionProvider } from "@/components/MotionProvider";
+import { MotionProvider } from "@/components/animated/MotionProvider";
 
 export const metadata: Metadata = {
   title: "Veyra",
