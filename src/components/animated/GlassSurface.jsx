@@ -301,6 +301,7 @@ const GlassSurface = ({
   renderer = 'auto',
   backdrop = undefined,
   shape = undefined,
+  contentClassName = '',
   className = '',
   style = {}
 }) => {
@@ -817,7 +818,7 @@ const GlassSurface = ({
         />
       )}
 
-      <div className="glass-surface__content">{children}</div>
+      <div className={`glass-surface__content ${contentClassName}`}>{children}</div>
     </div>
   );
 };

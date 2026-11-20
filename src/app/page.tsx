@@ -10,20 +10,20 @@ const headline = "Every great story\nbegins with a name.\nLet this be the start\
 
 const Home = () => {
   return (
-    <div className="registration-shell">
+    <div className="isolate mx-auto flex min-h-dvh w-full max-w-[86rem] flex-col px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
       <SplashCursor colors={["#9955ff", "#ce96ff", "#7b72ff"]} rainbow={false} quality="low" glow={0.25} intro={false} zIndex={-1} style={{ opacity: 0.8 }} />
-      <header className="registration-header">
+      <header className="relative z-1 flex items-center border-b border-[#cab0ef24] py-2 lg:py-4">
         <Link href="/" className="flex items-center gap-2 text-2xl font-bold tracking-tight">
-          <span className="grid text-primary-foreground brand-mark rounded-xl size-8 place-items-center">
+          <span className="grid text-[#211030] bg-[#c5a6ff] rounded-xl size-8 place-items-center">
             <Image src="/icon.svg" alt="" width={32} height={32} />
           </span>
           Astra
         </Link>
       </header>
 
-      <main className="registration-layout">
+      <main className="mx-auto grid min-h-0 w-full max-w-[38rem] flex-1 grid-cols-1 content-center gap-2 py-3 sm:py-5 lg:max-w-[76rem] lg:grid-cols-2 lg:items-center lg:gap-12 lg:py-8 xl:gap-20">
         <section className="relative z-10 min-w-0">
-          <h1 aria-label={headline.replaceAll("\n", " ")} className="headline-panel">
+          <h1 aria-label={headline.replaceAll("\n", " ")} className="h-28 w-full text-[#faf5ff] sm:h-40 md:h-44 lg:h-80 xl:h-96 2xl:h-112">
             <TechText
               text={headline}
               fontSize={88}
@@ -38,11 +38,11 @@ const Home = () => {
               sweep={false}
             />
           </h1>
-          <p className="registration-note">Create your Astra profile in three steps. Your progress is saved each time you select Continue.</p>
+          <p className="mx-[5%] mt-2 hidden max-w-[31ch] leading-relaxed text-[#cfc2df] lg:block">Create your Astra profile in three steps. Your progress is saved each time you select Continue.</p>
         </section>
 
-        <div className="registration-form">
-          <GlassSurface width="100%" height="auto" className="registration-glass">
+        <div className="flex min-w-0 flex-col justify-center">
+          <GlassSurface width="100%" height="auto" contentClassName="h-auto! flex-col items-stretch! p-0!">
             <RegisterForm />
           </GlassSurface>
         </div>

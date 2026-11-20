@@ -24,13 +24,13 @@ export const RegisterActions = ({ step, busy, submitting, submissionStage, onBac
             Back
           </Button>
         )}
-        <Button type="submit" disabled={disabled} className="laser-button flex-1 text-xs font-semibold h-11">
+        <Button type="submit" disabled={disabled} className="bg-[linear-gradient(105deg,#b694ff,#e5bdff)] text-[#241332] shadow-[0_3px_19px_-9px_#985aff] enabled:hover:brightness-108 flex-1 text-xs font-semibold h-11">
           {disabled && <Loader2 className="size-4 animate-spin motion-reduce:animate-none" />}
           {label}
           {!disabled && <ArrowRight className="shrink-0 size-4" />}
         </Button>
       </div>
-      <p className="mt-5 flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
+      <p className="mt-5 flex items-center justify-center gap-1.5 text-xs text-[#c3b7d4]">
         <LockKeyhole size={11} />
         Progress is saved when you click Continue.
       </p>

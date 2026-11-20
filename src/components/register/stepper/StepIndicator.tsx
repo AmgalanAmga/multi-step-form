@@ -20,13 +20,13 @@ export const StepIndicator = ({ step, number }: StepIndicatorProps) => {
         animate={{ scale: step === number ? 1.08 : 1 }}
         transition={{ type: "spring", stiffness: 300, damping: 22 }}
         className={cn(
-          "step-marker relative z-10 grid size-8 place-items-center rounded-full border border-border text-xs font-semibold ",
-          step >= number ? "border-primary bg-primary text-primary-foreground shadow-sm" : "border-border bg-card text-muted-foreground",
+          "relative z-10 grid size-8 place-items-center rounded-full border border-[#49375c] text-xs font-semibold ",
+          step >= number ? "border-[#c5a6ff] bg-[#c5a6ff] text-[#211030] shadow-[0_0_14px_#bc84ff50]" : "border-[#49375c] bg-[#16121d] text-[#c3b7d4]",
         )}
       >
         {step > number ? <Check size={15} /> : number}
       </motion.span>
-      <span className={cn("flex items-center gap-1.5 text-xs", step === number ? "font-semibold text-foreground" : "text-muted-foreground")}>
+      <span className={cn("flex items-center gap-1.5 text-xs", step === number ? "font-semibold text-[#f6f2ff]" : "text-[#c3b7d4]")}>
         <Icon size={12} />
         {label}
       </span>

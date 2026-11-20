@@ -11,9 +11,9 @@ type SummaryRowType = {
 export const SummaryRow = ({ icon: Icon, label, value }: SummaryRowType) => {
   return (
     <div className="flex items-center gap-3 py-3">
-      <Icon className="size-4 shrink-0 text-muted-foreground" />
+      <Icon className="size-4 shrink-0 text-[#c3b7d4]" />
       <div className="min-w-0">
-        <dt className="text-xs text-muted-foreground">{label}</dt>
+        <dt className="text-xs text-[#c3b7d4]">{label}</dt>
         <dd className="text-sm wrap-break-word">{value}</dd>
       </div>
     </div>

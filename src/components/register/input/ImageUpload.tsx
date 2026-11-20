@@ -58,17 +58,17 @@ export const ImageUpload = ({ value, disabled = false, onChange, onBlur, ...butt
           onBlur={onBlur}
           onClick={openFilePicker}
           type="button"
-          className="field-control flex w-full cursor-pointer disabled:cursor-wait flex-col items-center rounded-xl border border-border border-dashed bg-muted/25 px-4 py-6 text-center hover:border-primary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          className="rounded-[9px]! border-[#d8c1f459]! bg-[linear-gradient(165deg,#eeddff21,#7e5fa20f_52%)] bg-[#110c1861]! shadow-[inset_0_1px_0_#ffffff24]! backdrop-blur-[10px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bd8aff] in-[.invalid-field]:border-[#ff92a7]! aria-invalid:border-[#ff92a7]! flex w-full cursor-pointer disabled:cursor-wait flex-col items-center rounded-xl border border-[#49375c] border-dashed bg-[#302736]/25 px-4 py-6 text-center hover:border-[#c5a6ff] hover:bg-[#c5a6ff]/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c5a6ff]"
         >
-          <span className="grid mb-3 rounded-full size-9 place-items-center bg-primary/10 text-primary">
+          <span className="grid mb-3 rounded-full size-9 place-items-center bg-[#c5a6ff]/10 text-[#c5a6ff]">
             <UploadCloud className="shrink-0" size={18} />
           </span>
       
           <span className="text-xs">
-            <strong className="font-semibold text-primary">Choose a photo</strong>
+            <strong className="font-semibold text-[#c5a6ff]">Choose a photo</strong>
           </span>
       
-          <span className="mt-1 text-xs text-muted-foreground">JPG, PNG or WebP · Up to 5 MB</span>
+          <span className="mt-1 text-xs text-[#c3b7d4]">JPG, PNG or WebP · Up to 5 MB</span>
         </button>
       )}
     </div>

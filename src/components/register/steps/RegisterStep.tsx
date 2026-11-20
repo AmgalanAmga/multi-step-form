@@ -21,9 +21,9 @@ export const RegisterStep = ({ step, form, disabled }: RegisterStepType) => {
   return (
     <>
       <MotionPanel key={`heading-${step}`} className="mb-4">
-        <p className="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">Step {step} of 3</p>
+        <p className="mb-2 text-xs font-semibold tracking-widest text-[#c5a6ff] uppercase">Step {step} of 3</p>
         <h2 className="text-3xl font-semibold tracking-tight">{title}</h2>
-        <p className="mt-2 text-xs leading-5 text-muted-foreground">{description}</p>
+        <p className="mt-2 text-xs leading-5 text-[#c3b7d4]">{description}</p>
       </MotionPanel>
 
       <fieldset disabled={disabled} className="min-w-0">
