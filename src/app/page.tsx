@@ -1,9 +1,9 @@
-import SplashCursor from "@/components/animated/SplashCursor";
-import GlassSurface from "@/components/animated/GlassSurface";
-import TechText from "@/components/animated/TechText";
-import { LaserFooter } from "@/components/animated/LaserFooter";
 import Link from "next/link";
 import Image from "next/image";
+import TechText from "@/components/animated/TechText";
+import SplashCursor from "@/components/animated/SplashCursor";
+import GlassSurface from "@/components/animated/GlassSurface";
+import { LaserFooter } from "@/components/animated/LaserFooter";
 import { RegisterForm } from "@/components/register/form/RegisterForm";
 
 const headline = "Every great story\nbegins with a name.\nLet this be the start\nof yours.";
@@ -34,7 +34,6 @@ const Home = () => {
               intro="type"
               introDuration={2.8}
               accentColor="#e6baff"
-              draggable={false}
               labels={false}
               sweep={false}
             />

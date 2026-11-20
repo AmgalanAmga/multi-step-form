@@ -54,7 +54,6 @@ const TechText = ({
   specks = 15,
   selection = true,
   labels = true,
-  draggable = true,
   bounce = 0.4,
   sweep = true,
   speed = 1,
@@ -93,7 +92,6 @@ const TechText = ({
       specks,
       selection,
       labels,
-      draggable,
       bounce,
       sweep,
       speed,
@@ -131,7 +129,6 @@ const TechText = ({
     let clock = 0;
     let pulse = 0;
     let placed = false;
-    let dragging = -1;
     let cursor = '';
     let introClock = 0;
     let introKind = '';
@@ -141,7 +138,6 @@ const TechText = ({
     const kicks = [];
     const press = { x: 0, y: 0, time: 0, index: -1 };
     const pointer = { x: 0, y: 0, inside: false };
-    const grab = { x: 0, y: 0 };
     const lens = { x: 0, y: 0 };
     const frame = { x1: 0, y1: 0, x2: 0, y2: 0, alpha: 0, index: -1 };
 
@@ -327,7 +323,6 @@ const TechText = ({
           dashes: sprite(s, { ...next, baseline: glyphBaseline }, base, true, ink)
         });
       });
-      if (dragging >= 0 && glyphs[dragging]?.index !== previous[dragging]?.index) dragging = -1;
       if (frame.index >= 0 && glyphs[frame.index]?.char !== previous[frame.index]?.char) frame.index = -1;
       return next;
     };
@@ -732,7 +727,7 @@ const TechText = ({
       const progress = introOn ? clamp01((introClock - INTRO_DELAY - s.introDelay) / Math.max(0.3, s.introDuration)) : 1;
       introducing = introOn && progress < 1;
 
-      const sweeping = !introducing && s.sweep && !reducedMotion && !pointer.inside && dragging < 0;
+      const sweeping = !introducing && s.sweep && !reducedMotion && !pointer.inside;
       if (sweeping) clock += dt * s.speed;
       pulse += dt;
       let targetX = pointer.x;
@@ -741,7 +736,7 @@ const TechText = ({
         targetX = view.left + (view.right - view.left) * (0.5 - 0.5 * Math.cos(clock * 0.45));
         targetY = view.top + (view.bottom - view.top) * (0.45 + 0.1 * Math.sin(clock * 0.8));
       }
-      const active = !introducing && (pointer.inside || sweeping || dragging >= 0);
+      const active = !introducing && (pointer.inside || sweeping);
       if (active && !placed) {
         lens.x = targetX;
         lens.y = targetY;
@@ -752,7 +747,7 @@ const TechText = ({
         lens.y = approach(lens.y, targetY, dt, lag);
       }
       placed = active;
-      presence = approach(presence, s.reveal === 'area' && active && dragging < 0 ? 1 : 0, dt, 0.16);
+      presence = approach(presence, s.reveal === 'area' && active ? 1 : 0, dt, 0.16);
 
       for (let k = kicks.length - 1; k >= 0; k--) {
         if (kicks[k].at > pulse) continue;
@@ -762,15 +757,7 @@ const TechText = ({
       }
 
       let moving = false;
-      glyphs.forEach((glyph, i) => {
-        if (i === dragging) {
-          glyph.offset.x = approach(glyph.offset.x, pointer.x - grab.x, dt, 0.03);
-          glyph.offset.y = approach(glyph.offset.y, pointer.y - grab.y, dt, 0.03);
-          glyph.velocity.x = 0;
-          glyph.velocity.y = 0;
-          moving = true;
-          return;
-        }
+      glyphs.forEach(glyph => {
         const { offset, velocity } = glyph;
         if (Math.abs(offset.x) < 0.05 && Math.abs(offset.y) < 0.05 && Math.hypot(velocity.x, velocity.y) < 0.5) {
           offset.x = 0;
@@ -802,7 +789,7 @@ const TechText = ({
         });
       }
 
-      const focus = introducing ? typing : dragging >= 0 ? dragging : active ? glyphAt(lens.x, lens.y) : -1;
+      const focus = introducing ? typing : active ? glyphAt(lens.x, lens.y) : -1;
       if (focus >= 0 && s.selection) {
         const glyph = glyphs[focus];
         const bx1 = glyph.box.x1 + glyph.offset.x - 6;
@@ -815,7 +802,7 @@ const TechText = ({
           frame.x2 = bx2;
           frame.y2 = by2;
         }
-        const glide = focus === dragging ? 0.02 : 0.08;
+        const glide = 0.08;
         frame.x1 = approach(frame.x1, bx1, dt, glide);
         frame.y1 = approach(frame.y1, by1, dt, glide);
         frame.x2 = approach(frame.x2, bx2, dt, glide);
@@ -829,7 +816,7 @@ const TechText = ({
           ? introKind === 'type' && (i === typing || (typing >= 0 && i > typing))
             ? 1
             : 0
-          : s.reveal === 'letter' && i === focus && i !== dragging
+          : s.reveal === 'letter' && i === focus
             ? 1
             : 0;
         if (introducing && glyph.shown === 0) glyph.outline = target;
@@ -842,7 +829,7 @@ const TechText = ({
 
       const hovering = !introducing && focus >= 0 && pointer.inside;
       const nextCursor =
-        dragging >= 0 ? 'grabbing' : hovering && s.draggable ? 'grab' : hovering && s.clickKick ? 'pointer' : '';
+        hovering && s.clickKick ? 'pointer' : '';
       if (nextCursor !== cursor) {
         cursor = nextCursor;
         container.style.cursor = nextCursor;
@@ -901,7 +888,7 @@ const TechText = ({
         introducing ||
         kicks.length > 0 ||
         (guideAlpha > 0.005 && guideAlpha < 0.995) ||
-        Math.abs(presence - (s.reveal === 'area' && active && dragging < 0 ? 1 : 0)) > 0.002 ||
+        Math.abs(presence - (s.reveal === 'area' && active ? 1 : 0)) > 0.002 ||
         (frame.alpha > 0.01 && frame.alpha < 0.99);
       if ((active || settling) && visible && alive) raf = requestAnimationFrame(tick);
     };
@@ -931,7 +918,6 @@ const TechText = ({
     };
 
     const onLeave = () => {
-      if (dragging >= 0) return;
       pointer.inside = false;
       wake();
     };
@@ -939,30 +925,16 @@ const TechText = ({
     const onDown = e => {
       locate(e);
       pointer.inside = true;
-      const s = settingsRef.current;
       const primary = e.pointerType !== 'mouse' || e.button === 0;
       const index = introducing || !primary ? -1 : glyphAt(pointer.x, pointer.y);
       press.x = pointer.x;
       press.y = pointer.y;
       press.time = performance.now();
       press.index = index;
-      if (s?.draggable && index >= 0) {
-        dragging = index;
-        grab.x = pointer.x - glyphs[index].offset.x;
-        grab.y = pointer.y - glyphs[index].offset.y;
-        container.setPointerCapture?.(e.pointerId);
-      }
       wake();
     };
 
     const onUp = e => {
-      if (dragging >= 0) {
-        dragging = -1;
-        container.releasePointerCapture?.(e.pointerId);
-        const rect = container.getBoundingClientRect();
-        pointer.inside =
-          e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
-      }
       if (
         e.type === 'pointerup' &&
         press.index >= 0 &&
