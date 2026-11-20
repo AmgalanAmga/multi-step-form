@@ -1,3 +1,4 @@
+import GlassSurface from "@/components/GlassSurface";
 import TechText from "@/components/TechText";
 import { LaserFooter } from "@/components/LaserFooter";
 import Link from "next/link";
@@ -42,7 +43,9 @@ const Home = () => {
         </section>
 
         <div className="registration-form">
-          <RegisterForm />
+          <GlassSurface width="100%" height="auto" className="registration-glass">
+            <RegisterForm />
+          </GlassSurface>
         </div>
       </main>
 

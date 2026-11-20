@@ -97,3 +97,11 @@
   .registration-note { display: none; }
   .registration-header { padding-block: .5rem; }
 }
+
+.registration-glass { max-height: 100%; min-height: 0; }
+.registration-glass > .glass-surface__content { padding: 0; min-height: 0; height: auto; max-height: inherit; flex-direction: column; align-items: stretch; }
+.registration-glass .laser-card {
+  background: linear-gradient(135deg, rgb(92 65 120 / 36%), rgb(24 17 37 / 72%) 58%, rgb(62 39 90 / 46%));
+  border-color: rgb(221 194 255 / 36%);
+  box-shadow: inset 0 1px 0 rgb(247 228 255 / 20%);
+}
