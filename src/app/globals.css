@@ -66,3 +66,9 @@
 }
 
 .laser-card { position: relative; }
+
+@media (max-width: 63.999rem) {
+  .headline-panel {
+    background: linear-gradient(90deg, #0c0a14 50%, transparent);
+  }
+}

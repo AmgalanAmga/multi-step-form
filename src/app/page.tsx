@@ -1,7 +1,10 @@
+import TechText from "@/components/TechText";
 import { LaserFormSurface } from "@/components/register/form/LaserFormSurface";
 import Link from "next/link";
-import { Asterisk, ShieldCheck } from "lucide-react";
+import { Asterisk } from "lucide-react";
 import { RegisterForm } from "@/components/register/form/RegisterForm";
+
+const headline = "Every great story\nbegins with a name.\nLet this be the start\nof yours.";
 
 const Home = () => {
   return (
@@ -15,22 +18,24 @@ const Home = () => {
         </Link>
       </header>
 
-      <main className="grid items-center flex-1 w-full max-w-xl min-h-0 grid-rows-1 pt-14 pb-3 lg:pt-10 mx-auto lg:max-w-6xl lg:grid-cols-2 lg:gap-16">
-        <section className="relative hidden max-h-full overflow-y-auto lg:block">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border border-primary/15 bg-primary/5 px-3 py-1.5 text-xs font-semibold tracking-widest text-primary">
-            <span className="size-1.5 rounded-full bg-primary" /> A FRESH START, MADE SIMPLE
-          </div>
-          <h1 className="max-w-lg text-5xl font-semibold leading-none tracking-tighter sm:text-6xl">
-            Big possibilities.
-            <br />A little more <span className="italic font-normal text-primary hero-accent">you.</span>
+      <main className="grid items-center flex-1 w-full max-w-xl min-h-0 grid-rows-[auto_minmax(0,1fr)] gap-2 pt-2 pb-3 lg:grid-rows-1 lg:pt-10 mx-auto lg:max-w-6xl lg:grid-cols-2 lg:gap-16">
+        <section className="relative z-10 min-w-0">
+          <h1 aria-label={headline.replaceAll("\n", " ")} className="headline-panel h-36 w-full sm:h-44 lg:h-72">
+            <TechText
+              text={headline}
+              fontSize={72}
+              align="left"
+              intro="type"
+              introDuration={2.8}
+              accentColor="#c8baff"
+              draggable={false}
+              labels={false}
+              sweep={false}
+            />
           </h1>
-          <p className="max-w-sm mt-6 text-base leading-7 text-muted-foreground">
-            Good things start with a hello. Create your profile and make space for what’s next.
+          <p className="mx-[5%] mt-4 hidden max-w-sm border-l-2 border-primary/60 pl-4 text-sm leading-6 text-muted-foreground lg:block">
+            Create your Firstleaf profile in three steps. Your progress is saved each time you select Continue.
           </p>
-          <div className="flex items-center gap-3 mt-10 text-xs text-muted-foreground">
-            <ShieldCheck className="text-primary size-5" />
-            <span>Your details. Your control. Always.</span>
-          </div>
         </section>
 
         <LaserFormSurface>
