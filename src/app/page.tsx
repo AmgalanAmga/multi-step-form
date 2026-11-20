@@ -1,3 +1,4 @@
+import SplashCursor from "@/components/SplashCursor";
 import GlassSurface from "@/components/GlassSurface";
 import TechText from "@/components/TechText";
 import { LaserFooter } from "@/components/LaserFooter";
@@ -10,6 +11,15 @@ const headline = "Every great story\nbegins with a name.\nLet this be the start\
 const Home = () => {
   return (
     <div className="registration-shell">
+      <SplashCursor
+        colors={["#9955ff", "#ce96ff", "#7b72ff"]}
+        rainbow={false}
+        quality="low"
+        glow={0.25}
+        intro={false}
+        zIndex={-1}
+        style={{ opacity: 0.8 }}
+      />
       <header className="registration-header">
         <Link href="/" className="flex items-center gap-2 text-2xl font-bold tracking-tight">
           <span className="grid text-primary-foreground brand-mark rounded-xl size-8 place-items-center">
