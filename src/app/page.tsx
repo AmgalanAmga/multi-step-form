@@ -17,7 +17,7 @@ const Home = () => {
           <span className="grid text-primary-foreground brand-mark rounded-xl size-8 place-items-center">
             <Image src="/icon.svg" alt="" width={32} height={32} />
           </span>
-          Veyra
+          Astra
         </Link>
       </header>
 
@@ -38,7 +38,7 @@ const Home = () => {
               sweep={false}
             />
           </h1>
-          <p className="registration-note">Create your Veyra profile in three steps. Your progress is saved each time you select Continue.</p>
+          <p className="registration-note">Create your Astra profile in three steps. Your progress is saved each time you select Continue.</p>
         </section>
 
         <div className="registration-form">

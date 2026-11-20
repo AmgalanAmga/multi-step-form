@@ -1,4 +1,4 @@
-# Veyra
+# Astra
 
 ## Install
 

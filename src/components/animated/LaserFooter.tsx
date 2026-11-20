@@ -13,8 +13,8 @@ export const LaserFooter = ({ year }: { year: number }) => {
       <div className="laser-stage" aria-hidden="true">
         <LaserFlow surfaceRef={footer} transmission={0.95} intensity={0.58} beamWidth={2.8} flare={1.15} beamPosition={0.5} spread={4} spill={0.55} revealImage={null} dpr={1} />
       </div>
-      <small><Image src="/icon.svg" alt="" width={20} height={20} />© {year} Veyra</small>
-      <p>Your next chapter starts here.</p>
+      <small><Image src="/icon.svg" alt="" width={20} height={20} />© {year} Astra</small>
+      <p>Take the first step toward something only you can build.</p>
     </footer>
   );
 };
