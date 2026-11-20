@@ -4,23 +4,23 @@
 
 @theme inline {
   --color-background: #0a0910;
-  --color-foreground: #faf6ff;
+  --color-foreground: #f6f2ff;
   --color-card: #16121d;
-  --color-card-foreground: #faf6ff;
+  --color-card-foreground: #f6f2ff;
   --color-popover: #211a2a;
-  --color-popover-foreground: #faf6ff;
-  --color-primary: #f0a7ff;
-  --color-primary-foreground: #27102c;
+  --color-popover-foreground: #f6f2ff;
+  --color-primary: #c5a6ff;
+  --color-primary-foreground: #211030;
   --color-secondary: #322737;
   --color-secondary-foreground: #f8eaff;
   --color-muted: #302736;
-  --color-muted-foreground: #bfb3c6;
+  --color-muted-foreground: #c3b7d4;
   --color-accent: #39283e;
   --color-accent-foreground: #fff2ff;
   --color-destructive: #ff92a7;
-  --color-border: #49394f;
-  --color-input: #67556d;
-  --color-ring: #eb9dff;
+  --color-border: #49375c;
+  --color-input: #705e85;
+  --color-ring: #bd8aff;
 }
 
 @layer base {
@@ -29,32 +29,32 @@
 }
 
 .laser-page {
-  background: radial-gradient(ellipse at 78% 30%, #181730 0%, transparent 46%),
-    radial-gradient(ellipse at 8% 96%, #1a1427, transparent 42%), #09080d;
+  background: radial-gradient(ellipse at 78% 30%, #241336 0%, transparent 46%),
+    radial-gradient(ellipse at 8% 96%, #1c112d, transparent 42%), #09070e;
 }
 
 .laser-card {
-  background: linear-gradient(150deg, #221927, #15111c 48%, #19141f);
-  border: 1px solid #725379;
-  border-top-color: #666483;
+  background: linear-gradient(150deg, #281d35, #17121e 48%, #1c1426);
+  border: 1px solid #564165;
+  border-top-color: #84659c;
   border-radius: 20px;
   box-shadow: 0 16px 60px #05030799;
 }
 
 .field-control {
-  background-color: #100e16;
+  background-color: #100d16;
   border-radius: 9px;
 }
 
 .invalid-field .field-control { border-color: var(--color-destructive); }
 
 .laser-button {
-  background: linear-gradient(105deg, #eeb3ff, #ffade4);
-  color: #28132e;
-  box-shadow: 0 3px 19px -9px #ed80fd;
+  background: linear-gradient(105deg, #b694ff, #e5bdff);
+  color: #241332;
+  box-shadow: 0 3px 19px -9px #985aff;
 }
 .laser-button:hover:enabled { filter: brightness(1.08); }
-.step-marker.bg-primary { box-shadow: 0 0 14px #e387fc50; }
+.step-marker.bg-primary { box-shadow: 0 0 14px #bc84ff50; }
 .hero-accent { text-shadow: 0 0 26px #ef95fe45; }
 
 .laser-surface { border-radius: 20px; }
@@ -67,8 +67,33 @@
 
 .laser-card { position: relative; }
 
+
+.registration-shell { width: min(100%, 86rem); margin: auto; padding: 0 clamp(1rem, 4vw, 4rem); min-height: 100svh; display: flex; flex-direction: column; }
+.registration-header { position: relative; z-index: 1; display: flex; align-items: center; padding-block: 1.1rem; border-bottom: 1px solid #cab0ef24; }
+.brand-mark { background: #c5a6ff; }
+.registration-layout { flex: 1; display: grid; grid-template-columns: minmax(0,1fr); align-content: center; gap: 3rem; width: min(100%, 38rem); margin: auto; padding-block: 2rem; }
+.headline-panel { width: 100%; height: clamp(12rem, 48vw, 19rem); color: #faf5ff; }
+.registration-note { margin: .5rem 5% 0; max-width: 31ch; color: #cfc2df; line-height: 1.6; }
+.laser-surface { min-width: 0; }
+@media (min-width: 64rem) {
+  .registration-layout { width: min(100%, 76rem); grid-template-columns: minmax(0,1fr) minmax(0,.95fr); gap: clamp(2rem, 5vw, 6rem); align-items: center; padding-block: 5rem; }
+  .headline-panel { height: clamp(18rem, 29vw, 28rem); }
+}
+
+.registration-shell { height: 100dvh; min-height: 0; isolation: isolate; }
+.registration-layout { min-height: 0; margin-block: 0; padding-block: clamp(.5rem, 3vh, 2rem); }
+.registration-form { display: flex; flex-direction: column; min-width: 0; min-height: 0; max-height: 100%; }
+.registration-footer { flex: none; padding: .55rem 0; border-top: 1px solid #cab0ef45; font-size: .875rem; }
+.registration-footer small { position: relative; color: #dfcfea; }
+.registration-footer .laser-stage { z-index: -1; }
+@media (min-width: 64rem) {
+  .registration-layout { grid-template-columns: repeat(2,minmax(0,1fr)); grid-template-rows: minmax(0,1fr); }
+  .headline-panel { height: min(29vw, 46dvh, 28rem); }
+}
 @media (max-width: 63.999rem) {
-  .headline-panel {
-    background: linear-gradient(90deg, #0c0a14 50%, transparent);
-  }
+  .registration-layout { grid-template-rows: auto minmax(0,1fr); gap: .5rem; }
+  .registration-form { align-self: stretch; justify-content: center; }
+  .headline-panel { height: clamp(4rem, 18dvh, 11rem); text-shadow: 0 1px 5px #150a24; }
+  .registration-note { display: none; }
+  .registration-header { padding-block: .5rem; }
 }
