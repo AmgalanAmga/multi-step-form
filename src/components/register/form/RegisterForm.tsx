@@ -93,7 +93,7 @@ export const RegisterForm = () => {
   if (isHydrating) return <RegisterSkeleton />;
 
   return (
-    <Card className="relative gap-0 rounded-[20px] border-[#ddc2ff5c] bg-transparent overscroll-contain py-0">
+    <Card className="relative gap-0 rounded-[20px] border-[#ddc2ff5c] bg-transparent py-0">
       <CardContent className="p-4 sm:p-6">
         <Stepper step={step + 1} />
 
