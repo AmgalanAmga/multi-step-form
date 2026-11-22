@@ -5,12 +5,10 @@ import { latestBirthDate } from "@/schemas";
 import { format, parseISO } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { useController } from "react-hook-form";
-import { Popover } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { Calendar as CalendarIcon } from "lucide-react";
-import { PopoverTrigger } from "@/components/ui/popover";
-import { PopoverContent } from "@/components/ui/popover";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
+import { PopoverTrigger, Popover, PopoverContent } from "@/components/ui/popover";
 
 export const DateOfBirthInput = ({ name, control }: RegistrationFieldProps<"dateOfBirth">) => {
   const {

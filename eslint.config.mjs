@@ -80,6 +80,10 @@ const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   {
+    files: ["src/**/*.{js,jsx,ts,tsx}"],
+    rules: { "no-duplicate-imports": "error" },
+  },
+  {
     files: ["src/**/*.{ts,tsx}"],
     ignores: ["src/components/ui/**"],
     rules: {
