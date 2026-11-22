@@ -2,15 +2,12 @@
 
 import { cn } from "@/lib/utils";
 import { STEPS } from "@/constants";
-import { Check, User, Lock, Camera } from "lucide-react";
-
-const icons = [User, Lock, Camera];
+import { Check } from "lucide-react";
 
 type StepIndicatorProps = { step: number; number: 1 | 2 | 3 };
 
 export const StepIndicator = ({ step, number }: StepIndicatorProps) => {
-  const Icon = icons[number - 1];
-  const label = STEPS[number - 1];
+  const { label, icon: Icon } = STEPS[number - 1];
 
   return (
     <li className="flex flex-col items-center gap-2.5 first:items-start last:items-end">

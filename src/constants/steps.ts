@@ -1,7 +1,12 @@
 import type { RegisterValues } from "@/schemas";
 import type { FieldPath } from "react-hook-form";
+import { Camera, Lock, User } from "lucide-react";
 
-export const STEPS = ["Personal info", "Security", "Profile"] as const;
+export const STEPS = [
+  { label: "Personal info", icon: User },
+  { label: "Security", icon: Lock },
+  { label: "Profile", icon: Camera },
+] as const;
 
 export const fields: Record<FormStep, FieldPath<RegisterValues>[]> = {
   0: ["firstName", "lastName", "email"],
