@@ -90,9 +90,10 @@ export const RegisterForm = () => {
   if (step === 0) return <RegisterSkeleton />;
 
   return (
-    <Card className="relative min-h-0 gap-0 overflow-visible rounded-[20px] border-[#ddc2ff5c] bg-transparent bg-[linear-gradient(135deg,#5c41785c,#181125b8_58%,#3e275a75)] shadow-[inset_0_1px_0_#f7e4ff33] overscroll-contain py-0">
+    <Card className="relative gap-0 rounded-[20px] border-[#ddc2ff5c] bg-transparent overscroll-contain py-0">
       <CardContent className="p-4 sm:p-6">
         <Stepper step={step} />
+
         <form noValidate onSubmit={handleSubmit}>
           <RegisterStep step={step} form={form} disabled={isSubmitting} />
           {error && (

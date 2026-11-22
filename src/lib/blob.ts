@@ -6,6 +6,6 @@ export const uploadImage = async (file: File): Promise<UploadResult> => {
   const id = randomUUID();
 
   await put(`profile-images/${id}`, file, { access: "private", contentType: file.type });
-  
+
   return { url: `/api/profile-images/${id}` };
 };
