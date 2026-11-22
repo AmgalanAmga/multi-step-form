@@ -27,7 +27,8 @@ export const uploadProfileImage = async (file: File): Promise<UploadResult> => {
 };
 
 export const saveProfile = async (values: RegisterValues, imageUrl: string): Promise<void> => {
-  const payload = registerSchema.parse({ ...values, profileImage: imageUrl });
+  const { firstName, lastName, email, phoneNumber, dateOfBirth } = values;
+  const payload = { firstName, lastName, email, phoneNumber, dateOfBirth, profileImage: imageUrl };
 
   const response = await fetch("/api/register", {
     method: "POST",

@@ -14,5 +14,3 @@ export const securitySchema = z
     confirmPassword: z.string().min(1, "Confirm your password."),
   })
   .refine(passwordsMatch, { message: "Passwords do not match.", path: ["confirmPassword"] });
-
-export type SecurityValues = z.infer<typeof securitySchema>;

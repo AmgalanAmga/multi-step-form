@@ -12,5 +12,3 @@ export const profileSchema = z.object({
   dateOfBirth: dateOfBirthSchema,
   profileImage: imageSchema,
 });
-
-export type ProfileValues = z.infer<typeof profileSchema>;

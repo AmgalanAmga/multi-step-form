@@ -7,9 +7,7 @@ const name = z
   .regex(/^\p{L}+$/u, "Use letters only.");
 
 export const personalSchema = z.object({
-  firstName: name,
   lastName: name,
+  firstName: name,
   email: z.string().trim().toLowerCase().pipe(z.email("Enter a valid email address.")),
 });
-
-export type PersonalValues = z.infer<typeof personalSchema>;

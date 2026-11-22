@@ -13,7 +13,7 @@ import { AlertCircle, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { registrationFormSchema, type RegisterValues } from "@/schemas";
 import { saveProfile, uploadProfileImage } from "@/lib/registration-client";
-import { clearProgress, loadProgress, markComplete, saveDraft } from "@/lib/registration-progress";
+import { clearDraft, loadProgress, saveDraft } from "@/lib/registration-progress";
 
 export const RegisterForm = () => {
   const form = useForm<RegisterValues>({
@@ -53,7 +53,7 @@ export const RegisterForm = () => {
       }
       await saveProfile(values, uploadedImage.current.result.url);
       uploadedImage.current = null;
-      markComplete();
+      clearDraft();
       reset(defaults);
       setStep(4);
     } catch (cause) {
@@ -62,7 +62,6 @@ export const RegisterForm = () => {
   };
 
   const startOver = () => {
-    clearProgress();
     setStep(1);
   };
 
