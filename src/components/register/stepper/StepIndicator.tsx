@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 import { STEPS } from "@/constants";
 import { Check, User, Lock, Camera } from "lucide-react";
 
@@ -15,17 +14,14 @@ export const StepIndicator = ({ step, number }: StepIndicatorProps) => {
 
   return (
     <li className="flex flex-col items-center gap-2.5 first:items-start last:items-end">
-      <motion.span
-        initial={false}
-        animate={{ scale: step === number ? 1.08 : 1 }}
-        transition={{ type: "spring", stiffness: 300, damping: 22 }}
+      <span
         className={cn(
-          "relative z-10 grid size-8 place-items-center rounded-full border border-[#49375c] text-xs font-semibold ",
+          "relative z-10 grid size-8 place-items-center rounded-full border border-[#49375c] text-xs font-semibold",
           step >= number ? "border-[#c5a6ff] bg-[#c5a6ff] text-[#211030] shadow-[0_0_14px_#bc84ff50]" : "border-[#49375c] bg-[#16121d] text-[#c3b7d4]",
         )}
       >
         {step > number ? <Check size={15} /> : number}
-      </motion.span>
+      </span>
       <span className={cn("flex items-center gap-1.5 text-xs", step === number ? "font-semibold text-[#f6f2ff]" : "text-[#c3b7d4]")}>
         <Icon size={12} />
         {label}
