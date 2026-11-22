@@ -3,7 +3,6 @@ import { registerSchema, type RegisterValues } from "@/schemas";
 
 const SAVE_TIMEOUT_MS = 90_000;
 const UPLOAD_TIMEOUT_MS = 90_000;
-const apiErrorSchema = z.object({ error: z.string() });
 const uploadSchema = z.object({ url: registerSchema.shape.profileImage });
 
 export const uploadProfileImage = async (file: File): Promise<UploadResult> => {
@@ -16,11 +15,10 @@ export const uploadProfileImage = async (file: File): Promise<UploadResult> => {
     signal: AbortSignal.timeout(UPLOAD_TIMEOUT_MS),
   });
 
-  const result: unknown = await response.json();
+  const result = await response.json();
 
   if (!response.ok) {
-    const parsed = apiErrorSchema.safeParse(result);
-    throw new Error(parsed.success ? parsed.data.error : "Upload failed. Please try again.");
+    throw new Error(typeof result?.error === "string" ? result.error : "Upload failed. Please try again.");
   }
 
   return uploadSchema.parse(result);
@@ -38,8 +36,7 @@ export const saveProfile = async (values: RegisterValues, imageUrl: string): Pro
   });
 
   if (!response.ok) {
-    const result: unknown = await response.json();
-    const parsed = apiErrorSchema.safeParse(result);
-    throw new Error(parsed.success ? parsed.data.error : "Registration could not be saved. Please try again.");
+    const result = await response.json();
+    throw new Error(typeof result?.error === "string" ? result.error : "Registration could not be saved. Please try again.");
   }
 };

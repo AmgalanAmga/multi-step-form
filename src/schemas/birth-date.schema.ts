@@ -7,8 +7,6 @@ export const latestBirthDate = () => subYears(startOfToday(), MIN_AGE);
 
 const meetsMinimumAge = (value: string) => !isAfter(parseISO(value), latestBirthDate());
 
-export const dateOfBirthSchema = z
-  .string()
-  .min(1, "Select your date of birth.")
-  .pipe(z.iso.date("Choose a valid date."))
+export const dateOfBirthSchema = z.iso
+  .date("Choose a valid date.")
   .refine(meetsMinimumAge, `You must be at least ${MIN_AGE} years old.`);

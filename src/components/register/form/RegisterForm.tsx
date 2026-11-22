@@ -7,13 +7,12 @@ import { Button } from "@/components/ui/button";
 import { RegisterActions } from "./RegisterActions";
 import { useEffect, useRef, useState } from "react";
 import { RegisterStep } from "../steps/RegisterStep";
-import { RegisterSkeleton } from "./RegisterSkeleton";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { registrationFormSchema, type RegisterValues } from "@/schemas";
 import { saveProfile, uploadProfileImage } from "@/lib/registration-client";
-import { clearDraft, loadProgress, saveDraft } from "@/lib/registration-progress";
+import { clearDraft, loadDraft, saveDraft } from "@/lib/registration-progress";
 
 export const RegisterForm = () => {
   const form = useForm<RegisterValues>({
@@ -23,76 +22,74 @@ export const RegisterForm = () => {
   });
 
   const [error, setError] = useState("");
-  const [step, setStep] = useState<0 | FormStep | 4>(0);
+  const [step, setStep] = useState<FormStep | 3>(0);
   const uploadedImage = useRef<UploadedImageType | null>(null);
 
   const { reset, setFocus } = form;
   const { isSubmitting } = form.formState;
 
   const restoreProgress = () => {
-    const progress = loadProgress();
-    if ("values" in progress) reset({ ...defaults, ...progress.values });
-    setStep(progress.step);
+    const draft = loadDraft();
+    if (!draft) return;
+    reset({ ...defaults, ...draft.values });
+    setStep(draft.step);
   };
 
   // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(restoreProgress, [reset]);
 
   const focusStep = () => {
-    if (step && step !== 4) setFocus(fields[step][0]);
+    if (step !== 3) setFocus(fields[step][0]);
   };
 
   useEffect(focusStep, [step, setFocus]);
 
   const submit = async (values: RegisterValues) => {
     setError("");
+
     try {
       const file = values.profileImage;
       if (uploadedImage.current?.file !== file) {
         uploadedImage.current = { file, result: await uploadProfileImage(file) };
       }
+
       await saveProfile(values, uploadedImage.current.result.url);
+
       uploadedImage.current = null;
       clearDraft();
       reset(defaults);
-      setStep(4);
+      setStep(3);
     } catch (cause) {
       setError(cause instanceof Error && cause.name !== "ZodError" ? cause.message : "Registration failed. Please try again.");
     }
   };
 
   const startOver = () => {
-    setStep(1);
+    setStep(0);
   };
 
   const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (isSubmitting || !step || step === 4) return;
-
-    if (step === 3) {
-      await form.handleSubmit(submit)();
-      return;
-    }
+    if (isSubmitting || step === 3) return;
+    if (step === 2) return form.handleSubmit(submit)(event);
 
     const valid = await form.trigger(fields[step], { shouldFocus: true });
     if (!valid) return;
 
-    const nextStep = step === 1 ? 2 : 3;
+    const nextStep = step === 0 ? 1 : 2;
     saveDraft(nextStep, form.getValues());
     setStep(nextStep);
   };
 
   const handleBack = () => {
     setError("");
-    setStep(step === 3 ? 2 : 1);
+    setStep(step === 2 ? 1 : 0);
   };
-
-  if (step === 0) return <RegisterSkeleton />;
 
   return (
     <Card className="relative gap-0 rounded-[20px] border-[#ddc2ff5c] bg-transparent overscroll-contain py-0">
       <CardContent className="p-4 sm:p-6">
-        <Stepper step={step} />
+        <Stepper step={step + 1} />
 
         <form noValidate onSubmit={handleSubmit}>
           <RegisterStep step={step} form={form} disabled={isSubmitting} />
@@ -102,7 +99,7 @@ export const RegisterForm = () => {
               {error}
             </div>
           )}
-          {step === 4 ? (
+          {step === 3 ? (
             <Button
               type="button"
               onClick={startOver}

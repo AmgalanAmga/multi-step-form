@@ -1,23 +1,34 @@
 import { STORAGE_KEYS } from "@/constants";
 import { draftSchema, personalSchema, type RegisterValues } from "@/schemas";
-import { readStorage, removeStorage, writeStorage } from "./storage";
 
-export const loadProgress = () => {
-  const draft = readStorage(STORAGE_KEYS.draft, draftSchema);
-  if (!draft) return { step: 1 as const };
+export const loadDraft = () => {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEYS.draft);
+    if (!saved) return null;
+    const { step, values } = draftSchema.parse(JSON.parse(saved));
 
-  // Passwords are never saved, so a restored draft must revisit the security step.
-  const personalComplete = personalSchema.safeParse(draft.values).success;
-  const step: FormStep = draft.step === 1 || !personalComplete ? 1 : 2;
-  return { step, values: draft.values };
+    // Saved steps are numbered from 1. Passwords must be entered again.
+    const resumeStep = step > 1 && personalSchema.safeParse(values).success ? 1 : 0;
+    return { step: resumeStep, values } as const;
+  } catch {
+    return null;
+  }
 };
 
 export const saveDraft = (step: FormStep, values: RegisterValues) => {
   const { firstName, lastName, email, phoneNumber, dateOfBirth } = values;
-  writeStorage<RegistrationDraft>(STORAGE_KEYS.draft, {
-    step,
-    values: { firstName, lastName, email, phoneNumber, dateOfBirth },
-  });
+  const draft = { step: step + 1, values: { firstName, lastName, email, phoneNumber, dateOfBirth } };
+  try {
+    localStorage.setItem(STORAGE_KEYS.draft, JSON.stringify(draft));
+  } catch {
+    // The form still works when browser storage is unavailable.
+  }
 };
 
-export const clearDraft = () => removeStorage(STORAGE_KEYS.draft);
+export const clearDraft = () => {
+  try {
+    localStorage.removeItem(STORAGE_KEYS.draft);
+  } catch {
+    // Registration has already succeeded.
+  }
+};
