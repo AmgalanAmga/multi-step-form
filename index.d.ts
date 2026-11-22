@@ -1,5 +1,5 @@
-import type { Control, FieldPath } from "react-hook-form";
 import type { RegisterValues } from "@/schemas";
+import type { Control, FieldPath } from "react-hook-form";
 
 declare global {
   type FormStep = 0 | 1 | 2;

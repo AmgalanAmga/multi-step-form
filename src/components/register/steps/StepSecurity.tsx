@@ -1,8 +1,8 @@
 "use client";
 
+import type { RegisterValues } from "@/schemas";
 import type { UseFormReturn } from "react-hook-form";
 import { PasswordInput } from "../input/PasswordInput";
-import type { RegisterValues } from "@/schemas";
 
 type StepSecurityType = { form: UseFormReturn<RegisterValues> };
 
