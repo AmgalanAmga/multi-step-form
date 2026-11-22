@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { Stepper } from "../stepper/Stepper";
 import { defaults, fields } from "@/constants";
 import { Button } from "@/components/ui/button";
+import { RegisterSkeleton } from "./RegisterSkeleton";
 import { RegisterActions } from "./RegisterActions";
 import { useEffect, useRef, useState } from "react";
 import { RegisterStep } from "../steps/RegisterStep";
@@ -21,6 +22,7 @@ export const RegisterForm = () => {
     defaultValues: defaults,
   });
 
+  const [isHydrating, setIsHydrating] = useState(true);
   const [error, setError] = useState("");
   const [step, setStep] = useState<FormStep | 3>(0);
   const uploadedImage = useRef<UploadedImageType | null>(null);
@@ -30,19 +32,21 @@ export const RegisterForm = () => {
 
   const restoreProgress = () => {
     const draft = loadDraft();
-    if (!draft) return;
-    reset({ ...defaults, ...draft.values });
-    setStep(draft.step);
+    if (draft) {
+      reset({ ...defaults, ...draft.values });
+      setStep(draft.step);
+    }
+    setIsHydrating(false);
   };
 
   // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(restoreProgress, [reset]);
 
   const focusStep = () => {
-    if (step !== 3) setFocus(fields[step][0]);
+    if (!isHydrating && step !== 3) setFocus(fields[step][0]);
   };
 
-  useEffect(focusStep, [step, setFocus]);
+  useEffect(focusStep, [isHydrating, step, setFocus]);
 
   const submit = async (values: RegisterValues) => {
     setError("");
@@ -85,6 +89,8 @@ export const RegisterForm = () => {
     setError("");
     setStep(step === 2 ? 1 : 0);
   };
+
+  if (isHydrating) return <RegisterSkeleton />;
 
   return (
     <Card className="relative gap-0 rounded-[20px] border-[#ddc2ff5c] bg-transparent overscroll-contain py-0">
