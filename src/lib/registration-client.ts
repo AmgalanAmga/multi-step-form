@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { successSchema, type RegisterValues } from "@/lib/validations/register.schema";
+import { registerSchema, type RegisterValues } from "@/schemas";
 
 const SAVE_TIMEOUT_MS = 90_000;
 const UPLOAD_TIMEOUT_MS = 90_000;
 const apiErrorSchema = z.object({ error: z.string() });
-const uploadSchema = z.object({ url: successSchema.shape.profileImage });
+const uploadSchema = z.object({ url: registerSchema.shape.profileImage });
 
 export const uploadProfileImage = async (file: File): Promise<UploadResult> => {
   const body = new FormData();
@@ -26,15 +26,8 @@ export const uploadProfileImage = async (file: File): Promise<UploadResult> => {
   return uploadSchema.parse(result);
 };
 
-export const saveProfile = async (values: RegisterValues, imageUrl: string): Promise<RegistrationSummary> => {
-  const payload = successSchema.parse({
-    firstName: values.firstName,
-    lastName: values.lastName,
-    email: values.email,
-    phoneNumber: values.phoneNumber,
-    dateOfBirth: values.dateOfBirth,
-    profileImage: imageUrl,
-  });
+export const saveProfile = async (values: RegisterValues, imageUrl: string): Promise<void> => {
+  const payload = registerSchema.parse({ ...values, profileImage: imageUrl });
 
   const response = await fetch("/api/register", {
     method: "POST",
@@ -43,12 +36,9 @@ export const saveProfile = async (values: RegisterValues, imageUrl: string): Pro
     signal: AbortSignal.timeout(SAVE_TIMEOUT_MS),
   });
 
-  const result: unknown = await response.json();
-
   if (!response.ok) {
+    const result: unknown = await response.json();
     const parsed = apiErrorSchema.safeParse(result);
     throw new Error(parsed.success ? parsed.data.error : "Registration could not be saved. Please try again.");
   }
-
-  return successSchema.parse(result);
 };

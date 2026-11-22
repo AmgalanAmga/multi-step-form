@@ -1,6 +1,6 @@
 "use client";
 
-import { IMAGE_TYPES } from "@/lib/constants";
+import { IMAGE_TYPES } from "@/constants";
 import { UploadCloud } from "lucide-react";
 import { ImageUploadPreview } from "./ImageUploadPreview";
 import { useEffect, useRef, useState } from "react";

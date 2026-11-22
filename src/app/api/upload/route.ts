@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { uploadImage } from "@/lib/blob";
-import { imageSchema } from "@/lib/validations/register.schema";
+import { imageSchema } from "@/schemas";
 
 export const runtime = "nodejs";
 

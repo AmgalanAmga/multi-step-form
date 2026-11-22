@@ -2,7 +2,7 @@
 
 import type { UseFormReturn } from "react-hook-form";
 import { PasswordInput } from "../input/PasswordInput";
-import type { RegisterValues } from "@/lib/validations/register.schema";
+import type { RegisterValues } from "@/schemas";
 
 type StepSecurityType = { form: UseFormReturn<RegisterValues> };
 

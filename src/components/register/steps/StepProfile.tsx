@@ -4,7 +4,7 @@ import { type UseFormReturn } from "react-hook-form";
 import { PhoneNumberInput } from "../input/PhoneNumberInput";
 import { DateOfBirthInput } from "../input/DateOfBirthInput";
 import { ProfileImageInput } from "../input/ProfileImageInput";
-import { type RegisterValues } from "@/lib/validations/register.schema";
+import type { RegisterValues } from "@/schemas";
 
 type StepProfileType = {
   form: UseFormReturn<RegisterValues>;

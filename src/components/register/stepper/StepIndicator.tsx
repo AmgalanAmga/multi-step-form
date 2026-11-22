@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { STEPS } from "@/lib/constants";
+import { STEPS } from "@/constants";
 import { Check, User, Lock, Camera } from "lucide-react";
 
 const icons = [User, Lock, Camera];

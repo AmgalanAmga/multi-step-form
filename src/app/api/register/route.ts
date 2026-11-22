@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { saveRegistration } from "@/lib/registrations";
-import { successSchema } from "@/lib/validations/register.schema";
+import { registerSchema } from "@/schemas";
 
 export const runtime = "nodejs";
 
@@ -15,7 +15,7 @@ export const POST = async (request: Request) => {
     return errorResponse("Send valid JSON data.", 400);
   }
 
-  const result = successSchema.safeParse(data);
+  const result = registerSchema.safeParse(data);
 
   if (!result.success) {
     return errorResponse(result.error.issues[0].message, 400);

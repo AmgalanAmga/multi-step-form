@@ -1,16 +1,16 @@
 import "server-only";
 import { put } from "@vercel/blob";
 import { randomUUID } from "node:crypto";
-import { successSchema } from "@/lib/validations/register.schema";
+import type { RegistrationPayload } from "@/schemas";
 
-type StoredRegistrationType = RegistrationSummary & {
+type StoredRegistrationType = RegistrationPayload & {
   id: string;
   createdAt: string;
 };
 
-export const saveRegistration = async (values: RegistrationSummary): Promise<StoredRegistrationType> => {
+export const saveRegistration = async (values: RegistrationPayload): Promise<StoredRegistrationType> => {
   const registration: StoredRegistrationType = {
-    ...successSchema.parse(values),
+    ...values,
     id: randomUUID(),
     createdAt: new Date().toISOString(),
   };

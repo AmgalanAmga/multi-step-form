@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { latestBirthDate } from "@/schemas";
 import { format, parseISO } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { useController } from "react-hook-form";
@@ -9,7 +10,6 @@ import { Calendar } from "@/components/ui/calendar";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { PopoverTrigger } from "@/components/ui/popover";
 import { PopoverContent } from "@/components/ui/popover";
-import { latestBirthDate } from "@/lib/validations/register.schema";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 
 export const DateOfBirthInput = ({ name, control }: RegistrationFieldProps<"dateOfBirth">) => {
@@ -65,7 +65,7 @@ export const DateOfBirthInput = ({ name, control }: RegistrationFieldProps<"date
           />
         </PopoverContent>
       </Popover>
-      
+
       <FieldError id={`${name}-error`}>{fieldState.error?.message}</FieldError>
       <p className="text-xs text-[#c3b7d4]">You must be 13 or older to join.</p>
     </Field>

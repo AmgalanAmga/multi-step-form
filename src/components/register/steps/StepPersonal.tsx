@@ -3,7 +3,7 @@
 import { NameInput } from "../input/NameInput";
 import { EmailInput } from "../input/EmailInput";
 import type { UseFormReturn } from "react-hook-form";
-import type { RegisterValues } from "@/lib/validations/register.schema";
+import type { RegisterValues } from "@/schemas";
 
 type StepPersonalType = { form: UseFormReturn<RegisterValues> };
 
@@ -13,6 +13,7 @@ export const StepPersonal = ({ form }: StepPersonalType) => (
       <NameInput control={form.control} name="firstName" />
       <NameInput control={form.control} name="lastName" />
     </div>
+    
     <EmailInput control={form.control} name="email" />
   </div>
 );

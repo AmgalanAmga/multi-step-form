@@ -1,7 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/sonner";
-import { MotionProvider } from "@/components/MotionProvider";
 
 export const metadata: Metadata = {
   title: "Astra",
@@ -12,10 +11,8 @@ const RootLayout = ({ children }: LayoutProps<"/">) => {
   return (
     <html lang="en">
       <body className="bg-[#09070e] bg-[radial-gradient(ellipse_at_78%_30%,#241336,transparent_46%),radial-gradient(ellipse_at_8%_96%,#1c112d,transparent_42%)] m-0 font-sans text-[#f6f2ff] antialiased scheme-dark">
-        <MotionProvider>
-          {children}
-          <Toaster richColors position="bottom-right" />
-        </MotionProvider>
+        {children}
+        <Toaster richColors position="bottom-right" />
       </body>
     </html>
   );

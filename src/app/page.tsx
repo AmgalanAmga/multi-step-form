@@ -1,9 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import TechText from "@/components/animated/TechText";
+import { LaserFooter } from "@/components/LaserFooter";
 import SplashCursor from "@/components/animated/SplashCursor";
 import GlassSurface from "@/components/animated/GlassSurface";
-import { LaserFooter } from "@/components/LaserFooter";
 import { RegisterForm } from "@/components/register/form/RegisterForm";
 
 const headline = "Every great story\nbegins with a name.\nLet this be the start\nof yours.";
@@ -25,20 +25,22 @@ const Home = () => {
         <section className="relative z-10 min-w-0">
           <h1 className="h-48 w-full text-[#faf5ff] sm:h-56 md:h-64 lg:h-80 xl:h-96 2xl:h-112">
             <TechText
-              text={headline}
-              fontSize={88}
-              fontFamily="Georgia, serif"
-              fontWeight={500}
-              letterSpacing={-0.045}
               align="left"
               intro="type"
+              fontSize={88}
+              sweep={false}
+              labels={false}
+              text={headline}
+              fontWeight={500}
               introDuration={2.8}
               accentColor="#e6baff"
-              labels={false}
-              sweep={false}
+              letterSpacing={-0.045}
+              fontFamily="Georgia, serif"
             />
           </h1>
-          <p className="mx-[5%] mt-2 hidden max-w-[31ch] leading-relaxed text-[#cfc2df] lg:block">Create your Astra profile in three steps. Your progress is saved each time you select Continue.</p>
+          <p className="mx-[5%] mt-2 hidden max-w-[31ch] leading-relaxed text-[#cfc2df] lg:block">
+            Create your Astra profile in three steps. Your progress is saved each time you select Continue.
+          </p>
         </section>
 
         <div className="flex min-w-0 flex-col justify-center">
