@@ -7,10 +7,11 @@ import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 
 export const NameInput = ({ name, control }: RegistrationFieldProps<"firstName" | "lastName">) => {
   const { field, fieldState } = useController({ name, control });
+
   const isFirstName = field.name === "firstName";
 
   return (
-    <Field className={fieldState.invalid ? "invalid-field gap-2 text-[#ff92a7]" : "gap-2"}>
+    <Field className={fieldState.invalid ? "gap-2 text-[#ff92a7]" : "gap-2"}>
       <FieldLabel htmlFor={field.name}>{isFirstName ? "First name" : "Last name"}</FieldLabel>
 
       <div className="relative">
@@ -20,7 +21,7 @@ export const NameInput = ({ name, control }: RegistrationFieldProps<"firstName" 
           {...field}
           autoComplete={isFirstName ? "given-name" : "family-name"}
           placeholder={isFirstName ? "e.g. Alex" : "e.g. Morgan"}
-          className="pl-10 rounded-[9px]! border-[#d8c1f459]! bg-[linear-gradient(165deg,#eeddff21,#7e5fa20f_52%)] bg-[#110c1861]! shadow-[inset_0_1px_0_#ffffff24]! backdrop-blur-[10px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bd8aff] in-[.invalid-field]:border-[#ff92a7]! h-11"
+          className="pl-10 rounded-[9px] border-[#d8c1f459] bg-[#110c1861]! focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bd8aff] h-11"
         />
       </div>
 

@@ -9,12 +9,19 @@ export const PhoneNumberInput = ({ name, control }: RegistrationFieldProps<"phon
   const { field, fieldState } = useController({ name, control });
 
   return (
-    <Field className={fieldState.invalid ? "invalid-field gap-2 text-[#ff92a7]" : "gap-2"}>
+    <Field className={fieldState.invalid ? "gap-2 text-[#ff92a7]" : "gap-2"}>
       <FieldLabel htmlFor={field.name}>Phone number</FieldLabel>
 
       <div className="relative">
         <Phone className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-[#c3b7d4]" />
-        <Input id={field.name} {...field} type="tel" inputMode="numeric" autoComplete="tel-national" placeholder="99112233" className="rounded-[9px]! border-[#d8c1f459]! bg-[linear-gradient(165deg,#eeddff21,#7e5fa20f_52%)] bg-[#110c1861]! shadow-[inset_0_1px_0_#ffffff24]! backdrop-blur-[10px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bd8aff] in-[.invalid-field]:border-[#ff92a7]! pl-10 h-11" />
+        <Input
+          id={field.name}
+          {...field}
+          type="tel"
+          inputMode="numeric"
+          placeholder="99112233"
+          className="rounded-[9px] border-[#d8c1f459] bg-[#110c1861]! focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bd8aff] pl-10 h-11"
+        />
       </div>
 
       <FieldError id={`${field.name}-error`}>{fieldState.error?.message}</FieldError>

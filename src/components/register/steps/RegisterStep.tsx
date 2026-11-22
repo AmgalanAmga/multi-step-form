@@ -1,17 +1,16 @@
 import { copy } from "@/constants";
 import { StepProfile } from "./StepProfile";
+import { StepSuccess } from "./StepSuccess";
 import { StepSecurity } from "./StepSecurity";
 import { StepPersonal } from "./StepPersonal";
-import type { UseFormReturn } from "react-hook-form";
 import type { RegisterValues } from "@/schemas";
-
-import { StepSuccess } from "./StepSuccess";
+import type { UseFormReturn } from "react-hook-form";
 
 const stepComponents = [StepPersonal, StepSecurity, StepProfile, StepSuccess] as const;
 
 type RegisterStepType = {
-  step: FormStep | 4;
   disabled: boolean;
+  step: FormStep | 4;
   form: UseFormReturn<RegisterValues>;
 };
 
@@ -21,8 +20,8 @@ export const RegisterStep = ({ step, form, disabled }: RegisterStepType) => {
     return <Success />;
   }
 
-  const ActiveStep = stepComponents[step - 1];
   const { title, description } = copy[step];
+  const ActiveStep = stepComponents[step - 1];
 
   return (
     <>

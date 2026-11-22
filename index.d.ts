@@ -11,5 +11,10 @@ declare global {
 
   type ApiError = { error: string };
 
+  type UploadedImageType = {
+    file: File;
+    result: UploadResult;
+  };
+
   type RegistrationFieldProps<Name extends FieldPath<RegisterValues>> = { control: Control<RegisterValues>; name: Name };
 }
