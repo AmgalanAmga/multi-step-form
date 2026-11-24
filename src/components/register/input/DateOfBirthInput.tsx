@@ -1,14 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { latestBirthDate } from "@/schemas";
-import { format, parseISO } from "date-fns";
+import { format, parseISO, startOfToday, subYears } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { useController } from "react-hook-form";
 import { Calendar } from "@/components/ui/calendar";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import { PopoverTrigger, Popover, PopoverContent } from "@/components/ui/popover";
+
+const MIN_AGE = 13;
+
+const latestBirthDate = () => subYears(startOfToday(), MIN_AGE);
 
 export const DateOfBirthInput = ({ name, control }: RegistrationFieldProps<"dateOfBirth">) => {
   const {

@@ -1,10 +1,5 @@
 import { z } from "zod";
 import { MAX_IMAGE_BYTES } from "@/constants";
-import { startOfToday, subYears } from "date-fns";
-
-const MIN_AGE = 13;
-
-export const latestBirthDate = () => subYears(startOfToday(), MIN_AGE);
 
 const name = z
   .string()
