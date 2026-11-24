@@ -26,9 +26,7 @@ const formFields = z.object({
   confirmPassword: z.string().min(1, "Confirm your password."),
 });
 
-export type RegisterValues = z.infer<typeof formFields>;
-
-const passwordsMatch = (values: RegisterValues) => values?.password === values?.confirmPassword;
+const passwordsMatch = (values: z.infer<typeof formFields>) => values?.password === values?.confirmPassword;
 
 export const registrationFormSchema = formFields.refine(passwordsMatch, {
   message: "Passwords do not match.",

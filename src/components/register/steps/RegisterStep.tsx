@@ -3,7 +3,6 @@ import { StepProfile } from "./StepProfile";
 import { StepSuccess } from "./StepSuccess";
 import { StepSecurity } from "./StepSecurity";
 import { StepPersonal } from "./StepPersonal";
-import type { RegisterValues } from "@/schemas";
 import type { UseFormReturn } from "react-hook-form";
 
 const stepComponents = [StepPersonal, StepSecurity, StepProfile, StepSuccess] as const;

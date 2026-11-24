@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { profileImageUrlSchema, type RegisterValues } from "@/schemas";
+import { profileImageUrlSchema } from "@/schemas";
 
 const SAVE_TIMEOUT_MS = 90_000;
 const UPLOAD_TIMEOUT_MS = 90_000;

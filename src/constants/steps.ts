@@ -1,4 +1,3 @@
-import type { RegisterValues } from "@/schemas";
 import type { FieldPath } from "react-hook-form";
 import { Camera, Lock, User } from "lucide-react";
 

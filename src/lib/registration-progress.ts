@@ -1,5 +1,5 @@
 import { STORAGE_KEYS } from "@/constants";
-import { draftSchema, type RegisterValues } from "@/schemas";
+import { draftSchema } from "@/schemas";
 
 export const loadDraft = () => {
   try {

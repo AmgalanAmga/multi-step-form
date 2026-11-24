@@ -1,6 +1,5 @@
 "use client";
 
-import type { RegisterValues } from "@/schemas";
 import { type UseFormReturn } from "react-hook-form";
 import { PhoneNumberInput } from "../input/PhoneNumberInput";
 import { DateOfBirthInput } from "../input/DateOfBirthInput";

@@ -11,7 +11,7 @@ import { RegisterStep } from "../steps/RegisterStep";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { registrationFormSchema, type RegisterValues } from "@/schemas";
+import { registrationFormSchema } from "@/schemas";
 import { saveProfile, uploadProfileImage } from "@/lib/registration-client";
 import { clearDraft, loadDraft, saveDraft } from "@/lib/registration-progress";
 
