@@ -1,5 +1,5 @@
 import type { RegisterValues } from "@/schemas";
-import type { Control, FieldPath } from "react-hook-form";
+import type { Control } from "react-hook-form";
 
 declare global {
   type FormStep = 0 | 1 | 2;
@@ -13,5 +13,5 @@ declare global {
     result: UploadResult;
   };
 
-  type RegistrationFieldProps<Name extends FieldPath<RegisterValues>> = { control: Control<RegisterValues>; name: Name };
+  type RegistrationFieldProps<Name extends keyof RegisterValues> = { control: Control<RegisterValues>; name: Name };
 }
