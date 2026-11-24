@@ -1,5 +1,5 @@
 import { STORAGE_KEYS } from "@/constants";
-import { draftSchema, personalSchema, type RegisterValues } from "@/schemas";
+import { draftSchema, type RegisterValues } from "@/schemas";
 
 export const loadDraft = () => {
   try {
@@ -8,7 +8,7 @@ export const loadDraft = () => {
     const { step, values } = draftSchema.parse(JSON.parse(saved));
 
     // Saved steps are numbered from 1. Passwords must be entered again.
-    const resumeStep = step > 1 && personalSchema.safeParse(values).success ? 1 : 0;
+    const resumeStep = step > 1 ? 1 : 0;
     return { step: resumeStep, values } as const;
   } catch {
     return null;

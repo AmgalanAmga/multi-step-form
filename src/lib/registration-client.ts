@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { registerSchema, type RegisterValues } from "@/schemas";
+import { profileImageUrlSchema, type RegisterValues } from "@/schemas";
 
 const SAVE_TIMEOUT_MS = 90_000;
 const UPLOAD_TIMEOUT_MS = 90_000;
-const uploadSchema = z.object({ url: registerSchema.shape.profileImage });
+const uploadSchema = z.object({ url: profileImageUrlSchema });
 
 export const uploadProfileImage = async (file: File): Promise<UploadResult> => {
   const body = new FormData();

@@ -1,30 +1,16 @@
 import { NextResponse } from "next/server";
+import type { RegistrationPayload } from "@/schemas";
 import { saveRegistration } from "@/lib/registrations";
-import { registerSchema } from "@/schemas";
 
 export const runtime = "nodejs";
 
-const errorResponse = (error: string, status: number) => NextResponse.json<ApiError>({ error }, { status });
-
 export const POST = async (request: Request) => {
-  let data: unknown;
+  const payload: RegistrationPayload = await request.json();
 
   try {
-    data = await request.json();
-  } catch {
-    return errorResponse("Send valid JSON data.", 400);
-  }
-
-  const result = registerSchema.safeParse(data);
-
-  if (!result.success) {
-    return errorResponse(result.error.issues[0].message, 400);
-  }
-
-  try {
-    const registration = await saveRegistration(result.data);
+    const registration = await saveRegistration(payload);
     return NextResponse.json(registration, { status: 201 });
   } catch {
-    return errorResponse("Registration could not be saved. Please try again.", 500);
+    return NextResponse.json<ApiError>({ error: "Registration could not be saved. Please try again." }, { status: 500 });
   }
 };
