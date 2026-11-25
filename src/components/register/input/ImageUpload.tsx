@@ -1,6 +1,5 @@
 "use client";
 
-import { IMAGE_TYPES } from "@/constants";
 import { UploadCloud } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { ImageUploadPreview } from "./ImageUploadPreview";
@@ -48,7 +47,7 @@ export const ImageUpload = ({ value, disabled = false, onChange, onBlur, ...butt
 
   return (
     <div>
-      <input ref={input} type="file" disabled={disabled} accept={IMAGE_TYPES.join(",")} hidden onChange={handleFileChange} />
+      <input ref={input} type="file" disabled={disabled} accept="image/*" hidden onChange={handleFileChange} />
       {preview ? (
         <ImageUploadPreview {...buttonProps} preview={preview} filename={value?.name} disabled={disabled} onChoose={openFilePicker} onRemove={removeImage} />
       ) : (
@@ -68,7 +67,6 @@ export const ImageUpload = ({ value, disabled = false, onChange, onBlur, ...butt
             <strong className="font-semibold text-[#c5a6ff]">Choose a photo</strong>
           </span>
 
-          <span className="mt-1 text-xs text-[#c3b7d4]">JPG, PNG or WebP · Up to 5 MB</span>
         </button>
       )}
     </div>

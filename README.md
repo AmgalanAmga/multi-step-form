@@ -23,4 +23,4 @@ npm run typecheck
 npm run build
 ```
 
-Submission stores the image under `profile-images/<id>` and a private JSON record under `registrations/<id>.json`. The record contains profile details and the image route. Anyone with the image route can view that image. Password fields stay in the browser.
+Submission stores the image under `profile-images/<id>` and a private JSON record under `registrations/<id>.json`. The record contains profile details and the private image’s Blob pathname. Password fields stay in the browser.

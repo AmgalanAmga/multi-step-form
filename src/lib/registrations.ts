@@ -1,4 +1,4 @@
-import "server-only";
+"use server";
 import { put } from "@vercel/blob";
 import { randomUUID } from "node:crypto";
 import type { RegistrationPayload } from "@/schemas";
@@ -8,7 +8,7 @@ type StoredRegistrationType = RegistrationPayload & {
   createdAt: string;
 };
 
-export const saveRegistration = async (values: RegistrationPayload): Promise<StoredRegistrationType> => {
+export const saveProfile = async (values: RegistrationPayload): Promise<void> => {
   const registration: StoredRegistrationType = {
     ...values,
     id: randomUUID(),
@@ -19,6 +19,4 @@ export const saveRegistration = async (values: RegistrationPayload): Promise<Sto
     access: "private",
     contentType: "application/json",
   });
-
-  return registration;
 };

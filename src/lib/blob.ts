@@ -1,11 +1,11 @@
-import "server-only";
+"use server";
 import { put } from "@vercel/blob";
 import { randomUUID } from "node:crypto";
 
-export const uploadImage = async (file: File): Promise<UploadResult> => {
+export const uploadProfileImage = async (file: File): Promise<string> => {
   const id = randomUUID();
 
-  await put(`profile-images/${id}`, file, { access: "private", contentType: file.type });
+  const blob = await put(`profile-images/${id}`, file, { access: "private", contentType: file.type });
 
-  return { url: `/api/profile-images/${id}` };
+  return blob.pathname;
 };

@@ -12,7 +12,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { registrationFormSchema } from "@/schemas";
-import { saveProfile, uploadProfileImage } from "@/lib/registration-client";
+import { uploadProfileImage } from "@/lib/blob";
+import { saveProfile } from "@/lib/registrations";
 import { clearDraft, loadDraft, saveDraft } from "@/lib/registration-progress";
 
 export const RegisterForm = () => {
@@ -54,10 +55,11 @@ export const RegisterForm = () => {
     try {
       const file = values.profileImage;
       if (uploadedImage.current?.file !== file) {
-        uploadedImage.current = { file, result: await uploadProfileImage(file) };
+        uploadedImage.current = { file, pathname: await uploadProfileImage(file) };
       }
 
-      await saveProfile(values, uploadedImage.current.result.url);
+      const { firstName, lastName, email, phoneNumber, dateOfBirth } = values;
+      await saveProfile({ firstName, lastName, email, phoneNumber, dateOfBirth, profileImage: uploadedImage.current.pathname });
 
       uploadedImage.current = null;
       clearDraft();
