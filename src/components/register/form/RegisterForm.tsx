@@ -12,8 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { registrationFormSchema } from "@/schemas";
-import { uploadProfileImage } from "@/lib/blob";
-import { saveProfile } from "@/lib/registrations";
+import { saveProfile, uploadProfileImage } from "@/lib/registrations";
 import { clearDraft, loadDraft, saveDraft } from "@/lib/registration-progress";
 
 export const RegisterForm = () => {
