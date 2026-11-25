@@ -4,14 +4,14 @@ import { useForm } from "react-hook-form";
 import { Stepper } from "../stepper/Stepper";
 import { defaults, fields } from "@/constants";
 import { Button } from "@/components/ui/button";
-import { RegisterSkeleton } from "./RegisterSkeleton";
+import { registrationFormSchema } from "@/schemas";
 import { RegisterActions } from "./RegisterActions";
 import { useEffect, useRef, useState } from "react";
 import { RegisterStep } from "../steps/RegisterStep";
+import { RegisterSkeleton } from "./RegisterSkeleton";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { registrationFormSchema } from "@/schemas";
 import { saveProfile, uploadProfileImage } from "@/lib/registrations";
 import { clearDraft, loadDraft, saveDraft } from "@/lib/registration-progress";
 
