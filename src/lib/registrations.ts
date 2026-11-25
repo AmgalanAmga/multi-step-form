@@ -3,11 +3,6 @@ import { put } from "@vercel/blob";
 import { randomUUID } from "node:crypto";
 import type { RegistrationPayload } from "@/schemas";
 
-type StoredRegistrationType = RegistrationPayload & {
-  id: string;
-  createdAt: string;
-};
-
 export const uploadProfileImage = async (file: File): Promise<string> => {
   const id = randomUUID();
 
@@ -17,7 +12,7 @@ export const uploadProfileImage = async (file: File): Promise<string> => {
 };
 
 export const saveProfile = async (values: RegistrationPayload): Promise<void> => {
-  const registration: StoredRegistrationType = {
+  const registration = {
     ...values,
     id: randomUUID(),
     createdAt: new Date().toISOString(),
