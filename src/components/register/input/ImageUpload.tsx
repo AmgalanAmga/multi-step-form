@@ -1,7 +1,7 @@
 "use client";
 
+import { useRef } from "react";
 import { UploadCloud } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
 import { ImageUploadPreview } from "./ImageUploadPreview";
 
 type ImageUploadProps = {
@@ -13,27 +13,16 @@ type ImageUploadProps = {
 };
 
 export const ImageUpload = ({ value, disabled = false, onChange, onBlur, ...buttonProps }: ImageUploadProps) => {
-  const [preview, setPreview] = useState<string>();
   const input = useRef<HTMLInputElement>(null);
 
-  const syncImagePreview = () => {
-    if (!value) {
-      setPreview(undefined);
-      return;
-    }
-    const url = URL.createObjectURL(value);
-    setPreview(url);
-    const cleanup = () => URL.revokeObjectURL(url);
-    return cleanup;
-  };
-
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(syncImagePreview, [value]);
-
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(event.target.files?.[0]);
+    const element = event.currentTarget;
+    const file = element.files?.[0];
+    if (!file) return;
+
+    onChange(file);
     onBlur();
-    event.target.value = "";
+    element.value = "";
   };
 
   const openFilePicker = () => {
@@ -48,8 +37,8 @@ export const ImageUpload = ({ value, disabled = false, onChange, onBlur, ...butt
   return (
     <div>
       <input ref={input} type="file" disabled={disabled} accept="image/*" hidden onChange={handleFileChange} />
-      {preview ? (
-        <ImageUploadPreview {...buttonProps} preview={preview} filename={value?.name} disabled={disabled} onChoose={openFilePicker} onRemove={removeImage} />
+      {value ? (
+        <ImageUploadPreview {...buttonProps} file={value} disabled={disabled} onChoose={openFilePicker} onRemove={removeImage} />
       ) : (
         <button
           {...buttonProps}
@@ -66,7 +55,6 @@ export const ImageUpload = ({ value, disabled = false, onChange, onBlur, ...butt
           <span className="text-xs">
             <strong className="font-semibold text-[#c5a6ff]">Choose a photo</strong>
           </span>
-
         </button>
       )}
     </div>
